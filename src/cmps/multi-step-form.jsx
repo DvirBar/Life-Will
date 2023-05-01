@@ -9,8 +9,18 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         last_name: '',
         edited_by: false,
         email: '',
-        money: '',
-        kids: false,
+        birthDate: Date.now(),
+        gender: 'other',
+        person_id: '',
+        passport_id: '',
+        phone: '',
+        address: '',
+        status: '',
+        partner_gender: '',
+        partner_first_name: '',
+        partner_last_name: '',
+        partner_id: '',
+        ex_partner_gain: 'לא',
     })
 
     const [currentStep, setCurrentStep] = useState(0)
@@ -19,16 +29,15 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         console.log("Form Submitted", formData);
     }
 
-    const handleNextStep = (newData, final = false, nextStage = false) => {
+    const handleNextStep = (newData, final = false, nextStage = false, isAgeOver18 = true) => {
         setData(prev => ({ ...prev, ...newData }))
-        if (!newData.edited_by) return alert('cannot move!')
-        if (nextStage) onSetStage(whatStage + 1)
         if (final) {
             makeRequest(newData)
             return
         }
+        if (newData.edited_by !== "true" || !isAgeOver18) return
+        if (nextStage) onSetStage(whatStage + 1)
         setCurrentStep(prev => prev + 1)
-        console.log('currentStep', currentStep);
     }
 
     const handlePrevStep = (newData) => {
@@ -39,7 +48,7 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
     const steps = [
         <StepOne next={handleNextStep} data={data} />,
         <StepOneContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
-        <StepTwo next={handleNextStep} prev={handlePrevStep} data={data} />
+        <StepTwo next={handleNextStep} prev={handlePrevStep} data={data} />,
     ]
     console.log("data", data);
 

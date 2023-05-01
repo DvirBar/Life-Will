@@ -17,12 +17,20 @@ export default function StepOneContinue({ next, prev, data }) {
             initialValues={data}
             onSubmit={handleSubmit}
         >
-            {({ values }) => (
-                <Form>
-                    <p>Email</p>
-                    <Field name="email" />
-                    <ErrorMessage name="email" />
-
+            {() => (
+                <Form className="input-container">
+                    <div className="input-container-formik">
+                        <Field name="person_id" type="number" placeholder='תז' />
+                        <Field name="passport_id" type="number" placeholder='מספר דרכון' />
+                        <Field name="email" placeholder="מייל" />
+                        {/* <ErrorMessage name="email" /> */}
+                        <Field name="phone" type="number" placeholder='פלאפון' />
+                        <Field name="address" placeholder='רחוב ומספר בית' />
+                        {/* <Field name="company" placeholder='שם חברה / עסק' /> */}
+                        {/* <Field name="city" placeholder='עיר / יישוב' /> */}
+                        {/* <Field name="companyID" placeholder='ח.פ' /> */}
+                        {/* <Field name="" placeholder='' /> */}
+                    </div>
                     {/* <button type="button" onClick={() => prev(values)}>Back</button> */}
                     <button type="submit">Next</button>
                 </Form>
