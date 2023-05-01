@@ -6,6 +6,10 @@ const routes = [
     path: "/",
     component: <HomePage />,
   },
+  // {
+  //   path: "/",
+  //   component: <HomePage />,
+  // },
 ];
 
 export default routes;

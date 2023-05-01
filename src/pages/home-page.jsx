@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FormStructure } from '../cmps/form-structure'
+import MultiStepForm from '../cmps/multi-step-form'
 
 
 export function HomePage() {
@@ -22,19 +23,19 @@ export function HomePage() {
                         <span>מצב משפחתי ויורשים</span>
                     </div>
                     <div className='stage-3 stage'>
-                        <div className={`number`}>3</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 3 && `#662A68`}` }}>3</div>
                         <span>מקרקעין</span>
                     </div>
                     <div className='stage-4 stage'>
-                        <div className={`number`}>4</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 4 && `#662A68`}` }}>4</div>
                         <span>מטלטלין</span>
                     </div>
                     <div className='stage-5 stage'>
-                        <div className={`number`}>5</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 5 && `#662A68`}` }}>5</div>
                         <span>כספים</span>
                     </div>
                     <div className='stage-6 stage'>
-                        <div className={`number`}>6</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 6 && `#662A68`}` }}>6</div>
                         <span>רצונות</span>
                     </div>
                 </div>
@@ -43,7 +44,8 @@ export function HomePage() {
                     <div class="boxItem">2</div>
                     <div class="boxItem">3</div>
                 </div> */}
-                {whatStage === 1 && <FormStructure whatStage={whatStage} onSetStage={onSetStage} />}
+                {/* {whatStage === 1 && <FormStructure whatStage={whatStage} onSetStage={onSetStage} />} */}
+                <MultiStepForm onSetStage={onSetStage} whatStage={whatStage} />
             </div>
         </div>
     )

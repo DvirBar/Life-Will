@@ -39,12 +39,15 @@
         align-items: center;
         padding: 20px 100px;
         font-size: 1.3rem;
-        margin-top: 80px;
         height: 40px;
         color: white;
         background-color: #662A68;
         // margin-inline-end: 100px;
         border-radius: 70px;
+
+        &:hover {
+            background-color: #946995;
+        }
     }
 
     .input-container-first {
@@ -119,7 +122,8 @@
                 .verify-person-yes,
                 .verify-person-no {
                     display: flex;
-                    label{
+
+                    label {
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -133,5 +137,20 @@
             margin-top: 0;
             background-color: #662A68;
         }
+    }
+}
+
+.input-container-formik {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    p {
+        margin: 0;
+    }
+
+    input,
+    select {
+        border: 1px solid black;
     }
 }
