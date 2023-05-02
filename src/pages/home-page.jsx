@@ -19,23 +19,23 @@ export function HomePage() {
                         <span>הזדהות</span>
                     </div>
                     <div className='stage-2 stage'>
-                        <div className={`number`} style={{ backgroundColor: `${whatStage === 2 && `#662A68`}` }}>2</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 2 ? `#662A68` : ''}` }}>2</div>
                         <span>מצב משפחתי ויורשים</span>
                     </div>
                     <div className='stage-3 stage'>
-                        <div className={`number`} style={{ backgroundColor: `${whatStage === 3 && `#662A68`}` }}>3</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 3 ? `#662A68` : ''}` }}>3</div>
                         <span>מקרקעין</span>
                     </div>
                     <div className='stage-4 stage'>
-                        <div className={`number`} style={{ backgroundColor: `${whatStage === 4 && `#662A68`}` }}>4</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 4 ? `#662A68` : ''}` }}>4</div>
                         <span>מטלטלין</span>
                     </div>
                     <div className='stage-5 stage'>
-                        <div className={`number`} style={{ backgroundColor: `${whatStage === 5 && `#662A68`}` }}>5</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 5 ? `#662A68` : ''}` }}>5</div>
                         <span>כספים</span>
                     </div>
                     <div className='stage-6 stage'>
-                        <div className={`number`} style={{ backgroundColor: `${whatStage === 6 && `#662A68`}` }}>6</div>
+                        <div className={`number`} style={{ backgroundColor: `${whatStage === 6 ? `#662A68` : ''}` }}>6</div>
                         <span>רצונות</span>
                     </div>
                 </div>

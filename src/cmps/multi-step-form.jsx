@@ -2,6 +2,7 @@ import { useState } from "react";
 import StepOne from "./step-one";
 import StepOneContinue from "./step-one-continue";
 import StepTwo from "./step-two";
+import StepTwoContinue from "./step-two-continue";
 
 export default function MultiStepForm({ onSetStage, whatStage }) {
     const [data, setData] = useState({
@@ -12,6 +13,7 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         birthDate: Date.now(),
         gender: 'other',
         person_id: '',
+        citizenship: 'לא',
         passport_id: '',
         phone: '',
         address: '',
@@ -21,6 +23,10 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         partner_last_name: '',
         partner_id: '',
         ex_partner_gain: 'לא',
+        kids: 'לא',
+        num_of_kids: 0,
+
+        
     })
 
     const [currentStep, setCurrentStep] = useState(0)
@@ -35,7 +41,7 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
             makeRequest(newData)
             return
         }
-        if (newData.edited_by !== "true" || !isAgeOver18) return
+        if (newData.edited_by !== "כן" || !isAgeOver18) return
         if (nextStage) onSetStage(whatStage + 1)
         setCurrentStep(prev => prev + 1)
     }
@@ -49,13 +55,14 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         <StepOne next={handleNextStep} data={data} />,
         <StepOneContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
         <StepTwo next={handleNextStep} prev={handlePrevStep} data={data} />,
+        <StepTwoContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
     ]
     console.log("data", data);
 
     return (
         <div className='form'>
-            {whatStage === 1 && steps[currentStep]}
-            {whatStage === 2 && steps[currentStep]}
+            {steps[currentStep]}
+            {/* {whatStage === 2 && steps[currentStep]} */}
         </div>
     )
 }

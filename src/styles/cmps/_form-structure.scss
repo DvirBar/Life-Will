@@ -191,6 +191,24 @@
     }
 }
 
+.input-btn {
+    input {
+        display: none;
+    }
+
+    label {
+        width: 100px;
+        height: 40px;
+        background-color: rgb(205, 203, 203);
+        border-radius: 4px;
+        cursor: pointer;
+        &.active {
+            background-color: rgb(88, 139, 186);
+            color: white;
+        }
+    }
+}
+
 .small-input {
     width: 40px;
 }

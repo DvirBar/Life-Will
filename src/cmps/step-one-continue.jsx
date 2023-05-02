@@ -17,11 +17,24 @@ export default function StepOneContinue({ next, prev, data }) {
             initialValues={data}
             onSubmit={handleSubmit}
         >
-            {() => (
+            {(values) => (
                 <Form className="input-container">
                     <div className="input-container-formik">
                         <Field name="person_id" type="number" placeholder='תז' />
-                        <Field name="passport_id" type="number" placeholder='מספר דרכון' />
+                        <div role="group">
+                            <p>האם יש בבעלותך אזרחות נוספת?</p>
+                            <div className="status-group flex space-between input-btn">
+                                <label className={`${values.values.citizenship === "לא" ? 'active' : ''}`}>
+                                    <Field type="radio" name="citizenship" value="לא" />
+                                    לא
+                                </label>
+                                <label className={`${values.values.citizenship === "כן" ? 'active' : ''}`}>
+                                    <Field type="radio" name="citizenship" value="כן" />
+                                    כן
+                                </label>
+                            </div>
+                        </div>
+                        {values.values.citizenship === "כן" && <Field name="passport_id" type="number" placeholder='מספר דרכון' />}
                         <Field name="email" placeholder="מייל" />
                         {/* <ErrorMessage name="email" /> */}
                         <Field name="phone" type="number" placeholder='פלאפון' />

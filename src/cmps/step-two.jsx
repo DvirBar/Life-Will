@@ -11,7 +11,7 @@ export default function StepTwo({ data, next, prev }) {
 
     const handleSubmit = (values) => {
         console.log(values);
-        next(values, true)
+        next(values)
     }
 
     return (
@@ -23,32 +23,32 @@ export default function StepTwo({ data, next, prev }) {
             {(values) => (
                 <Form className="input-container" style={{ width: "500px" }}>
                     <div>סטטוס</div>
-                    <div role="group" className="status-group">
-                        <label>
+                    <div role="group" className="status-group flex space-between input-btn">
+                        <label className={`${values.values.status === "נשוי" ? 'active' : ''}`}>
                             <Field type="radio" name="status" value="נשוי" />
                             נשוי
                         </label>
-                        <label>
+                        <label className={`${values.values.status === "פרוד" ? 'active' : ''}`}>
                             <Field type="radio" name="status" value="פרוד" />
                             פרוד
                         </label>
-                        <label>
+                        <label className={`${values.values.status === "אלמן" ? 'active' : ''}`}>
                             <Field type="radio" name="status" value="אלמן" />
                             אלמן
                         </label>
-                        <label>
+                        <label className={`${values.values.status === "רווק" ? 'active' : ''}`}>
                             <Field type="radio" name="status" value="רווק" />
                             רווק
                         </label>
-                        <label>
+                        <label className={`${values.values.status === "ערירי" ? 'active' : ''}`}>
                             <Field type="radio" name="status" value="ערירי" />
                             ערירי
                         </label>
-                        <label>
+                        <label className={`${values.values.status === "שותפות" ? 'active' : ''}`}>
                             <Field type="radio" name="status" value="שותפות" />
                             שותפות
                         </label>
-                        <label>
+                        <label className={`${values.values.status === "גרוש" ? 'active' : ''}`}>
                             <Field type="radio" name="status" value="גרוש" />
                             גרוש
                         </label>
@@ -56,12 +56,12 @@ export default function StepTwo({ data, next, prev }) {
                     {values.values.status === 'נשוי' && <div>
                         <div className='partner-details'>
                             <h3>אני נשוי ל-</h3>
-                            <div role="group" className="status-group">
-                                <label>
+                            <div role="group" className="status-group flex space-between input-btn">
+                                <label className={`${values.values.partner_gender === "גבר" ? 'active' : ''}`}>
                                     <Field type="radio" name="partner_gender" value="גבר" />
                                     גבר
                                 </label>
-                                <label>
+                                <label className={`${values.values.partner_gender === "אישה" ? 'active' : ''}`}>
                                     <Field type="radio" name="partner_gender" value="אישה" />
                                     אישה
                                 </label>
@@ -76,12 +76,12 @@ export default function StepTwo({ data, next, prev }) {
                     {values.values.status === 'שותפות' && <div>
                         <div className='partner-details'>
                             <h3>אני מנהל זוגיות עם- </h3>
-                            <div role="group" className="status-group">
-                                <label>
+                            <div role="group" className="status-group flex space-between input-btn">
+                                <label className={`${values.values.partner_gender === "גבר" ? 'active' : ''}`}>
                                     <Field type="radio" name="partner_gender" value="גבר" />
                                     גבר
                                 </label>
-                                <label>
+                                <label className={`${values.values.partner_gender === "אישה" ? 'active' : ''}`}>
                                     <Field type="radio" name="partner_gender" value="אישה" />
                                     אישה
                                 </label>
@@ -94,25 +94,26 @@ export default function StepTwo({ data, next, prev }) {
                         </div>
                     </div>}
                     {values.values.status === 'גרוש' && <div>
-                        <div role="group" className="status-group">
-                        <h5>האם תרצה להקצות  לגרוש/גרושתך מהצוואה?</h5>
-                            <label style={{width: '40px'}}>
+                        <div role="group" className="status-group flex space-between input-btn">
+                            <h5>האם תרצה להקצות  לגרוש/גרושתך מהצוואה?</h5>
+                            <label className={`${values.values.ex_partner_gain === "לא" ? 'active' : ''}`} style={{ width: '40px' }}>
                                 <Field type="radio" name="ex_partner_gain" value="לא" />
                                 לא
                             </label>
-                            <label style={{width: '40px'}}>
+                            <label className={`${values.values.ex_partner_gain === "כן" ? 'active' : ''}`} style={{ width: '40px' }}>
                                 <Field type="radio" name="ex_partner_gain" value="כן" />
                                 כן
                             </label>
                         </div>
                         {values.values.ex_partner_gain === 'כן' && <>
                             <div className='partner-details'>
-                                <div role="group" className="status-group">
-                                    <label>
+                                <h3>פרטי זיהוי–</h3>
+                                <div role="group" className="status-group flex space-between input-btn">
+                                    <label className={`${values.values.partner_gender === "גבר" ? 'active' : ''}`}>
                                         <Field type="radio" name="partner_gender" value="גבר" />
                                         גבר
                                     </label>
-                                    <label>
+                                    <label className={`${values.values.partner_gender === "אישה" ? 'active' : ''}`}>
                                         <Field type="radio" name="partner_gender" value="אישה" />
                                         אישה
                                     </label>

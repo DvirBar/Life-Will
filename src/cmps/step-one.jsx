@@ -23,7 +23,7 @@ export default function StepOne({ data, next }) {
             initialValues={data}
             onSubmit={handleSubmit}
         >
-            {() => (
+            {(values) => (
                 <Form>
                     <div className="input-container">
                         <div className="input-container-formik">
@@ -41,18 +41,33 @@ export default function StepOne({ data, next }) {
                                 type="date"
                                 className="birthDate"
                             />
+                            <div role="group">
+                                <p>מגדר</p>
+                                <div className="status-group flex space-between input-btn">
+                                    <label className={`${values.values.gender === "זכר" ? 'active' : ''}`}>
+                                        <Field type="radio" name="gender" value="זכר" />
+                                        זכר
+                                    </label>
+                                    <label className={`${values.values.gender === "נקבה" ? 'active' : ''}`}>
+                                        <Field type="radio" name="gender" value="נקבה" />
+                                        נקבה
+                                    </label>
+                                </div>
+                            </div>
+                            <div role="group">
+                                <p>האם ערכת את הצוואה לבד?</p>
+                                <div className="status-group flex space-between input-btn">
+                                    <label className={`${values.values.edited_by === "לא" ? 'active' : ''}`}>
+                                        <Field type="radio" name="edited_by" value="לא" />
+                                        לא
+                                    </label>
+                                    <label className={`${values.values.edited_by === "כן" ? 'active' : ''}`}>
+                                        <Field type="radio" name="edited_by" value="כן" />
+                                        כן
+                                    </label>
+                                </div>
+                            </div>
 
-                            <p>מגדר</p>
-                            <Field as="select" name="gender">
-                                <option value="other">אחר</option>
-                                <option value="male">זכר</option>
-                                <option value="female">נקבה</option>
-                            </Field>
-                            <p>האם ערכת את הצוואה לבד?</p>
-                            <Field as="select" name="edited_by">
-                                <option value={false}>לא</option>
-                                <option value={true}>כן</option>
-                            </Field>
                         </div>
                         <button type="submit">Next</button>
                     </div>

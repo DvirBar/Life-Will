@@ -12,26 +12,36 @@ hr {
 
     display: flex;
 
-    > *.full {
+    >*.full {
         flex: 1;
     }
+
     &.column {
         flex-direction: column;
     }
+
     &.justify-center {
         justify-content: center;
     }
+
     &.align-center {
         align-items: center;
     }
+
+    &.space-between {
+        justify-content: space-between;
+    }
 }
-.height{
+
+.height {
     height: 322px;
-} 
-.overflowY{
+}
+
+.overflowY {
     overflow-y: hidden;
 }
-.text-decoration{
+
+.text-decoration {
     text-decoration: none;
     color: rgb(233, 233, 233);
 }
