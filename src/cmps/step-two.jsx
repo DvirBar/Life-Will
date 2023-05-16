@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import StepTwoContinue from './step-two-continue';
+import StepTwoContinue2 from './step-two-continue2';
 
 const stepTwoValidationSchema = Yup.object({
     status: Yup.string().required(),
@@ -10,7 +12,6 @@ const stepTwoValidationSchema = Yup.object({
 export default function StepTwo({ data, next, prev }) {
 
     const handleSubmit = (values) => {
-        console.log(values);
         next(values)
     }
 
@@ -126,7 +127,12 @@ export default function StepTwo({ data, next, prev }) {
                             </div>
                         </>}
                     </div>}
+                    {/* <StepTwoContinue next={next} prev={prev} data={data} />
+                    <StepTwoContinue2 next={next} prev={prev} data={data} /> */}
+
                     <button type="submit">Next</button>
+
+                    
                 </Form>
             )}
 

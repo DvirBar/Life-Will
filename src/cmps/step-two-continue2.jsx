@@ -5,23 +5,7 @@ import { Formik, Form, Field } from "formik";
 
 export default function StepTwoContinue2({ data, next, prev }) {
 
-    const renderKidsForm = (numberOfKids) => {
-        const kidsFormArr = []
-        for (let i = 4; i <= numberOfKids; i++) {
-            if (i > 5) return kidsFormArr
-            kidsFormArr.push(
-                <div key={`${i}`} className="flex gap">
-                    <Field key={`kid_id${i}`} name={`kid_id${i}`} type="number" placeholder={`תז של ילד מספר ${i}`} />
-                    <Field key={`kid_first_name${i}`} name={`kid_first_name${i}`} placeholder={`שם פרטי ${i}`} />
-                    <Field key={`kid_last_name${i}`} name={`kid_last_name${i}`} placeholder={`שם משפחה ${i}`} />
-                </div>
-            )
-        }
-        return kidsFormArr
-    }
-
     const handleSubmit = (values) => {
-        console.log(values);
         next(values, false, true)
     }
 
@@ -32,11 +16,6 @@ export default function StepTwoContinue2({ data, next, prev }) {
         >
             {(values) => (
                 <Form className="input-container" style={{ width: "500px" }}>
-                    {values.values.num_of_kids > 3 &&
-                        <div className="input-container-formik" >
-                            {renderKidsForm(values.values.num_of_kids)}
-                        </div>
-                    }
                     <div role="group">
                         <h4 style={{margin: '10px 0'}}>האם יש הורים / אחים / חברים או אחרים שתרצה להפריש להם מצוואתך?</h4>
                         <div className="status-group flex space-between input-btn">

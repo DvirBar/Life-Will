@@ -5,30 +5,41 @@ import { Formik, Form, Field } from "formik";
 
 export default function StepTwoContinue({ data, next, prev }) {
 
-    const [kidsCount, setKidsCount] = useState(1)
+    const [kidsCount, setKidsCount] = useState(0)
 
-    const onAddKid = () => {
-        if (kidsCount === 18) return
+    const onAddKid = (ev, i) => {
         setKidsCount(kidsCount + 1)
+        data.kids_data.push({
+            kid_id: '',
+            kid_first_name: '',
+            kid_last_name: '',
+        })
     }
     const onRemoveKid = () => {
-        if (kidsCount === 1) return
+        if (kidsCount === 0) return
         setKidsCount(kidsCount - 1)
+        data.kids_data.pop()
+    }
+
+    const updateKidsData = (ev, i, credentials = 'id') => {
+        if (credentials === 'id') {
+            data.kids_data[i].kid_id = ev.target.value
+        } else if (credentials === 'first-name') {
+            data.kids_data[i].kid_first_name = ev.target.value
+        } else {
+            data.kids_data[i].kid_last_name = ev.target.value
+        }
     }
 
     const renderKidsForm = () => {
         const kidsFormArr = []
-        var i
-        if (kidsCount <= 6) i = 1
-        else if (kidsCount <= 12) i = 7
-        else i = 13
-        for (i; i <= kidsCount; i++) {
+        for (let i = 0; i <= kidsCount; i++) {
             kidsFormArr.push(
                 <div key={`${i}`} className="flex gap">
                     <div className='flex align-center pointer' onClick={onRemoveKid}>-</div>
-                    <Field key={`kid_id${i}`} name={`kid_id${i}`} type="number" placeholder={`תז של ילד מספר ${i}`} />
-                    <Field key={`kid_first_name${i}`} name={`kid_first_name${i}`} placeholder={`שם פרטי ${i}`} />
-                    <Field key={`kid_last_name${i}`} name={`kid_last_name${i}`} placeholder={`שם משפחה ${i}`} />
+                    <Field key={`kid_id${i}`} onChange={(ev) => updateKidsData(ev, i)} name={`kid_id${i}`} type="number" placeholder={`תז של ילד מספר ${i + 1}`} />
+                    <Field key={`kid_first_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'first-name')} name={`kid_first_name${i}`} placeholder={`שם פרטי ${i + 1}`} />
+                    <Field key={`kid_last_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'last-name')} name={`kid_last_name${i}`} placeholder={`שם משפחה ${i + 1}`} />
                     <div className='flex align-center pointer' onClick={onAddKid}>+</div>
                 </div>
             )
@@ -37,7 +48,6 @@ export default function StepTwoContinue({ data, next, prev }) {
     }
 
     const handleSubmit = (values) => {
-        console.log(values);
         next(values, false)
     }
 
@@ -67,21 +77,10 @@ export default function StepTwoContinue({ data, next, prev }) {
                         //     <Field name="num_of_kids" type="number" placeholder='מספר' />
                         // </div>
                         <div>
-                            {kidsCount <= 6 &&
-                                <div className="input-container-formik" >
-                                    {renderKidsForm()}
-                                </div>
-                            }
-                            {(kidsCount > 6 && kidsCount <= 12) &&
-                                <div className="input-container-formik">
-                                    {renderKidsForm()}
-                                </div>
-                            }
-                            {kidsCount > 12 &&
-                                <div className="input-container-formik" >
-                                    {renderKidsForm()}
-                                </div>
-                            }
+                            <div className="input-container-formik child-container" >
+                                {renderKidsForm()}
+                            </div>
+
                         </div>
                     }
                     <button type="submit">Next</button>

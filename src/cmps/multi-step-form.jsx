@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StepOne from "./step-one";
 import StepOneContinue from "./step-one-continue";
 import StepTwo from "./step-two";
@@ -7,8 +7,13 @@ import { PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "./pdf";
 import StepTwoContinue2 from "./step-two-continue2";
 import StepThree from "./step-three";
+import StepThreeContinue from "./step-three-continue";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/user.actions";
 
-export default function MultiStepForm({ onSetStage, whatStage }) {
+export default function MultiStepForm({ onSetStage, whatStage, selectedStage }) {
+    const dispatch = useDispatch()
+
     const [data, setData] = useState({
         first_name: 'asd',
         last_name: 'asd',
@@ -30,21 +35,36 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         ex_partner_gain: 'לא',
         kids: 'לא',
         num_of_kids: 0,
-        kid_id1: '',
+        kids_data: [{
+            kid_id: '',
+            kid_first_name: '',
+            kid_last_name: '',
+        },
+        ],
         give_to_family: 'לא',
         give_to_family_type: '',
         real_estate: 'לא',
         real_estate_type: '',
         real_estate_type_percent: 0,
+        real_estate_share_percent: 0,
+        real_estate_desc: '',
     })
 
     const [currentStep, setCurrentStep] = useState(0)
-
+    useEffect(() => {
+        setCurrentStep(selectedStage)
+    }, [selectedStage]);
     const makeRequest = (formData) => {
+        dispatch(addUser({
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            email: formData.email,
+            birthDate: formData.birthDate,
+        }))
         console.log("Form Submitted", formData);
     }
 
-    const handleNextStep = (newData, final = false, nextStage = false, isAgeOver18 = true) => {
+    const handleNextStep = (newData, final = false, nextStage = false, isAgeOver18 = true, skipNextStage = false) => {
         setData(prev => ({ ...prev, ...newData }))
         if (final) {
             makeRequest(newData)
@@ -52,6 +72,7 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         }
         if (newData.edited_by !== "כן" || !isAgeOver18) return
         if (nextStage) onSetStage(whatStage + 1)
+        if (skipNextStage) return setCurrentStep(prev => prev + 2)
         setCurrentStep(prev => prev + 1)
     }
 
@@ -59,6 +80,7 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         setData(prev => ({ ...prev, ...newData }))
         setCurrentStep(prev => prev - 1)
     }
+
     const steps = [
         <StepOne next={handleNextStep} data={data} />,
         <StepOneContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
@@ -66,8 +88,8 @@ export default function MultiStepForm({ onSetStage, whatStage }) {
         <StepTwoContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
         <StepTwoContinue2 next={handleNextStep} prev={handlePrevStep} data={data} />,
         <StepThree next={handleNextStep} prev={handlePrevStep} data={data} />,
+        <StepThreeContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
     ]
-    console.log("data", data);
 
     return (
         <div className='form'>

@@ -6,9 +6,8 @@ import { Formik, Form, Field } from "formik";
 export default function StepThree({ data, next, prev }) {
 
     const handleSubmit = (values) => {
-        console.log(values);
-        if (values.real_estate === 'לא') next(values, false, true)
-        else next(values, false)
+        if (values.real_estate === 'לא') next(values, false, true, true ,true)
+        else next(values)
     }
 
     return (
