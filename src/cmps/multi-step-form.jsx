@@ -7,9 +7,9 @@ import { PDFViewer } from "@react-pdf/renderer";
 import MyDocument from "./pdf";
 import StepTwoContinue2 from "./step-two-continue2";
 import StepThree from "./step-three";
-import StepThreeContinue from "./step-three-continue";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/user.actions";
+import StepFour from "./step-four";
 
 export default function MultiStepForm({ onSetStage, whatStage, selectedStage }) {
     const dispatch = useDispatch()
@@ -39,15 +39,28 @@ export default function MultiStepForm({ onSetStage, whatStage, selectedStage }) 
             kid_id: '',
             kid_first_name: '',
             kid_last_name: '',
-        },
-        ],
+        }],
+        real_estate_data: [{
+            type: '',
+            country: '',
+            city: '',
+            street: '',
+            house_number: '',
+            block: '',
+            lot: '',
+            size: '',
+            ground_description: '',
+            type_percent: 0,
+            share_percent: 0,
+            general_description: ''
+
+        }],
         give_to_family: 'לא',
         give_to_family_type: '',
         real_estate: 'לא',
         real_estate_type: '',
         real_estate_type_percent: 0,
         real_estate_share_percent: 0,
-        real_estate_desc: '',
     })
 
     const [currentStep, setCurrentStep] = useState(0)
@@ -88,7 +101,7 @@ export default function MultiStepForm({ onSetStage, whatStage, selectedStage }) 
         <StepTwoContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
         <StepTwoContinue2 next={handleNextStep} prev={handlePrevStep} data={data} />,
         <StepThree next={handleNextStep} prev={handlePrevStep} data={data} />,
-        <StepThreeContinue next={handleNextStep} prev={handlePrevStep} data={data} />,
+        <StepFour next={handleNextStep} prev={handlePrevStep} data={data} />,
     ]
 
     return (

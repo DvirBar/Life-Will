@@ -20,6 +20,10 @@ hr {
         gap: 20px;
     }
 
+    &.row {
+        flex-direction: row;
+    }
+
     &.column {
         flex-direction: column;
     }
@@ -52,4 +56,24 @@ hr {
 
 .pointer {
     cursor: pointer;
+}
+
+.direction-ltr {
+    direction: ltr;
+}
+
+.direction-rtl {
+    direction: rtl;
+}
+
+.fade {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: .8;
+    z-index: 20;
 }

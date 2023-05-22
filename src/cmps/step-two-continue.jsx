@@ -15,10 +15,10 @@ export default function StepTwoContinue({ data, next, prev }) {
             kid_last_name: '',
         })
     }
-    const onRemoveKid = () => {
+    const onRemoveKid = (i) => {
         if (kidsCount === 0) return
         setKidsCount(kidsCount - 1)
-        data.kids_data.pop()
+        data.kids_data.splice(i, 1)
     }
 
     const updateKidsData = (ev, i, credentials = 'id') => {
@@ -33,10 +33,11 @@ export default function StepTwoContinue({ data, next, prev }) {
 
     const renderKidsForm = () => {
         const kidsFormArr = []
-        for (let i = 0; i <= kidsCount; i++) {
+        console.log(data.kids_data);
+        for (let i = 0; i < data.kids_data.length; i++) {
             kidsFormArr.push(
-                <div key={`${i}`} className="flex gap">
-                    <div className='flex align-center pointer' onClick={onRemoveKid}>-</div>
+                <div key={`${i}`} className="flex gap direction-rtl">
+                    <div className='flex align-center pointer' style={{ visibility: (i === data.kids_data.length - 1 && i > 0) ? "visible" : "hidden" }} onClick={() => onRemoveKid(i)}>-</div>
                     <Field key={`kid_id${i}`} onChange={(ev) => updateKidsData(ev, i)} name={`kid_id${i}`} type="number" placeholder={`תז של ילד מספר ${i + 1}`} />
                     <Field key={`kid_first_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'first-name')} name={`kid_first_name${i}`} placeholder={`שם פרטי ${i + 1}`} />
                     <Field key={`kid_last_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'last-name')} name={`kid_last_name${i}`} placeholder={`שם משפחה ${i + 1}`} />
@@ -77,7 +78,7 @@ export default function StepTwoContinue({ data, next, prev }) {
                         //     <Field name="num_of_kids" type="number" placeholder='מספר' />
                         // </div>
                         <div>
-                            <div className="input-container-formik child-container" >
+                            <div className="input-container-formik child-container direction-ltr" >
                                 {renderKidsForm()}
                             </div>
 
