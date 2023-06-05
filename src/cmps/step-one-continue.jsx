@@ -45,7 +45,7 @@ export default function StepOneContinue({ next, prev, data }) {
                         {/* <Field name="" placeholder='' /> */}
                     </div>
                     {/* <button type="button" onClick={() => prev(values)}>Back</button> */}
-                    <button type="submit">Next</button>
+                    <button type="submit">המשך</button>
                 </Form>
             )}
         </Formik>

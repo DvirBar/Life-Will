@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 import { Formik, Form, Field } from "formik";
+import StepThreeAssociations from './step-three-associations';
+import StepThreekids from './step-three-kids';
 
 
 export default function StepThree({ data, next, prev }) {
@@ -29,7 +31,9 @@ export default function StepThree({ data, next, prev }) {
             ground_description: '',
             type_percent: 0,
             share_percent: 0,
-            general_description: ''
+            general_description: '',
+            inheritor_type: '',
+            inheritor: []
         })
     }
 
@@ -60,13 +64,16 @@ export default function StepThree({ data, next, prev }) {
             data.real_estate_data[i].general_description = ev.target.value
         } else if (credentials === 'real_estate_is_desc') {
             data.real_estate_data[i].real_estate_is_desc = ev.target.value
+        } else if (credentials === 'associationName') {
+            data.real_estate_data[i].associationName = ev.target.innerText
+        } else if (credentials === 'inheritor_type') {
+            data.real_estate_data[i].inheritor_type = ev.target.value
         }
     }
 
     const renderRealEstatesForm = (values) => {
         const RealEstateFormArr = []
         for (let i = 0; i < data.real_estate_data.length; i++) {
-            console.log(data.real_estate_data.length, i);
             RealEstateFormArr.push(
                 <div key={`${i}`} className="flex gap column direction-rtl">
                     <h4 className='direction-rtl' style={{ margin: '0', display: (i >= 1) ? "flex" : "none" }}>סוג הנכס נדלן {i + 1}</h4>
@@ -92,8 +99,7 @@ export default function StepThree({ data, next, prev }) {
                             קרקע
                         </label>
                     </div>
-                    <h4 style={{ margin: '10px 0' }}>כמה אחוז בבעלותך?</h4>
-                    <Field onChange={(ev) => updateRealEstateData(ev, i, "type_percent")} name="type_percent" min="0" max="100" type="number" placeholder='כמה אחוז בבעלותך?' />
+                    
                     {(values.values.real_estate_data[i].type && values.values.real_estate_data[i].type !== 'בניין') &&
                         <div className='partner-details'>
                             <Field onChange={(ev) => updateRealEstateData(ev, i, "country")} name={`country${i}`} placeholder='מדינה' />
@@ -111,6 +117,8 @@ export default function StepThree({ data, next, prev }) {
                             <Field onChange={(ev) => updateRealEstateData(ev, i, "ground_description")} name={`ground_description${i}`} placeholder='תיאור' />
                         </div>
                     }
+                    <h4 style={{ margin: '10px 0' }}>כמה אחוז בבעלותך?</h4>
+                    <Field onChange={(ev) => updateRealEstateData(ev, i, "type_percent")} name="type_percent" min="0" max="100" type="number" placeholder='כמה אחוז בבעלותך?' />
                     <h4 style={{ margin: '10px 0' }}>מהי צורת החלוקה?</h4>
                     <Field onChange={(ev) => updateRealEstateData(ev, i, "share_percent")} name="share_percent" min="0" max="100" type="number" />
                     <h4 style={{ margin: '10px 0' }}>האם יש גם הערות בכתב שתרצה להוסיף?</h4>
@@ -125,8 +133,35 @@ export default function StepThree({ data, next, prev }) {
                         </label>
                     </div>
                     {values.values.real_estate_data[i].real_estate_is_desc === 'כן' &&
-                        <Field onChange={(ev) => updateRealEstateData(ev, i, "general_description")} name="general_description" placeholder="תיאור" />
+                        <textarea onChange={(ev) => updateRealEstateData(ev, i, "general_description")} name={`general_description${i}`} placeholder='תיאור'></textarea>
                     }
+
+                    <h4 style={{ margin: '10px 0' }}>מי יירש את הנכס?</h4>
+                    <div className="status-group flex space-between input-btn">
+                        <label className={`${values.values.real_estate_data[i].inheritor_type === "יורשים" ? 'active' : ''}`}>
+                            <Field type="radio" onClick={(ev) => updateRealEstateData(ev, i, "inheritor_type")} name={`inheritor_type`} value="יורשים" />
+                            יורשים
+                        </label>
+                        <label className={`${values.values.real_estate_data[i].inheritor_type === "ילדים" ? 'active' : ''}`}>
+                            <Field type="radio" onClick={(ev) => updateRealEstateData(ev, i, "inheritor_type")} name={`inheritor_type`} value="ילדים" />
+                            ילדים
+                        </label>
+                        <label className={`${values.values.real_estate_data[i].inheritor_type === "בת זוג/בן זוג" ? 'active' : ''}`}>
+                            <Field type="radio" onClick={(ev) => updateRealEstateData(ev, i, "inheritor_type")} name={`inheritor_type`} value="בת זוג/בן זוג" />
+                            בת זוג/בן זוג
+                        </label>
+                        <label className={`${values.values.real_estate_data[i].inheritor_type === "עמותה" ? 'active' : ''}`}>
+                            <Field type="radio" onClick={(ev) => updateRealEstateData(ev, i, "inheritor_type")} name={`inheritor_type`} value="עמותה" />
+                            עמותה
+                        </label>
+                    </div>
+                    {values.values.real_estate_data[i].inheritor_type === 'עמותה' &&
+                        <StepThreeAssociations i={i} updatePropertyData={updateRealEstateData} />
+                    }
+                    {values.values.real_estate_data[i].inheritor_type === 'ילדים' &&
+                        <StepThreekids propertyData={values.values.real_estate_data[i]} data={data} i={i} updateRealEstateData={updateRealEstateData} />
+                    }
+
                     <h4 style={{ margin: '0', display: (i === data.real_estate_data.length - 1) ? "flex" : "none" }}>האם קיים ברשותך נכס נדלן נוסף?</h4>
                     <div className='flex gap row'>
                         <div className='flex align-center pointer add-btn' style={{ display: (i === data.real_estate_data.length - 1) ? "flex" : "none" }} onClick={onAddRealEstate}>כן</div>
@@ -168,7 +203,7 @@ export default function StepThree({ data, next, prev }) {
 
 
 
-                    <button type="submit">Next</button>
+                    <button type="submit">המשך</button>
                 </Form>
             )}
         </Formik>

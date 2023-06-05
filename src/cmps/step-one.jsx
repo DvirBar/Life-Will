@@ -69,7 +69,7 @@ export default function StepOne({ data, next }) {
                             </div>
 
                         </div>
-                        <button type="submit">Next</button>
+                        <button type="submit">המשך</button>
                     </div>
                 </Form>
             )}

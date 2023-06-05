@@ -130,7 +130,7 @@ export default function StepTwo({ data, next, prev }) {
                     {/* <StepTwoContinue next={next} prev={prev} data={data} />
                     <StepTwoContinue2 next={next} prev={prev} data={data} /> */}
 
-                    <button type="submit">Next</button>
+                    <button type="submit">המשך</button>
 
                     
                 </Form>

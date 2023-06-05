@@ -105,7 +105,7 @@ export default function StepTwoContinue2({ data, next, prev }) {
                             </div>
                         </div>
                     }
-                    <button type="submit">Next</button>
+                    <button type="submit">המשך</button>
                 </Form>
             )}
         </Formik>
