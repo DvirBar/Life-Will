@@ -3,6 +3,7 @@ import { userService } from "../services/user.service.js";
 export function addUser(currUser) {
   return async (dispatch) => {
     try {
+      console.log(currUser);
       const savedUser = await userService.save(currUser);
       const action = { type: "ADD_USER", savedUser };
       dispatch(action);

@@ -5,18 +5,18 @@ import StepThreeAssociations from './step-three-associations';
 import StepThreekids from './step-three-kids';
 
 
-export default function StepFour({ data, next, prev }) {
+export default function StepFourVehicle({ data, next, prev }) {
     const [vehicleCount, setVehicleCount] = useState(0)
 
     const handleSubmit = (values) => {
-        next(values, true)
+        next(values)
     }
-    const onRemoveRealEstate = (i) => {
+    const onRemoveVehicle = (i) => {
         if (vehicleCount === 0) return
         setVehicleCount(vehicleCount - 1)
         data.vehicle_data.splice(i, 1)
     }
-    const onAddRealEstate = (ev, i) => {
+    const onAddVehicle = (ev, i) => {
         setVehicleCount(vehicleCount + 1)
         data.vehicle_data.push({
             type: '',
@@ -71,9 +71,9 @@ export default function StepFour({ data, next, prev }) {
     }
 
     const renderVehiclesForm = (values) => {
-        const RealEstateFormArr = []
+        const VehicleFormArr = []
         for (let i = 0; i < data.vehicle_data.length; i++) {
-            RealEstateFormArr.push(
+            VehicleFormArr.push(
                 <div key={`${i}`} className="flex gap column direction-rtl">
                     <h4 className='direction-rtl' style={{ margin: '0', display: (i >= 1) ? "flex" : "none" }}>סוג הרכב {i + 1}</h4>
                     <div className="status-group flex space-between input-btn">
@@ -163,14 +163,14 @@ export default function StepFour({ data, next, prev }) {
                     }
                     <h4 style={{ margin: '0', display: (i === data.vehicle_data.length - 1) ? "flex" : "none" }}>האם קיים ברשותך רכב נוסף?</h4>
                     <div className='flex gap row'>
-                        <div className='flex align-center pointer add-btn' style={{ display: (i === data.vehicle_data.length - 1) ? "flex" : "none" }} onClick={onAddRealEstate}>כן</div>
-                        <div className='flex align-center pointer add-btn' style={{ visibility: (i === data.vehicle_data.length - 1 && i > 0) ? "visible" : "hidden" }} onClick={() => onRemoveRealEstate(i)}>הסר רכב</div>
+                        <div className='flex align-center pointer add-btn' style={{ display: (i === data.vehicle_data.length - 1) ? "flex" : "none" }} onClick={onAddVehicle}>כן</div>
+                        <div className='flex align-center pointer add-btn' style={{ visibility: (i === data.vehicle_data.length - 1 && i > 0) ? "visible" : "hidden" }} onClick={() => onRemoveVehicle(i)}>הסר רכב</div>
                     </div>
                 </div>
 
             )
         }
-        return RealEstateFormArr
+        return VehicleFormArr
     }
 
     return (
