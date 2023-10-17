@@ -32,6 +32,7 @@ export default function StepThreeAssociations({ i, updatePropertyData }) {
         setModal(!modal)
     }
 
+    // TODO: This is where debounce was used - probably to prevent search from sending get request too often.
     const onGetInfo = (ev, association) => {
         console.log(association.replace(`(ע''ר)`, '').replace('(ע~ר)', '').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>;\{\}\[\]\\\/]/gi, ''));
         setModal(!modal)

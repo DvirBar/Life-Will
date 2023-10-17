@@ -5,12 +5,13 @@ import { RootCmp } from "./root-cmp";
 import "./styles/main.scss";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-  
+import SiteProvider from "./store/context";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
+  <SiteProvider>
     <Router>
       <RootCmp />
     </Router>
-  </Provider>
+  </SiteProvider>
 );

@@ -30,6 +30,7 @@ export default function StepThreekids({ data, propertyData }) {
             {modal && <>
                 <div onClick={onToggleModal} className='fade'></div>
                 <div className='association-container'>
+                    {/* TODO: State mutation */}
                     {data.kids_data.map((kid, idx) => {
                         return <div className={`association-info ${checkIsKidSelected(kid) && 'kid-chosen'}`} onClick={(ev) => {
                             onUpdateKidsArr(kid, idx)
