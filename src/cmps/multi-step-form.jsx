@@ -4,16 +4,14 @@ import { Form, Formik } from "formik";
 import FormStepsWrapper from "./form-steps-wrapper";
 import { SiteContext } from "../store/context";
 import * as Yup from 'yup';
+import { validationSchema } from '../schemas/validationSchemas';
 
-const validationSchema = Yup.object().shape({
-	first_name: Yup.string().required('Required'),
-	email: Yup.string().email('Invalid email').required('Required'),
-});
 
 
 export default function MultiStepForm() {
 	const {
-		data
+		data,
+
 	} = useContext(SiteContext)
 
 
@@ -27,8 +25,9 @@ export default function MultiStepForm() {
 	//     console.log("Form Submitted", formData);
 	// }
 
-	const handleSubmit = () => {
-
+	const handleSubmit = async (values, helpers) => {
+		console.log("submitted");
+		return true;
 	}
 
 	return (
@@ -40,6 +39,7 @@ export default function MultiStepForm() {
 				validationSchema={validationSchema}
 			>
 				{(formikProps) => {
+					debugger;
 					return (
 						<Form>
 							<FormStepsWrapper values={formikProps} />

@@ -2,6 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
 import * as Yup from "yup";
 import { SiteContext } from "../store/context";
+import { Validate } from '../utils/validation';
 
 const stepOneValidationSchema = Yup.object({
 	first_name: Yup.string().required().label("First Name"),
@@ -25,14 +26,11 @@ export default function StepOne({ formikProps }) {
 
 	return (
 		<div className="input-container">
-			<button className='example-for-dvir' onClick={() => { formikProps.setValues({ ...formikProps.values, first_name: "changed by setValues example" }) }}>Set State Example</button>
 			<div className="input-container-formik">
-
-				<Field name="first_name" placeholder='שם פרטי' required />
-				{/* <ErrorMessage name="first_name" /> */}
-
-				<Field name="last_name" placeholder='שם משפחה' required />
-				{/* <ErrorMessage name="last_name" /> */}
+				<Field name="first_name" placeholder='שם פרטי' />
+				<ErrorMessage name="first_name" />
+				<Field name="last_name" placeholder='שם משפחה' />
+				<ErrorMessage name="last_name" />
 			</div>
 			<div className="input-container-formik">
 				<p>מה התאריך לידה שלך</p>
@@ -71,7 +69,8 @@ export default function StepOne({ formikProps }) {
 				</div>
 
 			</div>
-			<button onClick={() => moveNextStep()}>המשך</button>
+			{/* <button onClick={() => moveNextStep()}>המשך</button> */}
+			<button onClick={() => Validate(moveNextStep, formikProps, null)}>המשך</button>
 		</div>
 	)
 }
