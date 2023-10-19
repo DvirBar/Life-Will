@@ -19,7 +19,7 @@ export default function StepOneContinue({ next, prev, values }) {
     } = useContext(SiteContext)
 
     return (
-        <>
+        <div className="input-container">
             <div className="input-container-formik">
                 <Field name="person_id" type="number" placeholder='תז' />
                 <div role="group">
@@ -47,6 +47,6 @@ export default function StepOneContinue({ next, prev, values }) {
             </div>
             {/* <button type="button" onClick={() => prev(values)}>Back</button> */}
             <button onClick={() => moveNextStep(true)}>המשך</button>
-        </>
+        </div>
     )
 }
