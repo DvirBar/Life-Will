@@ -19,8 +19,8 @@ const SiteProvider = ({ children }) => {
         email: '',
         phone: '',
         address: '',
-        // TODO: enum
-        citizenship: '',
+        // TODO: CLARIFY - If they have another citizenship - should they say what?
+        citizenship: 'לא',
         passport_id: '',
         // Step 2
         // TODO: should probably be enum
@@ -35,23 +35,32 @@ const SiteProvider = ({ children }) => {
         ex_partner_last_name: '',
         // TODO: enum
         kids: '',
-        num_of_kids: 0,
+        num_of_kids: '',
         kids_data: [
-            // {
-            //     id: '',
-            //     gender: '',
-            //     first_name: '',
-            //     last_name: '',
-            //     birthDate: Date.now(),
-            //     // TODO: In case birth date is under what age?
-            //     // TODO: What data?
-            //     hebrewBirthDate: '',
-            // }
+            {
+                id: '',
+                gender: '',
+                first_name: '',
+                last_name: '',
+                birthDate: '',
+
+                hebrewBirthDate: '',
+                has_disability: '',
+                // TODO: CLARIFY - In case birth date is under what age?
+                // TODO: CLARIFY - Should I give details of the guardian of minor?
+                // TODO: CLARIFY - Can a disabled child guardian only be on of the siblings? what details?
+                guardian: ''
+            }
         ],
         give_to_family: 'לא',
         // TODO: make it multi option
         // TODO: enum
-        give_to_family_type: {},
+        give_to_family_type: {
+            parents: [],
+            siblings: [],
+            friends: [],
+            grandchildren: []
+        },
         // Step 3
         // TODO: enum
         real_estate: 'לא',
@@ -66,14 +75,16 @@ const SiteProvider = ({ children }) => {
                 house_number: '',
                 block: '',
                 lot: '',
+                sub_lot: '',
                 size: '',
-                ground_description: '',
-                // TODO: CLARIFY: If only one inheritors - it means we shouldn't devide?
+                description: '',
+                // TODO: CLARIFY: If only one inheritors - it means we shouldn't devide? בשלמות
                 inheritors: [
                     {
                         // TODO: enum
                         type: '',
                         // TODO: CLARIFY: is it percentage out of own percentage?
+                        // TODO: CLARIFY: is the percentage always equal?
                         percentage: '',
                         remarks: ''
                     }
@@ -93,11 +104,6 @@ const SiteProvider = ({ children }) => {
                 year: '',
                 color: '',
                 description: '',
-                size: '',
-                ground_description: '',
-                vehicle_desc: 'לא',
-                general_description: '',
-                inheritor_type: '',
                 inheritors: [
                     {
                         // TODO: enum
@@ -154,6 +160,13 @@ const SiteProvider = ({ children }) => {
         ],
         books: 'לא',
         books_data: [
+            {
+                description: '',
+                inheritors: []
+            }
+        ],
+        clothes: 'לא',
+        clothes_data: [
             {
                 description: '',
                 inheritors: []
