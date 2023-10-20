@@ -6,7 +6,7 @@ import StepThreekids from '../stepthree/step-three-kids';
 import { SiteContext } from '../../store/context';
 
 
-export default function StepFourArt({ formikProps }) {
+export default function StepFourArt() {
 	const [artCount, setArtCount] = useState(0)
 
 	const {
@@ -130,19 +130,19 @@ export default function StepFourArt({ formikProps }) {
 							<div role="group">
 								<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך אומנות?</h4>
 								<div className="status-group flex space-between input-btn">
-									<label className={`${formikProps.values.art === "לא" ? 'active' : ''}`}>
+									<label className={`${values.art === "לא" ? 'active' : ''}`}>
 										<Field type="radio" name="art" value="לא" />
 										לא
 									</label>
-									<label className={`${formikProps.values.art === "כן" ? 'active' : ''}`}>
+									<label className={`${values.art === "כן" ? 'active' : ''}`}>
 										<Field type="radio" name="art" value="כן" />
 										כן
 									</label>
 								</div>
 							</div>
-							{formikProps.values.art === 'כן' &&
+							{values.art === 'כן' &&
 								<div className="input-container-formik real-estate-container direction-ltr" >
-									{renderArtsForm(formikProps)}
+									{renderArtsForm()}
 								</div>
 							}
 

@@ -12,7 +12,7 @@ import StepFourArt from './stepfour/step-four-art';
 import { SiteContext } from '../store/context'
 
 
-function FormStepsWrapper({ values, nextStepHandler, formRef }) {
+function FormStepsWrapper() {
 	const {
 		selectedStep,
 		selectedStage
