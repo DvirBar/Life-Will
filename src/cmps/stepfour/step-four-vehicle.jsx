@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 
 import { Formik, Form, Field } from "formik";
-import StepThreeAssociations from './step-three-associations';
-import StepThreekids from './step-three-kids';
-import { SiteContext } from '../store/context';
+import StepThreeAssociations from '../stepthree/step-three-associations';
+import StepThreekids from '../stepthree/step-three-kids';
+import { SiteContext } from '../../store/context';
 
 
-export default function StepFourVehicle({ formikProps }) {
+export default function StepFourVehicle() {
 	const [vehicleCount, setVehicleCount] = useState(0)
 
 	//TODO: delete - not relevant
@@ -15,8 +15,15 @@ export default function StepFourVehicle({ formikProps }) {
 	// }
 
 	const {
+		data,
+		setData,
 		moveNextStep
-	} = useContext(SiteContext)
+	} = useContext(SiteContext);
+
+	const handleSubmit = (values, actions) => {
+		setData(prev => ({ ...prev, values }))
+		moveNextStep();
+	}
 
 	// TODO: State mutation
 	const onRemoveVehicle = (i) => {
@@ -183,29 +190,43 @@ export default function StepFourVehicle({ formikProps }) {
 
 	return (
 		<>
-			<div role="group">
-				<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך רכבים?</h4>
-				<div className="status-group flex space-between input-btn">
-					<label className={`${formikProps.values.vehicle === "לא" ? 'active' : ''}`}>
-						<Field type="radio" name="vehicle" value="לא" />
-						לא
-					</label>
-					<label className={`${formikProps.values.vehicle === "כן" ? 'active' : ''}`}>
-						<Field type="radio" name="vehicle" value="כן" />
-						כן
-					</label>
-				</div>
-			</div>
-			{formikProps.values.vehicle === 'כן' &&
-				<div className="input-container-formik real-estate-container direction-ltr" >
-					<h4 className='direction-rtl' style={{ margin: '10px 0' }}>סוג הרכב</h4>
-					{renderVehiclesForm(formikProps)}
-				</div>
-			}
+			<Formik
+				//validationSchema={validationSchema}
+				initialValues={data}
+				onSubmit={handleSubmit}
+			>
+				{({ values }) => {
+					return (
+						<Form>
+							<div role="group">
+								<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך רכבים?</h4>
+								<div className="status-group flex space-between input-btn">
+									<label className={`${values.vehicle === "לא" ? 'active' : ''}`}>
+										<Field type="radio" name="vehicle" value="לא" />
+										לא
+									</label>
+									<label className={`${values.vehicle === "כן" ? 'active' : ''}`}>
+										<Field type="radio" name="vehicle" value="כן" />
+										כן
+									</label>
+								</div>
+							</div>
+							{values.vehicle === 'כן' &&
+								<div className="input-container-formik real-estate-container direction-ltr" >
+									<h4 className='direction-rtl' style={{ margin: '10px 0' }}>סוג הרכב</h4>
+									{renderVehiclesForm(values)}
+								</div>
+							}
 
 
 
-			<button onClick={() => moveNextStep()}>המשך</button>
+							<button type="submit">המשך</button>
+						</Form>
+					)
+				}
+				}
+			</Formik>
+
 		</>
 	)
 }

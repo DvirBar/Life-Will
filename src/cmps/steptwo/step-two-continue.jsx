@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { Formik, Form, Field } from "formik";
-import { SiteContext } from '../store/context';
+import { SiteContext } from '../../store/context';
 
 
 export default function StepTwoContinue({ formikProps }) {
@@ -55,37 +55,58 @@ export default function StepTwoContinue({ formikProps }) {
 	// }
 
 	const {
+		data,
+		setData,
 		moveNextStep
-	} = useContext(SiteContext)
+	} = useContext(SiteContext);
+
+	const handleSubmit = (values, actions) => {
+		setData(prev => ({ ...prev, values }))
+		moveNextStep();
+	}
 
 	return (
 		<>
-			<div role="group">
-				<p>ילדים-</p>
-				<div className="status-group input-btn">
-					<label className={`${formikProps.values.kids === "לא" ? 'active' : ''}`}>
-						<Field type="radio" name="kids" value="לא" />
-						לא
-					</label>
-					<label className={`${formikProps.values.kids === "כן" ? 'active' : ''}`}>
-						<Field type="radio" name="kids" value="כן" />
-						כן
-					</label>
-				</div>
-			</div>
-			{formikProps.values.kids === 'כן' &&
-				// <div className="input-container-formik" >
-				//     <p>מספר-</p>
-				//     <Field name="num_of_kids" type="number" placeholder='מספר' />
-				// </div>
-				<div>
-					<div className="input-container-formik child-container direction-ltr" >
-						{renderKidsForm()}
-					</div>
+			<Formik
+				//validationSchema={validationSchema}
+				initialValues={data}
+				onSubmit={handleSubmit}
+			>
+				{({ values }) => {
+					return (
+						<Form>
+							<div role="group">
+								<p>ילדים-</p>
+								<div className="status-group input-btn">
+									<label className={`${formikProps.values.kids === "לא" ? 'active' : ''}`}>
+										<Field type="radio" name="kids" value="לא" />
+										לא
+									</label>
+									<label className={`${formikProps.values.kids === "כן" ? 'active' : ''}`}>
+										<Field type="radio" name="kids" value="כן" />
+										כן
+									</label>
+								</div>
+							</div>
+							{formikProps.values.kids === 'כן' &&
+								// <div className="input-container-formik" >
+								//     <p>מספר-</p>
+								//     <Field name="num_of_kids" type="number" placeholder='מספר' />
+								// </div>
+								<div>
+									<div className="input-container-formik child-container direction-ltr" >
+										{renderKidsForm()}
+									</div>
 
-				</div>
-			}
-			<button onClick={() => moveNextStep()}>המשך</button>
+								</div>
+							}
+							<button type="submit">המשך</button>
+						</Form>
+					)
+				}
+				}
+			</Formik>
+
 		</>
 	)
 }

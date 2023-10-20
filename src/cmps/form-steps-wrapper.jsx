@@ -1,40 +1,47 @@
-import React, { useContext } from 'react'
-import StepOne from './step-one'
-import StepOneContinue from './step-one-continue'
-import StepTwo from './step-two'
-import StepTwoContinue from './step-two-continue'
-import StepTwoContinue2 from './step-two-continue2'
-import StepThree from './step-three'
-import StepFourVehicle from './step-four-vehicle'
-import StepFourJewelry from './step-four-jewelry'
-import StepFourTool from './step-four-tools'
-import StepFourArt from './step-four-art'
+import React, { useContext } from 'react';
+import StepOne from './stepone/step-one';
+import StepOneContinue from './stepone/step-one-continue';
+import StepTwo from './steptwo/step-two';
+import StepTwoContinue from './steptwo/step-two-continue';
+import StepTwoContinue2 from './steptwo/step-two-continue2';
+import StepThree from './stepthree/step-three';
+import StepFourVehicle from './stepfour/step-four-vehicle';
+import StepFourJewelry from './stepfour/step-four-jewelry';
+import StepFourTool from './stepfour/step-four-tools';
+import StepFourArt from './stepfour/step-four-art';
 import { SiteContext } from '../store/context'
 
-function FormStepsWrapper({ values }) {
+
+function FormStepsWrapper({ values, nextStepHandler, formRef }) {
 	const {
 		selectedStep,
 		selectedStage
-	} = useContext(SiteContext)
+	} = useContext(SiteContext);
+
 
 	const stages = [
 		[
-			<StepOne formikProps={values} />,
-			<StepOneContinue formikProps={values} />,
+			// <StepOneWrapper
+			// 	formikProps={values}
+			// 	nextStepHandler={nextStepHandler}
+			// 	validationSchema={stepOneSchema}
+			// 	formRef={formRef} />,
+			<StepOne />,
+			<StepOneContinue />,
 		],
 		[
-			<StepTwo formikProps={values} />,
-			<StepTwoContinue formikProps={values} />,
-			<StepTwoContinue2 formikProps={values} />,
+			<StepTwo />,
+			<StepTwoContinue />,
+			<StepTwoContinue2 />,
 		],
 		[
-			<StepThree formikProps={values} />,
+			<StepThree />,
 		],
 		[
-			<StepFourVehicle formikProps={values} />,
-			<StepFourJewelry formikProps={values} />,
-			<StepFourTool formikProps={values} />,
-			<StepFourArt formikProps={values} />,
+			<StepFourVehicle />,
+			<StepFourJewelry />,
+			<StepFourTool />,
+			<StepFourArt />,
 		],
 	]
 

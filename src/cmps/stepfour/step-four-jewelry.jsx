@@ -1,22 +1,24 @@
 import React, { useContext, useState } from 'react';
 
 import { Formik, Form, Field } from "formik";
-import StepThreeAssociations from './step-three-associations';
-import StepThreekids from './step-three-kids';
-import { SiteContext } from '../store/context';
+import StepThreeAssociations from '../stepthree/step-three-associations';
+import StepThreekids from '../stepthree/step-three-kids';
+import { SiteContext } from '../../store/context';
 
 
-export default function StepFourJewelry({ formikProps }) {
+export default function StepFourJewelry() {
 	const [jewelryCount, setJewelryCount] = useState(0)
 
-	//AM17102023 - to delete
-	// const handleSubmit = (values) => {
-	// 	next(values)
-	// }
-
 	const {
+		data,
+		setData,
 		moveNextStep
-	} = useContext(SiteContext)
+	} = useContext(SiteContext);
+
+	const handleSubmit = (values, actions) => {
+		setData(prev => ({ ...prev, values }))
+		moveNextStep();
+	}
 
 	// TODO: Mutating state
 	const onRemoveJewelry = (i) => {
@@ -117,28 +119,38 @@ export default function StepFourJewelry({ formikProps }) {
 
 	return (
 		<>
-			<div role="group">
-				<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך תכשיטים?</h4>
-				<div className="status-group flex space-between input-btn">
-					<label className={`${formikProps.values.jewelry === "לא" ? 'active' : ''}`}>
-						<Field type="radio" name="jewelry" value="לא" />
-						לא
-					</label>
-					<label className={`${formikProps.values.jewelry === "כן" ? 'active' : ''}`}>
-						<Field type="radio" name="jewelry" value="כן" />
-						כן
-					</label>
-				</div>
-			</div>
-			{formikProps.values.values.jewelry === 'כן' &&
-				<div className="input-container-formik real-estate-container direction-ltr" >
-					{renderJewelrysForm(formikProps)}
-				</div>
-			}
-
-
-
-			<button onClick={() => moveNextStep()}>המשך</button>
+			<Formik
+				//validationSchema={validationSchema}
+				initialValues={data}
+				onSubmit={handleSubmit}
+			>
+				{({ values }) => {
+					return (
+						<Form>
+							<div role="group">
+								<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך תכשיטים?</h4>
+								<div className="status-group flex space-between input-btn">
+									<label className={`${values.jewelry === "לא" ? 'active' : ''}`}>
+										<Field type="radio" name="jewelry" value="לא" />
+										לא
+									</label>
+									<label className={`${values.jewelry === "כן" ? 'active' : ''}`}>
+										<Field type="radio" name="jewelry" value="כן" />
+										כן
+									</label>
+								</div>
+							</div>
+							{values.values.jewelry === 'כן' &&
+								<div className="input-container-formik real-estate-container direction-ltr" >
+									{renderJewelrysForm(values)}
+								</div>
+							}
+							<button type="submit">המשך</button>
+						</Form>
+					)
+				}
+				}
+			</Formik>
 		</>
 	)
 }

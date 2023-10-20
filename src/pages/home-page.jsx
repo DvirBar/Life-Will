@@ -6,8 +6,9 @@ import { SiteContext } from '../store/context'
 export function HomePage() {
 	const {
 		selectedStage,
-		selectStage
+		selectStage,
 	} = useContext(SiteContext)
+
 
 	return (
 		<div className="app-home main-view main-layout">

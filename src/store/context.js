@@ -136,6 +136,7 @@ const SiteProvider = ({ children }) => {
 
 	const value = {
 		data,
+		setData,
 		selectedStage,
 		selectedStep,
 		selectStage,

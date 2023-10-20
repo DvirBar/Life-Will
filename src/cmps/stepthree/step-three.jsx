@@ -3,15 +3,22 @@ import React, { useContext, useState } from 'react';
 import { Formik, Form, Field } from "formik";
 import StepThreeAssociations from './step-three-associations';
 import StepThreekids from './step-three-kids';
-import { SiteContext } from '../store/context';
+import { SiteContext } from '../../store/context';
 
 
-export default function StepThree({ formikProps }) {
+export default function StepThree() {
 	const [realEstateCount, setRealEstateCount] = useState(0)
 
 	const {
+		data,
+		setData,
 		moveNextStep
-	} = useContext(SiteContext)
+	} = useContext(SiteContext);
+
+	const handleSubmit = (values, actions) => {
+		setData(prev => ({ ...prev, values }))
+		moveNextStep(true);
+	}
 
 	// const handleSubmit = (values) => {
 	//     if (values.real_estate === 'לא') next(values, false, true)
@@ -182,26 +189,39 @@ export default function StepThree({ formikProps }) {
 
 	return (
 		<>
-			<div role="group">
-				<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך נכסי נדלן?</h4>
-				<div className="status-group flex space-between input-btn">
-					<label className={`${formikProps.values.real_estate === "לא" ? 'active' : ''}`}>
-						<Field type="radio" name="real_estate" value="לא" />
-						לא
-					</label>
-					<label className={`${formikProps.values.real_estate === "כן" ? 'active' : ''}`}>
-						<Field type="radio" name="real_estate" value="כן" />
-						כן
-					</label>
-				</div>
-			</div>
-			{formikProps.values.real_estate === 'כן' &&
-				<div className="input-container-formik real-estate-container direction-ltr" >
-					<h4 className='direction-rtl' style={{ margin: '10px 0' }}>סוג הנכס נדלן</h4>
-					{renderRealEstatesForm(formikProps)}
-				</div>
-			}
-			<button onClick={() => moveNextStep(true)}>המשך</button>
+			<Formik
+				//validationSchema={validationSchema}
+				initialValues={data}
+				onSubmit={handleSubmit}
+			>
+				{({ values }) => {
+					return (
+						<Form>
+							<div role="group">
+								<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך נכסי נדלן?</h4>
+								<div className="status-group flex space-between input-btn">
+									<label className={`${values.real_estate === "לא" ? 'active' : ''}`}>
+										<Field type="radio" name="real_estate" value="לא" />
+										לא
+									</label>
+									<label className={`${values.real_estate === "כן" ? 'active' : ''}`}>
+										<Field type="radio" name="real_estate" value="כן" />
+										כן
+									</label>
+								</div>
+							</div>
+							{values.real_estate === 'כן' &&
+								<div className="input-container-formik real-estate-container direction-ltr" >
+									<h4 className='direction-rtl' style={{ margin: '10px 0' }}>סוג הנכס נדלן</h4>
+									{renderRealEstatesForm(values)}
+								</div>
+							}
+							<button onClick={() => moveNextStep(true)}>המשך</button>
+						</Form>
+					)
+				}
+				}
+			</Formik>
 		</>
 	)
 }
