@@ -1,8 +1,6 @@
 import React, { createContext, useState } from "react";
 
-
 export const SiteContext = createContext(null);
-
 
 const SiteProvider = ({ children }) => {
     const [data, setData] = useState({
@@ -19,7 +17,6 @@ const SiteProvider = ({ children }) => {
         email: '',
         phone: '',
         address: '',
-        // TODO: CLARIFY - If they have another citizenship - should they say what?
         citizenship: 'לא',
         passport_id: '',
         // Step 2
@@ -29,7 +26,6 @@ const SiteProvider = ({ children }) => {
         partner_first_name: '',
         partner_last_name: '',
         partner_id: '',
-        // TODO: CLARIFY - can there be more than 1 ex partners?
         ex_partner_gain: 'לא',
         ex_partner_first_name: '',
         ex_partner_last_name: '',
@@ -38,17 +34,13 @@ const SiteProvider = ({ children }) => {
         num_of_kids: '',
         kids_data: [
             {
-                id: '',
+                person_id: '',
                 gender: '',
                 first_name: '',
                 last_name: '',
                 birthDate: '',
-
                 hebrewBirthDate: '',
                 has_disability: '',
-                // TODO: CLARIFY - In case birth date is under what age?
-                // TODO: CLARIFY - Should I give details of the guardian of minor?
-                // TODO: CLARIFY - Can a disabled child guardian only be on of the siblings? what details?
                 guardian: ''
             }
         ],
@@ -78,19 +70,14 @@ const SiteProvider = ({ children }) => {
                 sub_lot: '',
                 size: '',
                 description: '',
-                // TODO: CLARIFY: If only one inheritors - it means we shouldn't devide? בשלמות
                 inheritors: [
                     {
                         // TODO: enum
                         type: '',
-                        // TODO: CLARIFY: is it percentage out of own percentage?
-                        // TODO: CLARIFY: is the percentage always equal?
                         percentage: '',
                         remarks: ''
                     }
                 ]
-
-                // TODO: CLARIFY: is it just future real estate? 
             }
         ],
         vehicle: 'לא',
@@ -245,7 +232,6 @@ const SiteProvider = ({ children }) => {
             {
                 // TODO: enum
                 non_profit_provision_size: '',
-                // TODO: CLARIFY: should one specify a specific non_profit?
                 non_profit_name: '',
                 non_profit_provision_percentage: '',
                 non_profit_message: 'לא',
@@ -254,13 +240,11 @@ const SiteProvider = ({ children }) => {
         ],
         // TODO: enum - either equal or by decision
         money_devision: '',
-        // TODO: CLARIFY - if equal is chosen, do we still need to specify?
         money_devision_inheritors: [
             {
                 first_name: '',
                 last_name: '',
-                // TODO: CLARIFY - what details?
-                details: '',
+                person_id: '',
                 percentage: ''
             }
         ],
@@ -271,11 +255,10 @@ const SiteProvider = ({ children }) => {
         funeral_in_charge_details: {
             first_name: '',
             last_name: '',
-            id: ''
+            person_id: ''
         },
         edi_card: '',
         organ_donation: '',
-        // TODO: CLARIFY - can they write something for multiple people?
         relatives_message: ''
     })
 

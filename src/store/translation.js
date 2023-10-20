@@ -4,6 +4,11 @@ const birth_date = 'תאריך לידה'
 const hebrew_birth_date = 'תאריך לידה עברי'
 const id = 'תעודת זהות'
 const gender = 'מגדר'
+const personInfo = {
+    first_name,
+    last_name,
+    id
+}
 const inheritorsData = {
     type: 'יורש',
     percentage: 'אחוז',
@@ -16,6 +21,18 @@ const assetsData = {
 }
 
 const type = 'סוג'
+
+const fund_data = {
+    fund_name: 'שם הקופה',
+    fund_number: 'מספר הקופה'
+}
+
+const answers = {
+    yes: 'כן',
+    no: 'לא'
+}
+
+const percentage = 'אחוז'
 
 // TODO: translate enums
 
@@ -57,26 +74,10 @@ const translation = {
     },
     give_to_family: 'האם יש הורים / אחים / חברים או אחרים שתרצה להפריש להם מצוואתך?',
     give_to_family_type: {
-        parents: {
-            first_name,
-            last_name,
-            id
-        },
-        siblings: {
-            first_name,
-            last_name,
-            id
-        },
-        friends: {
-            first_name,
-            last_name,
-            id
-        },
-        grandchildren: {
-            first_name,
-            last_name,
-            id
-        }
+        parents: personInfo,
+        siblings: personInfo,
+        friends: personInfo,
+        grandchildren: personInfo
     },
     // Step 3
     real_estate_title: 'נדלן',
@@ -181,52 +182,29 @@ const translation = {
         account_number: 'מספר חשבון',
         branch_number: 'מספר סניף'
     },
-
     provident_fund: 'האם קיימת ברשותך קופת גמל?',
-    provident_fund_data: {
-        fund_name: 'שם הקופה',
-        fund_number: 'מספר הקופה'
+    provident_fund_data: fund_data,
+    study_fund: '?האם קיימת ברשותך קרן השתלמות',
+    study_fund_data: fund_data,
+    non_profit_provision: 'האם תרצה להפריש מהירושה שלך לעמותות הפועלות כאן בארץ?',
+    non_profit_provision_data: {
+        non_profit_provision_size: 'האם תרצה להפריש לעמותה גדולה או קטנה?',
+        non_profit_name: 'שם העמותה',
+        non_profit_provision_percentage: 'אחוז',
+        non_profit_message: 'תרצה להשאיר הודעה לעמותה?',
+        non_profit_message_content: 'תוכן ההודעה'
     },
-    study_fund: 'האם קיימת ברשותך קרן השתלמות',
-    study_fund_data: {
-        fund_name: '',
-        fund_number: ''
+    money_devision: 'איך תרצה לחלק את עיזבונך הכספי בין משפחתך?',
+    money_devision_inheritors: {
+        ...personInfo,
+        percentage
     },
-    non_profit_provision: 'לא',
-    non_profit_provision_data: [
-        {
-            // TODO: enum
-            non_profit_provision_size: '',
-            // TODO: CLARIFY: should one specify a specific non_profit?
-            non_profit_name: '',
-            non_profit_provision_percentage: '',
-            non_profit_message: 'לא',
-            non_profit_message_content: ''
-        }
-    ],
-    // TODO: enum - either equal or by decision
-    money_devision: '',
-    // TODO: CLARIFY - if equal is chosen, do we still need to specify?
-    money_devision_inheritors: [
-        {
-            first_name: '',
-            last_name: '',
-            // TODO: CLARIFY - what details?
-            details: '',
-            percentage: ''
-        }
-    ],
     // Step 6
-    not_applied_before_spouse: '',
-    burial_location: '',
-    funeral_in_charge: '',
-    funeral_in_charge_details: {
-        first_name: '',
-        last_name: '',
-        id: ''
-    },
-    edi_card: '',
-    organ_donation: '',
-    // TODO: CLARIFY - can they write something for multiple people?
-    relatives_message: ''
+    not_applied_before_spouse: 'תרצה להוסיף סעיף שכל האמור בצוואה לא יחול לפני פטירת אשתך?',
+    burial_location: 'איפה תרצה להיקבר?',
+    funeral_in_charge: 'תרצה שמישהו יהיה אחראי על טקס ההלוויה?',
+    funeral_in_charge_details: personInfo,
+    edi_card: 'האם קיים ברשותך כרטיס "אדי" הנותן אפשרות לתרומת איברים מגופך?',
+    organ_donation: 'האם תרצה לתרום איברים בעזיבתך?',
+    relatives_message: 'האם תרצה לכתוב משהו ליקירך?'
 }
