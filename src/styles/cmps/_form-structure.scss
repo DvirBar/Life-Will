@@ -176,6 +176,12 @@
 	textarea {
 		border: 1px solid black;
 	}
+
+	.display-rows {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem
+	}
 }
 
 .status-group {

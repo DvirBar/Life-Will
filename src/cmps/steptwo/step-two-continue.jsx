@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { SiteContext } from '../../store/context';
 
 
-export default function StepTwoContinue({ formikProps }) {
+export default function StepTwoContinue() {
 
 	const [kidsCount, setKidsCount] = useState(0)
 
@@ -78,17 +78,17 @@ export default function StepTwoContinue({ formikProps }) {
 							<div role="group">
 								<p>ילדים-</p>
 								<div className="status-group input-btn">
-									<label className={`${formikProps.values.kids === "לא" ? 'active' : ''}`}>
+									<label className={`${values.kids === "לא" ? 'active' : ''}`}>
 										<Field type="radio" name="kids" value="לא" />
 										לא
 									</label>
-									<label className={`${formikProps.values.kids === "כן" ? 'active' : ''}`}>
+									<label className={`${values.kids === "כן" ? 'active' : ''}`}>
 										<Field type="radio" name="kids" value="כן" />
 										כן
 									</label>
 								</div>
 							</div>
-							{formikProps.values.kids === 'כן' &&
+							{values.kids === 'כן' &&
 								// <div className="input-container-formik" >
 								//     <p>מספר-</p>
 								//     <Field name="num_of_kids" type="number" placeholder='מספר' />

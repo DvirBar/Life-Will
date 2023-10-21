@@ -14,7 +14,7 @@ export default function StepTwoContinue2() {
 
 	const handleSubmit = (values, actions) => {
 		setData(prev => ({ ...prev, values }))
-		moveNextStep();
+		moveNextStep(true);
 	}
 
 	return (

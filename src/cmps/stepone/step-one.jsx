@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { SiteContext } from "../../store/context";
 import * as Yup from 'yup';
 
+import { HebrewMonthInput } from '../formikcomponents/hebrew-month-input';
+import { HebrewDayInput } from '../formikcomponents/hebrew-day-input';
 export const validationSchema = Yup.object().shape({
 	first_name: Yup.string().required('Required').label("שם פרטי"),
 	last_name: Yup.string().required('Required').label("שם משפחה"),
@@ -36,6 +38,7 @@ export default function StepOne() {
 			onSubmit={handleSubmit}
 		>
 			{({ values }) => {
+				console.log(values);
 				return (
 					<Form>
 						<div className="input-container">
@@ -51,9 +54,27 @@ export default function StepOne() {
 								<Field
 									name="birthDate"
 									type="date"
-
 									className="birthDate"
+									placeholder="dd/mm/yyyy"
 								/>
+								<p>תאריך עברי(לא חובה*)</p>
+								<div className="display-rows">
+									<label>
+										שנה
+										<Field name="hebrew_year" />
+									</label>
+									<label>
+										חודש
+										<HebrewMonthInput name="hebrew_month" />
+									</label>
+									<label>
+										יום
+										<HebrewDayInput name="hebrew_day" />
+									</label>
+
+								</div>
+
+
 								<div role="group">
 									<p>מגדר</p>
 									<div className="status-group flex space-between input-btn">
