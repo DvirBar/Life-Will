@@ -1,6 +1,24 @@
 import React, { createContext, useState } from "react";
+import { answers, giveToFamilyTypesKeys } from "./translation";
 
 export const SiteContext = createContext(null);
+// TODO: Add types of non profits
+
+const personInfo = {
+    first_name: '',
+    last_name: '',
+    person_id: '',
+}
+
+const itemNoDescription = {
+    remarks: '',
+    inheritors: []
+}
+
+const itemData = {
+    description: '',
+    ...itemNoDescription
+}
 
 const SiteProvider = ({ children }) => {
     const [data, setData] = useState({
@@ -26,60 +44,59 @@ const SiteProvider = ({ children }) => {
         partner_first_name: '',
         partner_last_name: '',
         partner_id: '',
+        // TODO: CLARIFY - if status is married we should also show ex partners (not just when divorced) 
         ex_partner_gain: 'לא',
-        ex_partner_first_name: '',
-        ex_partner_last_name: '',
+        ex_partners: [
+            {
+                ...personInfo,
+                gender: ''
+            }
+        ],
         // TODO: enum
         kids: '',
         num_of_kids: '',
         kids_data: [
             {
-                person_id: '',
+                ...personInfo,
                 gender: '',
-                first_name: '',
-                last_name: '',
                 birthDate: '',
                 hebrewBirthDate: '',
                 has_disability: '',
-                guardian: ''
+                guardian_data: null
             }
         ],
         give_to_family: 'לא',
         // TODO: make it multi option
         // TODO: enum
         give_to_family_type: {
-            parents: [],
-            siblings: [],
-            friends: [],
-            grandchildren: []
+            [giveToFamilyTypesKeys.parents]: [],
+            [giveToFamilyTypesKeys.siblings]: [],
+            [giveToFamilyTypesKeys.friends]: [],
+            [giveToFamilyTypesKeys.grandChildren]: []
         },
+
         // Step 3
         // TODO: enum
-        real_estate: 'לא',
+        real_estate: answers.no,
         real_estate_data: [
-            {
-                // TODO: enum
-                type: '',
-                own_percentage: '',
-                country: '',
-                city: '',
-                street: '',
-                house_number: '',
-                block: '',
-                lot: '',
-                sub_lot: '',
-                size: '',
-                description: '',
-                inheritors: [
-                    {
-                        // TODO: enum
-                        type: '',
-                        percentage: '',
-                        remarks: ''
-                    }
-                ]
-            }
+            // {
+            //     // TODO: enum
+            //     type: '',
+            //     own_percentage: '',
+            //     country: '',
+            //     city: '',
+            //     street: '',
+            //     house_number: '',
+            //     block: '',
+            //     lot: '',
+            //     sub_lot: '',
+            //     size: '',
+            //     ...itemData
+            // }
         ],
+        future_real_estate_data: itemNoDescription,
+
+        // Step 4
         vehicle: 'לא',
         vehicle_data: [
             {
@@ -90,119 +107,44 @@ const SiteProvider = ({ children }) => {
                 model: '',
                 year: '',
                 color: '',
-                description: '',
-                inheritors: [
-                    {
-                        // TODO: enum
-                        type: '',
-                        percentage: '',
-                        remarks: ''
-                    }
-                ]
+                ...itemData
             }
         ],
         jewelry: 'לא',
-        jewelry_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        jewelry_data: [itemData],
         tool: 'לא',
         tool_data: [
             {
                 // TODO: enum
                 type: '',
-                description: '',
-                inheritors: []
+                ...itemData
             }
         ],
         art: 'לא',
-        art_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        art_data: [itemData],
         musical_instruments: 'לא',
-        musical_instruments_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        musical_instruments_data: [itemData],
         unique_collection: 'לא',
-        unique_collection_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        unique_collection_data: [itemData],
         furniture: 'לא',
-        furniture_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        furniture_data: [itemData],
         books: 'לא',
-        books_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        books_data: [itemData],
         clothes: 'לא',
-        clothes_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        clothes_data: [itemData],
         appliances: 'לא',
-        appliances_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        appliances_data: [itemData],
         sport_equipment: 'לא',
-        sport_equipment_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        sport_equipment_data: [itemData],
         pets: 'לא',
-        pets_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        pets_data: [itemData],
         digital_assets: 'לא',
-        digital_assets_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        digital_assets_data: [itemData],
         items: 'לא',
-        items_data: [
-            {
-                description: '',
-                inheritors: []
-            }
-        ],
+        items_data: [itemData],
         other_inheritance: 'לא',
-        other_inheritance_data: [
-            {
-                // TODO: enum
-                type: '',
-                description: '',
-                inheritors: []
-            }
-        ],
+        other_inheritance_data: [itemData],
+        future_items_data: itemNoDescription,
 
         // Step 5
         money: '',
@@ -231,7 +173,6 @@ const SiteProvider = ({ children }) => {
         non_profit_provision_data: [
             {
                 // TODO: enum
-                non_profit_provision_size: '',
                 non_profit_name: '',
                 non_profit_provision_percentage: '',
                 non_profit_message: 'לא',

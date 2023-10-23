@@ -1,22 +1,41 @@
 const first_name = 'שם'
 const last_name = 'שם משפחה'
 const birth_date = 'תאריך לידה'
-const hebrew_birth_date = 'תאריך לידה עברי'
-const id = 'תעודת זהות'
+const hebrew_birth_date = 'תאריך עברי'
+const person_id = 'ת״ז'
 const gender = 'מגדר'
 const personInfo = {
     first_name,
     last_name,
-    id
+    person_id
 }
+
+export const statusTypes = {
+    separate: 'פרוד',
+    widow: 'אלמן',
+    single: 'רווק',
+    solitary: 'ערירי',
+    married: 'נשוי',
+    partnership: 'שותפות',
+    divorced: 'גרוש'
+}
+
 const inheritorsData = {
+    ...personInfo,
     type: 'יורש',
     percentage: 'אחוז',
-    remarks: 'הערות'
+}
+
+export const inheritorsTypes = {
+    inheritors: 'יורשים',
+    children: 'ילדים',
+    spouse: 'בן/בת זוג',
+    nonprofit: 'עמותה'
 }
 
 const assetsData = {
     description: 'תיאור',
+    remarks: 'האם יש הערות בכתב שתרצה להוסיף?',
     inheritors: inheritorsData
 }
 
@@ -27,82 +46,159 @@ const fund_data = {
     fund_number: 'מספר הקופה'
 }
 
-const answers = {
+export const answers = {
     yes: 'כן',
     no: 'לא'
 }
 
+export const moneyDivision = {
+    equal: 'שווה בשווה',
+    byDecision: 'לפי מה שאחליט'
+}
+
 const percentage = 'אחוז'
+
+export const realEstateTypes = {
+    appartment: 'דירה',
+    warehouse: 'מחסן',
+    parking: 'חניה',
+    lands: 'קרקעות',
+    building: 'בניין'
+}
+
+export const vehicleTypes = {
+    truck: 'משאית',
+    bus: 'אוטובוס',
+    vehicle: 'רכב',
+    motorcycle: 'אופנוע',
+    airplane: 'מטוס',
+    boat: 'סירה',
+    yacht: 'יאכטה',
+    ship: 'אונייה'
+}
+
+export const guardianTypes = {
+    sibling: 'אחד מהאחים',
+    court: 'מינוי לפי בית משפט',
+    other: 'אחר'
+}
+
+export const giveToFamilyTypesKeys = {
+    parents: 'parents',
+    siblings: 'siblings',
+    friends: 'friends',
+    grandChildren: 'grandChildren'
+}
+
+export const giveToFamilyTypes = {
+    [giveToFamilyTypesKeys.parents]: 'הורים',
+    [giveToFamilyTypesKeys.siblings]: 'אחים אחיות',
+    [giveToFamilyTypesKeys.friends]: 'חברים ומכרים',
+    [giveToFamilyTypesKeys.grandChildren]: 'נכדים נכדות'
+}
+
+export const inheritanceKeys = {
+    real_estate: 'real_estate',
+    future_real_estate: 'future_real_estate',
+    vehicle: 'vehicle',
+    jewelry: 'jewelry',
+    art: 'art',
+    musical_instruments: 'musical_instruments',
+    unique_collection: 'unique_collection',
+    furniture: 'furniture',
+    books: 'books',
+    digital_assets: 'digital_assets',
+    items: 'items',
+    other_inheritance: 'other_inheritance',
+    future_items: 'future_items'
+}
 
 // TODO: translate enums
 
 const translation = {
     // Step 1
+    step1: 'שלב א׳ - הזדהות',
     first_name: first_name,
     last_name: last_name,
     birthDate: birth_date,
     hebrewBirthDate: hebrew_birth_date,
     gender: gender,
     edited_by: 'האם אתה עורך לבד את צוואתך?',
-    person_id: id,
+    person_id,
     email: 'כתובת מייל',
-    phone: 'פלאפון',
+    phone: 'טלפון נייד',
     address: 'כתובת',
     citizenship: 'אזרחות - האם יש בבעלותך אזרחות נוספת?',
     passport_id: 'מספר דרכון',
     // Step 2
+    step2: 'שלב ב׳ - מצב משפחתי ויורשים',
     status: 'סטטוס',
     partner_married_gender: 'אני נשוי ל-',
     partner_spouse_gender: 'אני מנהל זוגיות עם-',
     partner_first_name: first_name,
     partner_last_name: last_name,
-    partner_id: id,
-    ex_partner_gain: 'האם תרגצה להקצות לגרושך/גרושתך מהצוואה?',
-    ex_partner_first_name: first_name,
-    ex_partner_last_name: last_name,
+    partner_id: person_id,
+    ex_partner_gain: 'האם תרצה להקצות לגרושך/גרושתך מהצוואה?',
+    ex_partners: {
+        gender,
+        ...personInfo
+    },
     kids: 'ילדים',
+    kidNameText: 'שם הילד',
     num_of_kids: 'מספר ילדים',
     kids_data: {
-        id: id,
+        ...personInfo,
         gender: gender,
-        first_name: first_name,
-        last_name: last_name,
         birthDate: birth_date,
         hebrewBirthDate: hebrew_birth_date,
-        has_disability: 'ילד עם מוגבלות',
-        guardian: 'מי יהיה האפוטרופוס עליו?'
+        has_disability: 'מוגבלות',
+        guardian_text: 'מי יהיה האפוטרופוס עליו?',
+        guardian_data: {
+            type: 'סוג',
+            ...personInfo
+        }
     },
+    guardianDetailsText: 'פרטי אפוטרופוס',
     give_to_family: 'האם יש הורים / אחים / חברים או אחרים שתרצה להפריש להם מצוואתך?',
     give_to_family_type: {
-        parents: personInfo,
-        siblings: personInfo,
-        friends: personInfo,
-        grandchildren: personInfo
+        [giveToFamilyTypesKeys.parents]: personInfo,
+        [giveToFamilyTypesKeys.siblings]: personInfo,
+        [giveToFamilyTypesKeys.friends]: personInfo,
+        [giveToFamilyTypesKeys.grandChildren]: personInfo
     },
     // Step 3
+    step3: 'שלב ג׳ - מקרקעין',
     real_estate_title: 'נדלן',
     real_estate: 'האם קיימים ברשותך נכסי נדלן?',
     real_estate_data:
     {
-        type: 'סוג הנכס נדלן',
+        type: 'סוג',
         own_percentage: 'כמה אחוז בבעלותך?',
         country: 'מדינה',
         city: 'עיר',
         street: 'רחוב',
-        house_number: 'מספר בית',
-        block: 'מספר גוש',
-        lot: 'מספר חלקה',
-        sub_lot: 'מספר תת חלקה',
+        house_number: 'מספר',
+        block: 'גוש',
+        lot: 'חלקה',
+        sub_lot: 'תת חלקה',
         size: 'גודל',
         ...assetsData
     },
+    future_real_estate_title: 'הורשה בעתיד',
+    future_real_estate: 'נכס נדלני, בין אם יש לך עכשיו ובין אם יהיה לך בעתיד, ששכחת או לא ציינת למי היית רוצה להוריש אותו?',
+    future_real_estate_data: assetsData,
+
+    inheritorsText: 'יורשים',
+
+    // Step 4
+    step4: 'שלב ד׳ - מטלטלין',
     vehicle_title: 'רכב',
     vehicle: 'האם קיים ברשותך כלי תחבורה?',
     vehicle_data:
     {
         // TODO: enum
         type: 'סוג',
-        license_plate: 'מספר זיהוי',
+        license_plate: 'זיהוי',
         manufacturer: 'יצרן',
         model: 'דגם',
         year: 'שנה',
@@ -171,8 +267,12 @@ const translation = {
         type,
         ...assetsData
     },
+    future_items_title: 'הורשה בעתיד',
+    future_items: 'מטלטלין, בין אם יש לך עכשיו ובין אם יהיה לך בעתיד, ששכחת או לא ציינת למי היית רוצה להוריש אותו?',
+    future_items_data: assetsData,
 
     // Step 5
+    step5: 'שלב ה׳ - כספים',
     money_title: 'כסף',
     money: 'כמה כסף בערך קיים ברשותך או בבנק?',
     bank_accounts_title: 'חשבונות בנק',
@@ -199,7 +299,9 @@ const translation = {
         ...personInfo,
         percentage
     },
+
     // Step 6
+    step6: 'שלב ו׳ - לוויה ורצונות',
     not_applied_before_spouse: 'תרצה להוסיף סעיף שכל האמור בצוואה לא יחול לפני פטירת אשתך?',
     burial_location: 'איפה תרצה להיקבר?',
     funeral_in_charge: 'תרצה שמישהו יהיה אחראי על טקס ההלוויה?',
@@ -208,3 +310,5 @@ const translation = {
     organ_donation: 'האם תרצה לתרום איברים בעזיבתך?',
     relatives_message: 'האם תרצה לכתוב משהו ליקירך?'
 }
+
+export default translation
