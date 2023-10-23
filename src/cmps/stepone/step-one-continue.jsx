@@ -16,7 +16,7 @@ export default function StepOneContinue() {
 	} = useContext(SiteContext);
 
 	const handleSubmit = (values, actions) => {
-		setData(prev => ({ ...prev, values }))
+		setData({ ...values });
 		moveNextStep(true);
 	}
 	return (
@@ -28,7 +28,7 @@ export default function StepOneContinue() {
 			>
 				{({ values }) => {
 					return (
-						<Form>
+						<Form className="input-container">
 							<div className="input-container-formik">
 								<Field name="person_id" type="number" placeholder='תז' />
 								<div role="group">
@@ -48,7 +48,7 @@ export default function StepOneContinue() {
 								<Field name="email" placeholder="מייל" />
 								<ErrorMessage name="email" />
 								<Field name="phone" type="number" placeholder='פלאפון' />
-								<Field name="address" placeholder='רחוב ומספר בית' />
+								<Field name="address" placeholder='עיר, רחוב ומספר בית' />
 								{/* <Field name="company" placeholder='שם חברה / עסק' /> */}
 								{/* <Field name="city" placeholder='עיר / יישוב' /> */}
 								{/* <Field name="companyID" placeholder='ח.פ' /> */}

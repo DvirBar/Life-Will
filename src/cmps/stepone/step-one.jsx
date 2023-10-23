@@ -28,7 +28,7 @@ export default function StepOne() {
 	// 	next(values, false, false, isAgeOver18)
 	// }
 	const handleSubmit = (values, actions) => {
-		setData(prev => ({ ...prev, values }))
+		setData({ ...values })
 		moveNextStep();
 	}
 	return (

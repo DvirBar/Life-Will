@@ -13,7 +13,7 @@ export default function StepTwoContinue2() {
 	} = useContext(SiteContext);
 
 	const handleSubmit = (values, actions) => {
-		setData(prev => ({ ...prev, values }))
+		setData(({ ...values }))
 		moveNextStep(true);
 	}
 
@@ -26,7 +26,7 @@ export default function StepTwoContinue2() {
 			>
 				{({ values }) => {
 					return (
-						<Form>
+						<Form className="input-container">
 							<div role="group">
 								<h4 style={{ margin: '10px 0' }}>האם יש הורים / אחים / חברים או אחרים שתרצה להפריש להם מצוואתך?</h4>
 								<div className="status-group flex space-between input-btn">

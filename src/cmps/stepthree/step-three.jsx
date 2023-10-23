@@ -16,7 +16,7 @@ export default function StepThree() {
 	} = useContext(SiteContext);
 
 	const handleSubmit = (values, actions) => {
-		setData(prev => ({ ...prev, values }))
+		setData({ ...values })
 		moveNextStep(true);
 	}
 
@@ -196,7 +196,7 @@ export default function StepThree() {
 			>
 				{({ values }) => {
 					return (
-						<Form>
+						<Form className="input-container" style={{ minWidth: "500px" }}>
 							<div role="group">
 								<h4 style={{ margin: '10px 0' }}>האם קיימים ברשותך נכסי נדלן?</h4>
 								<div className="status-group flex space-between input-btn">

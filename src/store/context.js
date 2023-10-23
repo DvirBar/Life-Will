@@ -5,6 +5,7 @@ export const SiteContext = createContext(null);
 
 
 const SiteProvider = ({ children }) => {
+	console.log("site provider rendered");
 	const [data, setData] = useState({
 		// Step 1
 		first_name: '',
@@ -279,7 +280,7 @@ const SiteProvider = ({ children }) => {
 		// TODO: CLARIFY - can they write something for multiple people?
 		relatives_message: ''
 	})
-
+	console.log(data);
 	const [selectedStage, setSelectedStage] = useState(0)
 	const [selectedStep, setSelectedStep] = useState(0)
 

@@ -18,7 +18,7 @@ export default function StepTwo() {
 	} = useContext(SiteContext);
 
 	const handleSubmit = (values, actions) => {
-		setData(prev => ({ ...prev, values }))
+		setData({ ...values });
 		moveNextStep();
 	}
 
@@ -31,7 +31,7 @@ export default function StepTwo() {
 			>
 				{({ values }) => {
 					return (
-						<Form>
+						<Form className="input-container" style={{ width: "500px" }}>
 							<div>סטטוס</div>
 							<div role="group" className="status-group flex space-between input-btn">
 								<label className={`${values.status === "נשוי" ? 'active' : ''}`}>
@@ -137,7 +137,7 @@ export default function StepTwo() {
 								</>}
 							</div>}
 							{/* <StepTwoContinue next={next} prev={prev} data={data} />
-            <StepTwoContinue2 next={next} prev={prev} data={data} /> */}
+            				<StepTwoContinue2 next={next} prev={prev} data={data} /> */}
 
 							<button type="submit">המשך</button>
 						</Form>
