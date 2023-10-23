@@ -6,7 +6,6 @@ import { SiteContext } from '../../store/context';
 
 export default function StepTwoContinue() {
 
-	const [kidsCount, setKidsCount] = useState(0);
 	const {
 		data,
 		setData,
@@ -18,33 +17,6 @@ export default function StepTwoContinue() {
 		moveNextStep();
 	}
 
-	const onChildOptionChosen = (callBack) => {
-		callBack();
-	}
-	// TODO: state mutation - need to change
-	const onAddKid = (ev, i) => {
-		setKidsCount(kidsCount + 1)
-		// data.kids_data.push({
-		//     id: '',
-		//     first_name: '',
-		//     last_name: '',
-		// })
-	}
-	const onRemoveKid = (i) => {
-		if (kidsCount === 0) return
-		setKidsCount(kidsCount - 1)
-		// data.kids_data.splice(i, 1)
-	}
-
-	const updateKidsData = (ev, i, credentials = 'id') => {
-		// if (credentials === 'id') {
-		//     data.kids_data[i].id = ev.target.value
-		// } else if (credentials === 'first-name') {
-		//     data.kids_data[i].first_name = ev.target.value
-		// } else {
-		//     data.kids_data[i].last_name = ev.target.value
-		// }
-	}
 
 	const renderKidsForm = (values) => {
 		return (
