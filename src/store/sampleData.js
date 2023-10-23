@@ -178,30 +178,8 @@ const data = {
             house_number: '20',
             ...sampleData
         },
-        {
-            type: realEstateTypes.appartment,
-            own_percentage: '70%',
-            country: 'ישראל',
-            city: 'תל אביב',
-            street: 'רחוב1',
-            house_number: '20',
-            block: '7',
-            lot: '2',
-            sub_lot: '1',
-            size: '',
-            ...sampleData
-        },
-        {
-            type: realEstateTypes.building,
-            own_percentage: '100%',
-            country: 'ישראל',
-            city: 'תל אביב',
-            street: 'רחוב1',
-            house_number: '20',
-            ...sampleData
-        },
     ],
-    future_real_estate_data: [sampleNoDescription],
+    future_real_estate_data: sampleNoDescription,
 
     // Step 4
     vehicle: answers.yes,
@@ -253,7 +231,7 @@ const data = {
     items_data: [sampleData],
     other_inheritance: answers.no,
     other_inheritance_data: [],
-    future_items_data: [sampleNoDescription],
+    future_items_data: sampleNoDescription,
 
     // Step 5
     money: '1000000',

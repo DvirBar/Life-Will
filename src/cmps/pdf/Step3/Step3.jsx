@@ -1,16 +1,20 @@
 import React from 'react'
+import Step3RealEstate from './Step3RealEstate'
 import Title from '../Title'
-import translation, { inheritanceKeys } from '../../../store/translation'
+import Subtitle from '../Subtitle'
+import translation, { answers } from '../../../store/translation'
 import DocPage from '../DocPage'
-import ItemInheritanceBlock from '../ItemInheritanceBlock'
+import data from '../../../store/sampleData'
+import Step3FutureRealEstate from './Step3FutureRealEstate'
 
 function Step3() {
     return (
         <>
             <DocPage>
                 <Title>{translation.step3}</Title>
-                <ItemInheritanceBlock itemKey={inheritanceKeys.real_estate} />
-                <ItemInheritanceBlock itemKey={inheritanceKeys.future_real_estate} />
+                <Subtitle>{translation.real_estate_title}</Subtitle>
+                <Step3RealEstate />
+                <Step3FutureRealEstate />
             </DocPage>
         </>
     )
