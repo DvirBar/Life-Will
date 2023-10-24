@@ -1,11 +1,11 @@
 import React from 'react'
 import { Page, Text, View } from '@react-pdf/renderer'
 
-import translation, { answers } from '../../store/translation'
-import data from '../../store/sampleData'
-import QuestionBlock from './QuestionBlock'
-import DocPage from './DocPage'
-import Title from './Title'
+import translation, { answers } from '../../../store/translation'
+import data from '../../../store/sampleData'
+import QuestionBlock from '../QuestionBlock'
+import DocPage from '../DocPage'
+import Title from '../Title'
 
 function Page1() {
     return (

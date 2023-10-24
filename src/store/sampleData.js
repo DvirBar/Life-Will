@@ -20,6 +20,11 @@ const sampleInheritors = [
         type: inheritorsTypes.nonprofit,
         first_name: 'עמותה כלשהי',
         percentage: "10%"
+    },
+    {
+        type: inheritorsTypes.nonprofit,
+        first_name: 'עמותה כלשהי',
+        percentage: "10%"
     }
 ]
 
@@ -159,27 +164,31 @@ const data = {
         {
             type: realEstateTypes.appartment,
             own_percentage: '70%',
-            country: 'ישראל',
-            city: 'תל אביב',
-            street: 'רחוב1',
-            house_number: '20',
-            block: '7',
-            lot: '2',
-            sub_lot: '1',
-            size: '',
+            details: {
+                country: 'ישראל',
+                city: 'תל אביב',
+                street: 'רחוב1',
+                house_number: '20',
+                block: '7',
+                lot: '2',
+                sub_lot: '1',
+                size: '',
+            },
             ...sampleData
         },
         {
             type: realEstateTypes.building,
             own_percentage: '100%',
-            country: 'ישראל',
-            city: 'תל אביב',
-            street: 'רחוב1',
-            house_number: '20',
+            details: {
+                country: 'ישראל',
+                city: 'תל אביב',
+                street: 'רחוב1',
+                house_number: '20',
+            },
             ...sampleData
         },
     ],
-    future_real_estate_data: sampleNoDescription,
+    future_real_estate_data: [sampleNoDescription],
 
     // Step 4
     vehicle: answers.yes,

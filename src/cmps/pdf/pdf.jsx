@@ -2,9 +2,9 @@ import React from 'react';
 import { Page, Text, View, Document, StyleSheet, PDFViewer, Font } from '@react-pdf/renderer';
 import HebrewRegular from "../../assets/fonts/NotoSansHebrew-Regular.ttf"
 import HebrewBold from "../../assets/fonts/NotoSansHebrew-Bold.ttf"
-import Step1 from './Step1';
-import Step2 from './Step2/Step2';
-import Step3 from './Step3/Step3';
+import Step1 from './Steps/Step1';
+import Step2 from './Steps/Step2/Step2';
+import Step3 from './Steps/Step3';
 // import Page1 from './Page1';
 
 Font.register({

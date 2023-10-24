@@ -1,12 +1,12 @@
 import React from 'react'
-import Table from '../../Table'
-import Subtitle from '../../Subtitle'
-import translation from '../../../../store/translation'
-import TableHeader from '../../TableHeader'
-import RowHeader from '../../RowHeader'
-import TableRow from '../../TableRow'
-import TableCell from '../../TableCell'
-import data from '../../../../store/sampleData'
+import Table from '../../../Table'
+import Subtitle from '../../../Subtitle'
+import translation from '../../../../../store/translation'
+import TableHeader from '../../../TableHeader'
+import RowHeader from '../../../RowHeader'
+import TableRow from '../../../TableRow'
+import TableCell from '../../../TableCell'
+import data from '../../../../../store/sampleData'
 
 function Step2Guardians() {
     const needGuardians = () => {

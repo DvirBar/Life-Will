@@ -1,12 +1,12 @@
 import React from 'react'
-import DocPage from '../DocPage'
-import Title from '../Title'
-import translation from '../../../store/translation'
+import DocPage from '../../DocPage'
+import Title from '../../Title'
+import translation from '../../../../store/translation'
 import Step2Partners from './Page2/Step2Partners'
 import Step2Kids from './Page2/Step2Kids'
-import Divider from '../Divider'
+import Divider from '../../Divider'
 import Step2Guardians from './Page2/Step2Guardians'
-import MoreNextPage from '../MoreNextPage'
+import MoreNextPage from '../../MoreNextPage'
 import { StyleSheet, View } from '@react-pdf/renderer'
 
 const styles = StyleSheet.create({

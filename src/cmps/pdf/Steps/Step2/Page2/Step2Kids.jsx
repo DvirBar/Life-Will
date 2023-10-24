@@ -1,12 +1,12 @@
 import React from 'react'
-import QuestionBlock from '../../QuestionBlock'
-import translation, { answers } from '../../../../store/translation'
-import data from '../../../../store/sampleData'
-import Table from '../../Table'
-import RowHeader from '../../RowHeader'
-import TableHeader from '../../TableHeader'
-import TableRow from '../../TableRow'
-import TableCell from '../../TableCell'
+import QuestionBlock from '../../../QuestionBlock'
+import translation, { answers } from '../../../../../store/translation'
+import data from '../../../../../store/sampleData'
+import Table from '../../../Table'
+import RowHeader from '../../../RowHeader'
+import TableHeader from '../../../TableHeader'
+import TableRow from '../../../TableRow'
+import TableCell from '../../../TableCell'
 
 function Step2Kids() {
     return (

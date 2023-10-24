@@ -3,8 +3,10 @@ import { Text, StyleSheet, View } from '@react-pdf/renderer';
 
 
 
-
 function QuestionBlock({ question, answer, newLine }) {
+    if (!question || answer?.length === '') {
+        return <></>
+    }
     const questionView = (question[question.length - 1] === '?') ? question : (question + ':')
 
     const styles = StyleSheet.create({
@@ -17,12 +19,12 @@ function QuestionBlock({ question, answer, newLine }) {
             textDecoration: 'underline'
         },
     });
+
     return (
         <Text style={styles.questionBlock}>
             <Text>{answer}</Text>&nbsp;
             <Text style={styles.question}>{questionView}</Text>
         </Text>
-
     )
 }
 
