@@ -1,19 +1,39 @@
 import React, { createContext, useState } from "react";
-
+import { answers, giveToFamilyTypesKeys } from "./translation";
 
 export const SiteContext = createContext(null);
+// TODO: Add types of non profits
 
+const personInfo = {
+	first_name: '',
+	last_name: '',
+	person_id: '',
+}
+
+const itemNoDescription = {
+	remarks: '',
+	inheritors: []
+}
+
+const itemData = {
+	description: '',
+	...itemNoDescription
+}
+
+const hebrewBirthDate = {
+	day: '',
+	month: '',
+	year: ''
+}
 
 const SiteProvider = ({ children }) => {
-	console.log("site provider rendered");
 	const [data, setData] = useState({
 		// Step 1
 		first_name: '',
 		last_name: '',
 		birthDate: '',
-		hebrew_day: '',
-		hebrew_month: '',
-		hebrew_year: '',
+		// TODO: Should probably be enum
+		hebrewBirthDate,
 		gender: 'other',
 		edited_by: 'כן',
 		// TODO: Add field
@@ -21,7 +41,6 @@ const SiteProvider = ({ children }) => {
 		email: '',
 		phone: '',
 		address: '',
-		// TODO: CLARIFY - If they have another citizenship - should they say what?
 		citizenship: 'לא',
 		passport_id: '',
 		// Step 2
@@ -31,70 +50,59 @@ const SiteProvider = ({ children }) => {
 		partner_first_name: '',
 		partner_last_name: '',
 		partner_id: '',
-		// TODO: CLARIFY - can there be more than 1 ex partners?
+		// TODO: CLARIFY - if status is married we should also show ex partners (not just when divorced) 
 		ex_partner_gain: 'לא',
-		ex_partner_first_name: '',
-		ex_partner_last_name: '',
+		ex_partners: [
+			{
+				...personInfo,
+				gender: ''
+			}
+		],
 		// TODO: enum
 		kids: '',
 		num_of_kids: '',
 		kids_data: [
 			{
-				id: '',
+				...personInfo,
 				gender: '',
-				first_name: '',
-				last_name: '',
 				birthDate: '',
-
-				hebrewBirthDate: '',
+				hebrewBirthDate,
 				has_disability: '',
-				// TODO: CLARIFY - In case birth date is under what age?
-				// TODO: CLARIFY - Should I give details of the guardian of minor?
-				// TODO: CLARIFY - Can a disabled child guardian only be on of the siblings? what details?
-				guardian: ''
+				guardian_data: null
 			}
 		],
 		give_to_family: 'לא',
 		// TODO: make it multi option
 		// TODO: enum
 		give_to_family_type: {
-			parents: [],
-			siblings: [],
-			friends: [],
-			grandchildren: []
+			[giveToFamilyTypesKeys.parents]: [],
+			[giveToFamilyTypesKeys.siblings]: [],
+			[giveToFamilyTypesKeys.friends]: [],
+			[giveToFamilyTypesKeys.grandChildren]: []
 		},
+
 		// Step 3
 		// TODO: enum
-		real_estate: 'לא',
+		real_estate: answers.no,
 		real_estate_data: [
-			{
-				// TODO: enum
-				type: '',
-				own_percentage: '',
-				country: '',
-				city: '',
-				street: '',
-				house_number: '',
-				block: '',
-				lot: '',
-				sub_lot: '',
-				size: '',
-				description: '',
-				// TODO: CLARIFY: If only one inheritors - it means we shouldn't devide? בשלמות
-				inheritors: [
-					{
-						// TODO: enum
-						type: '',
-						// TODO: CLARIFY: is it percentage out of own percentage?
-						// TODO: CLARIFY: is the percentage always equal?
-						percentage: '',
-						remarks: ''
-					}
-				]
-
-				// TODO: CLARIFY: is it just future real estate? 
-			}
+			// {
+			//     // TODO: enum
+			//     type: '',
+			//     own_percentage: '',
+			//     country: '',
+			//     city: '',
+			//     street: '',
+			//     house_number: '',
+			//     block: '',
+			//     lot: '',
+			//     sub_lot: '',
+			//     size: '',
+			//     ...itemData
+			// }
 		],
+		future_real_estate_data: itemNoDescription,
+
+		// Step 4
 		vehicle: 'לא',
 		vehicle_data: [
 			{
@@ -105,119 +113,44 @@ const SiteProvider = ({ children }) => {
 				model: '',
 				year: '',
 				color: '',
-				description: '',
-				inheritors: [
-					{
-						// TODO: enum
-						type: '',
-						percentage: '',
-						remarks: ''
-					}
-				]
+				...itemData
 			}
 		],
 		jewelry: 'לא',
-		jewelry_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		jewelry_data: [itemData],
 		tool: 'לא',
 		tool_data: [
 			{
 				// TODO: enum
 				type: '',
-				description: '',
-				inheritors: []
+				...itemData
 			}
 		],
 		art: 'לא',
-		art_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		art_data: [itemData],
 		musical_instruments: 'לא',
-		musical_instruments_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		musical_instruments_data: [itemData],
 		unique_collection: 'לא',
-		unique_collection_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		unique_collection_data: [itemData],
 		furniture: 'לא',
-		furniture_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		furniture_data: [itemData],
 		books: 'לא',
-		books_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		books_data: [itemData],
 		clothes: 'לא',
-		clothes_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		clothes_data: [itemData],
 		appliances: 'לא',
-		appliances_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		appliances_data: [itemData],
 		sport_equipment: 'לא',
-		sport_equipment_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		sport_equipment_data: [itemData],
 		pets: 'לא',
-		pets_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		pets_data: [itemData],
 		digital_assets: 'לא',
-		digital_assets_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		digital_assets_data: [itemData],
 		items: 'לא',
-		items_data: [
-			{
-				description: '',
-				inheritors: []
-			}
-		],
+		items_data: [itemData],
 		other_inheritance: 'לא',
-		other_inheritance_data: [
-			{
-				// TODO: enum
-				type: '',
-				description: '',
-				inheritors: []
-			}
-		],
+		other_inheritance_data: [itemData],
+		future_items_data: itemNoDescription,
 
 		// Step 5
 		money: '',
@@ -246,8 +179,6 @@ const SiteProvider = ({ children }) => {
 		non_profit_provision_data: [
 			{
 				// TODO: enum
-				non_profit_provision_size: '',
-				// TODO: CLARIFY: should one specify a specific non_profit?
 				non_profit_name: '',
 				non_profit_provision_percentage: '',
 				non_profit_message: 'לא',
@@ -256,13 +187,11 @@ const SiteProvider = ({ children }) => {
 		],
 		// TODO: enum - either equal or by decision
 		money_devision: '',
-		// TODO: CLARIFY - if equal is chosen, do we still need to specify?
 		money_devision_inheritors: [
 			{
 				first_name: '',
 				last_name: '',
-				// TODO: CLARIFY - what details?
-				details: '',
+				person_id: '',
 				percentage: ''
 			}
 		],
@@ -273,19 +202,17 @@ const SiteProvider = ({ children }) => {
 		funeral_in_charge_details: {
 			first_name: '',
 			last_name: '',
-			id: ''
+			person_id: ''
 		},
 		edi_card: '',
 		organ_donation: '',
-		// TODO: CLARIFY - can they write something for multiple people?
 		relatives_message: ''
 	})
-	console.log(data);
+
 	const [selectedStage, setSelectedStage] = useState(0)
 	const [selectedStep, setSelectedStep] = useState(0)
 
 	const moveNextStep = (isFinalStep = false) => {
-		console.log("moveNextStep");
 		setSelectedStep(currStep => {
 			if (isFinalStep) {
 				return 0
