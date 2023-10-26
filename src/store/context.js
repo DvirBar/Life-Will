@@ -186,8 +186,8 @@ const SiteProvider = ({ children }) => {
 			}
 		],
 		// TODO: enum - either equal or by decision
-		money_devision: '',
-		money_devision_inheritors: [
+		money_division: '',
+		money_division_inheritors: [
 			{
 				first_name: '',
 				last_name: '',
@@ -206,7 +206,8 @@ const SiteProvider = ({ children }) => {
 		},
 		edi_card: '',
 		organ_donation: '',
-		relatives_message: ''
+		relatives_message: '',
+		relatives_message_content: 'הודעה שנכתבה ליקירים'
 	})
 
 	const [selectedStage, setSelectedStage] = useState(0)

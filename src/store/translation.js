@@ -90,6 +90,14 @@ export const giveToFamilyTypesKeys = {
     grandChildren: 'grandChildren'
 }
 
+export const toolsTypes = {
+    silver: 'כלי כסף',
+    gold: 'כלי זהב',
+    food: 'כלי אוכל',
+    judaica: 'יודאיקה',
+    other: 'אחר'
+}
+
 export const giveToFamilyTypes = {
     [giveToFamilyTypesKeys.parents]: 'הורים',
     [giveToFamilyTypesKeys.siblings]: 'אחים אחיות',
@@ -99,14 +107,21 @@ export const giveToFamilyTypes = {
 
 export const inheritanceKeys = {
     real_estate: 'real_estate',
-    future_real_estate: 'future_real_estate',
+    future_real_estate: 'future_real_estate'
+}
+export const inheritanceKeysStep4 = {
     vehicle: 'vehicle',
     jewelry: 'jewelry',
+    tools: 'tools',
     art: 'art',
     musical_instruments: 'musical_instruments',
     unique_collection: 'unique_collection',
     furniture: 'furniture',
     books: 'books',
+    clothes: 'clothes',
+    appliances: 'appliances',
+    sport_equipment: 'sport_equipment',
+    pets: 'pets',
     digital_assets: 'digital_assets',
     items: 'items',
     other_inheritance: 'other_inheritance',
@@ -201,19 +216,21 @@ const translation = {
     {
         // TODO: enum
         type: 'סוג',
-        license_plate: 'זיהוי',
-        manufacturer: 'יצרן',
-        model: 'דגם',
-        year: 'שנה',
-        color: 'צבע',
+        details: {
+            license_plate: 'זיהוי',
+            manufacturer: 'יצרן',
+            model: 'דגם',
+            year: 'שנה',
+            color: 'צבע',
+        },
         ...assetsData
     },
     jewelry_title: 'תכשיטים',
     jewelry: 'האם קיים ברשותך תכשיטים שהיית רוצה להוריש?',
     jewelry_data: assetsData,
-    tool_title: 'כלים',
-    tool: 'האם קיים ברשותך כלים שהיית רוצה להוריש?',
-    tool_data:
+    tools_title: 'כלים',
+    tools: 'האם קיים ברשותך כלים שהיית רוצה להוריש?',
+    tools_data:
     {
         // TODO: enum
         type: 'סוג',
@@ -278,6 +295,7 @@ const translation = {
     step5: 'שלב ה׳ - כספים',
     money_title: 'כסף',
     money: 'כמה כסף בערך קיים ברשותך או בבנק?',
+    money_ils: 'ש״ח',
     bank_accounts_title: 'חשבונות בנק',
     bank_accounts:
     {
@@ -286,10 +304,13 @@ const translation = {
         branch_number: 'מספר סניף'
     },
     provident_fund: 'האם קיימת ברשותך קופת גמל?',
+    provident_fund_title: 'קופת גמל',
     provident_fund_data: fund_data,
-    study_fund: '?האם קיימת ברשותך קרן השתלמות',
+    study_fund: 'האם קיימת ברשותך קרן השתלמות?',
+    study_fund_title: 'קרן השתלמות',
     study_fund_data: fund_data,
     non_profit_provision: 'האם תרצה להפריש מהירושה שלך לעמותות הפועלות כאן בארץ?',
+    non_profit_provision_title: 'הפרשה לעמותה',
     non_profit_provision_data: {
         non_profit_provision_size: 'האם תרצה להפריש לעמותה גדולה או קטנה?',
         non_profit_name: 'שם העמותה',
@@ -297,8 +318,8 @@ const translation = {
         non_profit_message: 'תרצה להשאיר הודעה לעמותה?',
         non_profit_message_content: 'תוכן ההודעה'
     },
-    money_devision: 'איך תרצה לחלק את עיזבונך הכספי בין משפחתך?',
-    money_devision_inheritors: {
+    money_division: 'איך תרצה לחלק את עיזבונך הכספי בין משפחתך?',
+    money_division_inheritors: {
         ...personInfo,
         percentage
     },

@@ -16,24 +16,22 @@ function ItemInheritanceBlock({ itemKey }) {
     const itemData = data[`${itemKey}_data`]
     return (
         <View>
-            {(!data[itemKey] || data[itemKey] === answers.yes) &&
-                <>
-                    {/* Subtitle is wrapped with first block - Makes sure that wrapped views won't 
-                        leave subtitle in the previous page */}
-                    <View style={styles.wrappedView} wrap={false}>
-                        <Subtitle>{title}</Subtitle>
-                        {itemData?.length > 0
-                            ? <ItemInheritance item={itemData[0]} itemKey={itemKey} index={0} numItems={data[`${itemKey}_data`].length} />
-                            : <Text>{"אין"}</Text>
-                        }
-                    </View>
+            <>
+                {/* Subtitle is wrapped with first block - Makes sure that wrapped views won't 
+                    leave subtitle in the previous page */}
+                <View style={styles.wrappedView} wrap={false}>
+                    <Subtitle>{title}</Subtitle>
+                    {itemData?.length > 0
+                        ? <ItemInheritance item={itemData[0]} itemKey={itemKey} index={0} numItems={data[`${itemKey}_data`].length} />
+                        : <Text>{"אין"}</Text>
+                    }
+                </View>
 
-                    {itemData?.map((item, index) =>
-                        index > 0 &&
-                        <ItemInheritance item={item} itemKey={itemKey} index={index} numItems={data[`${itemKey}_data`].length} />
-                    )}
-                </>
-            }
+                {itemData?.map((item, index) =>
+                    index > 0 &&
+                    <ItemInheritance item={item} itemKey={itemKey} index={index} numItems={data[`${itemKey}_data`].length} />
+                )}
+            </>
         </View>
     )
 }

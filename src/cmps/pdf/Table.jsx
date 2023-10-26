@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 
 function Table({ children }) {
     return (
-        <View style={styles.table}>
+        <View wrap={false} style={styles.table}>
             {children}
         </View>
     )

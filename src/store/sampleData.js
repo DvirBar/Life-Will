@@ -1,4 +1,4 @@
-import { answers, giveToFamilyTypesKeys, guardianTypes, inheritorsTypes, moneyDivision, realEstateTypes, vehicleTypes } from "./translation";
+import { answers, giveToFamilyTypesKeys, guardianTypes, inheritorsTypes, moneyDivision, realEstateTypes, toolsTypes, vehicleTypes } from "./translation";
 
 
 const sampleInheritors = [
@@ -20,11 +20,49 @@ const sampleInheritors = [
         type: inheritorsTypes.nonprofit,
         first_name: 'עמותה כלשהי',
         percentage: "10%"
+    }
+]
+
+const kids_data = [
+    {
+        person_id: '444444444',
+        gender: 'זכר',
+        first_name: 'ילד1',
+        last_name: 'ישראלי',
+        birthDate: '01/01/2000',
+        hebrewBirthDate: 'כ״ג טבת תש״ס',
+        has_disability: 'לא',
+        guardian: null
     },
     {
-        type: inheritorsTypes.nonprofit,
-        first_name: 'עמותה כלשהי',
-        percentage: "10%"
+        person_id: '555555555',
+        gender: 'נקבה',
+        first_name: 'ילד2',
+        last_name: 'ישראלי',
+        birthDate: '01/01/2017',
+        hebrewBirthDate: 'ג׳ טבת תשע״ז',
+        has_disability: 'לא',
+        guardian_data: {
+            type: guardianTypes.other,
+            first_name: 'אפוטרופוס',
+            last_name: 'אפוטרופוס',
+            person_id: '666666666'
+        }
+    },
+    {
+        person_id: '777777777',
+        gender: 'זכר',
+        first_name: 'ילד3',
+        last_name: 'ישראלי',
+        birthDate: '01/01/2002',
+        hebrewBirthDate: 'י״ז טבת תשס״ב',
+        has_disability: 'כן',
+        guardian_data: {
+            type: guardianTypes.other,
+            first_name: 'אפוטרופוס',
+            last_name: 'אפוטרופוס',
+            person_id: '666666666'
+        }
     }
 ]
 
@@ -79,48 +117,7 @@ const data = {
     // TODO: enum
     kids: answers.yes,
     num_of_kids: '3',
-    kids_data: [
-        {
-            person_id: '444444444',
-            gender: 'זכר',
-            first_name: 'ילד1',
-            last_name: 'ישראלי',
-            birthDate: '01/01/2000',
-            hebrewBirthDate: 'כ״ג טבת תש״ס',
-            has_disability: 'לא',
-            guardian: null
-        },
-        {
-            person_id: '555555555',
-            gender: 'נקבה',
-            first_name: 'ילד2',
-            last_name: 'ישראלי',
-            birthDate: '01/01/2017',
-            hebrewBirthDate: 'ג׳ טבת תשע״ז',
-            has_disability: 'לא',
-            guardian_data: {
-                type: guardianTypes.other,
-                first_name: 'אפוטרופוס',
-                last_name: 'אפוטרופוס',
-                person_id: '666666666'
-            }
-        },
-        {
-            person_id: '777777777',
-            gender: 'זכר',
-            first_name: 'ילד3',
-            last_name: 'ישראלי',
-            birthDate: '01/01/2002',
-            hebrewBirthDate: 'י״ז טבת תשס״ב',
-            has_disability: 'כן',
-            guardian_data: {
-                type: guardianTypes.other,
-                first_name: 'אפוטרופוס',
-                last_name: 'אפוטרופוס',
-                person_id: '666666666'
-            }
-        }
-    ],
+    kids_data,
     give_to_family: answers.yes,
     // TODO: make it multi option
     // TODO: enum
@@ -195,27 +192,34 @@ const data = {
     vehicle_data: [
         {
             type: vehicleTypes.airplane,
-            license_plate: '4X-CDR',
-            manufacturer: 'ססנה',
-            model: '172',
-            year: '1997',
-            color: 'כחול',
+            details: {
+                license_plate: '4X-CDR',
+                manufacturer: 'ססנה',
+                model: '172',
+                year: '1997',
+                color: 'כחול',
+            },
             ...sampleData
         },
         {
             type: vehicleTypes.vehicle,
-            license_plate: '1111111',
-            manufacturer: 'סוסיתא',
-            model: 'רום כרמל',
-            year: '1981',
-            color: 'ירוק',
+            details: {
+                license_plate: '1111111',
+                manufacturer: 'סוסיתא',
+                model: 'רום כרמל',
+                year: '1981',
+                color: 'ירוק',
+            },
             ...sampleData
         }
     ],
     jewelry: answers.yes,
     jewelry_data: [sampleData],
-    tool: answers.yes,
-    tool_data: [sampleData],
+    tools: answers.yes,
+    tools_data: [{
+        type: toolsTypes.other,
+        ...sampleData
+    }],
     art: answers.no,
     art_data: [],
     musical_instruments: answers.yes,
@@ -240,7 +244,7 @@ const data = {
     items_data: [sampleData],
     other_inheritance: answers.no,
     other_inheritance_data: [],
-    future_items_data: sampleNoDescription,
+    future_items_data: [sampleNoDescription],
 
     // Step 5
     money: '1000000',
@@ -276,10 +280,26 @@ const data = {
         }
     ],
     // TODO: enum - either equal or by decision
-    money_devision: moneyDivision.byDecision,
-    money_devision_inheritors: [
-        sampleInheritors[0],
-        sampleInheritors[1]
+    money_division: moneyDivision.byDecision,
+    money_division_inheritors: [
+        {
+            ...kids_data[0],
+            percentage: '30%'
+        },
+        {
+            ...kids_data[1],
+            percentage: '30%'
+        },
+        {
+            ...kids_data[2],
+            percentage: '30%'
+        },
+        {
+            first_name: 'ישראלה',
+            last_name: 'ישראלי',
+            person_id: '111111111',
+            percentage: '10%'
+        },
     ],
 
     // Step 6
@@ -289,7 +309,8 @@ const data = {
     funeral_in_charge_details: sampleInheritors[1],
     edi_card: answers.yes,
     organ_donation: answers.yes,
-    relatives_message: 'הודעה שנכתבה ליקירים'
+    relatives_message: answers.yes,
+    relatives_message_content: 'זה תוכן ההודעה שנכתב ליקירים'
 }
 
 export default data

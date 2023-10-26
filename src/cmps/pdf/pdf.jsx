@@ -5,6 +5,9 @@ import HebrewBold from "../../assets/fonts/NotoSansHebrew-Bold.ttf"
 import Step1 from './Steps/Step1';
 import Step2 from './Steps/Step2/Step2';
 import Step3 from './Steps/Step3';
+import Step4 from './Steps/Step4';
+import Step5 from './Steps/Step5';
+import Step6 from './Steps/Step6';
 // import Page1 from './Page1';
 
 Font.register({
@@ -61,6 +64,9 @@ export default function MyDocument() {
                 <Step1 />
                 <Step2 />
                 <Step3 />
+                <Step4 />
+                <Step5 />
+                <Step6 />
             </Document>
         </PDFViewer>
     )
