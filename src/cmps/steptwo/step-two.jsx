@@ -1,13 +1,25 @@
 import React, { useContext } from 'react';
 
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import StepTwoContinue from './step-two-continue';
-import StepTwoContinue2 from './step-two-continue2';
 import { SiteContext } from '../../store/context';
+import { PartnerDetails } from '../formikcomponents/partner-details';
+
+const validatePartnerDetails = ((errors, status, ...partnerData) => {
+	const [
+		firstName,
+		lastName,
+		id
+	] = partnerData;
+
+	if (!(firstName && lastName && id))
+		errors.partnerError = "יש למלא את פרטים הנדרשים";
+	else
+		errors = {};
+})
 
 const stepTwoValidationSchema = Yup.object({
-	status: Yup.string().required(),
+	status: Yup.string().required("יש לבחור את הסטטוס")
 })
 
 export default function StepTwo() {
@@ -17,9 +29,21 @@ export default function StepTwo() {
 		moveNextStep
 	} = useContext(SiteContext);
 
-	const handleSubmit = (values, actions) => {
+	const handleSubmit = (values, actions, meta) => {
 		setData({ ...values });
 		moveNextStep();
+	}
+
+	const validate = (values, props) => {
+		debugger;
+		const errors = {};
+		validatePartnerDetails(
+			errors,
+			values.status,
+			values.partner_first_name,
+			values.partner_last_name,
+			values.partner_id)
+		return errors;
 	}
 
 	return (
@@ -28,6 +52,7 @@ export default function StepTwo() {
 				validationSchema={stepTwoValidationSchema}
 				initialValues={data}
 				onSubmit={handleSubmit}
+				validate={validate}
 			>
 				{({ values }) => {
 					return (
@@ -63,6 +88,8 @@ export default function StepTwo() {
 									גרוש
 								</label>
 							</div>
+							<ErrorMessage name="status" />
+
 							{values.status === 'נשוי' && <div>
 								<div className='partner-details'>
 									<h3>אני נשוי ל-</h3>
@@ -77,11 +104,7 @@ export default function StepTwo() {
 										</label>
 									</div>
 								</div>
-								<div className='partner-details'>
-									<Field name="partner_first_name" placeholder='שם פרטי' />
-									<Field name="partner_last_name" placeholder='שם משפחה' />
-									<Field name="partner_id" type="number" placeholder='ת.ז' />
-								</div>
+								<PartnerDetails className="partner-details" />
 							</div>}
 							{values.status === 'שותפות' && <div>
 								<div className='partner-details'>
@@ -97,11 +120,7 @@ export default function StepTwo() {
 										</label>
 									</div>
 								</div>
-								<div className='partner-details'>
-									<Field name="partner_first_name" placeholder='שם פרטי' />
-									<Field name="partner_last_name" placeholder='שם משפחה' />
-									<Field name="partner_id" type="number" placeholder='ת.ז' />
-								</div>
+								<PartnerDetails className="partner-details" />
 							</div>}
 							{values.status === 'גרוש' && <div>
 								<div role="group" className="status-group flex space-between input-btn">
@@ -129,11 +148,7 @@ export default function StepTwo() {
 											</label>
 										</div>
 									</div>
-									<div className='partner-details'>
-										<Field name="partner_first_name" placeholder='שם פרטי' />
-										<Field name="partner_last_name" placeholder='שם משפחה' />
-										<Field name="partner_id" type="number" placeholder='ת.ז' />
-									</div>
+									<PartnerDetails className="partner-details" />
 								</>}
 							</div>}
 							{/* <StepTwoContinue next={next} prev={prev} data={data} />

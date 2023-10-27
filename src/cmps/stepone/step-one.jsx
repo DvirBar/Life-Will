@@ -5,9 +5,19 @@ import * as Yup from 'yup';
 
 import { HebrewMonthInput } from '../formikcomponents/hebrew-month-input';
 import { HebrewDayInput } from '../formikcomponents/hebrew-day-input';
+
+import translation from '../../store/translation';
+
+import sampleData from '../../store/sampleData';
+
 export const validationSchema = Yup.object().shape({
-	first_name: Yup.string().required('Required').label("שם פרטי"),
-	last_name: Yup.string().required('Required').label("שם משפחה"),
+	first_name: Yup.string().required('יש להזין שם פרטי').label("שם פרטי"),
+	last_name: Yup.string().required('יש להזין שם משפחה').label("שם משפחה"),
+	birthDate: Yup.date().required('יש להזין תאריך לידה'),
+	gender: Yup
+		.string()
+		.oneOf(["זכר", "נקבה", "אחר"])
+		.required('נדרש לבחור את המגדר').label("מגדר")
 	//email: Yup.string().email('Invalid email').required('Required'),
 });
 
@@ -27,14 +37,15 @@ export default function StepOne() {
 	// 	const isAgeOver18 = diff.getUTCFullYear() - 1970 < 18 ? false : true
 	// 	next(values, false, false, isAgeOver18)
 	// }
-	const handleSubmit = (values, actions) => {
+	const handleSubmit = (values) => {
 		setData({ ...values })
 		moveNextStep();
 	}
+
 	return (
 		<Formik
 			validationSchema={validationSchema}
-			initialValues={data}
+			initialValues={sampleData}
 			onSubmit={handleSubmit}
 		>
 			{({ values }) => {
@@ -43,33 +54,33 @@ export default function StepOne() {
 					<Form>
 						<div className="input-container">
 							<div className="input-container-formik">
-								<Field name="first_name" placeholder='שם פרטי' />
+								<Field name="first_name" placeholder={`${translation.first_name}`} />
 								<ErrorMessage name="first_name" />
-								<Field name="last_name" placeholder='שם משפחה' />
+								<Field name="last_name" placeholder={`${translation.last_name}`} />
 								<ErrorMessage name="last_name" />
 							</div>
 							<div className="input-container-formik">
 								<p>מה התאריך לידה שלך</p>
-								{/* <input placeholder='תאריך לידה' type="date" name="birthDate" required /> */}
 								<Field
 									name="birthDate"
 									type="date"
 									className="birthDate"
 									placeholder="dd/mm/yyyy"
 								/>
-								<p>תאריך עברי(לא חובה*)</p>
+								<ErrorMessage name="birthDate" />
+								<p>תאריך לידה עברי*</p>
 								<div className="display-rows">
 									<label>
 										שנה
-										<Field name="hebrew_year" />
+										<Field name="hebrewBirthDate.year" />
 									</label>
 									<label>
 										חודש
-										<HebrewMonthInput name="hebrew_month" />
+										<HebrewMonthInput name="hebrewBirthDate.month" />
 									</label>
 									<label>
 										יום
-										<HebrewDayInput name="hebrew_day" />
+										<HebrewDayInput name="hebrewBirthDate.day" />
 									</label>
 
 								</div>
@@ -86,10 +97,15 @@ export default function StepOne() {
 											<Field type="radio" name="gender" value="נקבה" />
 											נקבה
 										</label>
+										<label className={`${values.gender === "אחר" ? 'active' : ''}`}>
+											<Field type="radio" name="gender" value="אחר" />
+											אחר
+										</label>
 									</div>
 								</div>
+								<ErrorMessage name="gender" />
 								<div role="group">
-									<p>האם ערכת את הצוואה לבד?</p>
+									<p>{`${translation.edited_by}`}</p>
 									<div className="status-group flex space-between input-btn">
 										<label className={`${values.edited_by === "לא" ? 'active' : ''}`}>
 											<Field type="radio" name="edited_by" value="לא" />
@@ -101,7 +117,7 @@ export default function StepOne() {
 										</label>
 									</div>
 								</div>
-
+								<ErrorMessage name="edited_by" />
 							</div>
 							{/* <button onClick={() => moveNextStep()}>המשך</button> */}
 							{/* <button onClick={() => nextStepHandler(formikProps, false, submitForm)}>המשך</button> */}

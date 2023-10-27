@@ -2,9 +2,13 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
 import * as Yup from "yup";
 import { SiteContext } from "../../store/context";
-
+import translation from '../../store/translation';
 const stepOneContinueValidationSchema = Yup.object({
-	email: Yup.string().required().email().label("Email"),
+	email: Yup.string().required("יש להזין את הדואר האלקטרוני").email().label("Email"),
+	citizenship: Yup.string().oneOf(["כן", "לא"]).required("יש לבחור האם קיימת אזרחות"),
+	person_id: Yup.number().required("יש להזין תעודת זהות"),
+	phone: Yup.string().required("יש להזין את הטלפון"),
+	address: Yup.string().required("יש להזין את הכתובת")
 })
 
 export default function StepOneContinue() {
@@ -31,8 +35,9 @@ export default function StepOneContinue() {
 						<Form className="input-container">
 							<div className="input-container-formik">
 								<Field name="person_id" type="number" placeholder='תז' />
+								<ErrorMessage name="person_id" />
 								<div role="group">
-									<p>האם יש בבעלותך אזרחות נוספת?</p>
+									<p>{translation.citizenship}</p>
 									<div className="status-group flex space-between input-btn">
 										<label className={`${values.citizenship === "לא" ? 'active' : ''}`}>
 											<Field type="radio" name="citizenship" value="לא" />
@@ -48,7 +53,9 @@ export default function StepOneContinue() {
 								<Field name="email" placeholder="מייל" />
 								<ErrorMessage name="email" />
 								<Field name="phone" type="number" placeholder='פלאפון' />
+								<ErrorMessage name="phone" />
 								<Field name="address" placeholder='עיר, רחוב ומספר בית' />
+								<ErrorMessage name="address" />
 								{/* <Field name="company" placeholder='שם חברה / עסק' /> */}
 								{/* <Field name="city" placeholder='עיר / יישוב' /> */}
 								{/* <Field name="companyID" placeholder='ח.פ' /> */}
