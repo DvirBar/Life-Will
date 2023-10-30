@@ -17,53 +17,73 @@ export default function StepTwoContinue() {
 		moveNextStep();
 	}
 
+	const handleValidate = () => {
+		const errors = {};
+		return errors;
+	}
+
+	const addKid = (arrayHelpers) => {
+		const personInfo = {
+			first_name: '',
+			last_name: '',
+			person_id: '',
+		}
+		const hebrewBirthDate = {
+			day: '',
+			month: '',
+			year: ''
+		}
+		const initialModel = {
+			...personInfo,
+			gender: '',
+			birthDate: '',
+			hebrewBirthDate,
+			has_disability: '',
+			guardian_data: null
+		}
+
+		arrayHelpers.push({ initialModel });
+	}
 
 	const renderKidsForm = (values) => {
 		return (
 			<FieldArray
 				name="kids_data"
-				render={arrayHelpers => (
-					<div>
-						{
-							(
-								values.kids_data.map((kid, i) => (
-									<div key={i} className="flex gap direction-rtl">
-										<div
-											className='flex align-center pointer'
-											style={{ visibility: (i === values.kids_data.length - 1 && i > 0) ? "visible" : "hidden" }}
-											onClick={() => arrayHelpers.remove(i)}> -
-										</div>
-										<Field key={`kids_data[${i}].id`} name={`kids_data[${i}].id`} type="number" placeholder={`תז של ילד מספר ${i + 1}`} />
-										<Field key={`kids_data.${i}.first_name`} name={`kids_data.${i}.first_name`} placeholder={`שם פרטי ${i + 1}`} />
-										<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
-										<div
-											className='flex align-center pointer'
-											onClick={() => { arrayHelpers.push({ id: '', first_name: '', last_name: '' }) }}>+</div>
-									</div>
-								))
-							)
-						}
-					</div >
-				)
-				}
+				render={arrayHelpers => {
+					return (
+						<div>
+							{
 
+								(
+									values.kids_data.map((kid, i) => (
+										<div key={i} className="flex wrap row gap direction-rtl">
+											<div
+												className='flex align-center pointer'
+												style={{ visibility: (i === values.kids_data.length - 1 && i > 0) ? "visible" : "hidden" }}
+												onClick={() => arrayHelpers.remove(i)}> -
+											</div>
+											<Field key={`kids_data[${i}].id`} name={`kids_data[${i}].id`} type="number" placeholder={`תז של ילד מספר ${i + 1}`} />
+											<Field key={`kids_data.${i}.first_name`} name={`kids_data.${i}.first_name`} placeholder={`שם פרטי ${i + 1}`} />
+											<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
+											<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
+											<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
+											<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
+											<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
+											<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
+											<div
+												className='flex align-center pointer'
+												onClick={() => { addKid(arrayHelpers) }}>+</div>
+										</div>
+									))
+								)
+							}
+						</div >
+					)
+				}
+				}
 			/>
 		);
-		// <div key={`${i}`} className="flex gap direction-rtl">
-		// 	<div className='flex align-center pointer' style={{ visibility: (i === data.kids_data.length - 1 && i > 0) ? "visible" : "hidden" }} onClick={() => onRemoveKid(i)}>-</div>
-		// 	<Field key={`id${i}`} onChange={(ev) => updateKidsData(ev, i)} name={`id${i}`} type="number" placeholder={`תז של ילד מספר ${i + 1}`} />
-		// 	<Field key={`first_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'first-name')} name={`first_name${i}`} placeholder={`שם פרטי ${i + 1}`} />
-		// 	<Field key={`last_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'last-name')} name={`last_name${i}`} placeholder={`שם משפחה ${i + 1}`} />
-		// 	<div className='flex align-center pointer' onClick={onAddKid}>+</div>
-		// </div>
-
-
 	}
-
-	// const handleSubmit = (values) => {
-	//     next(values, false)
-	// }
-
 
 	return (
 		<>
@@ -71,6 +91,7 @@ export default function StepTwoContinue() {
 				//validationSchema={validationSchema}
 				initialValues={data}
 				onSubmit={handleSubmit}
+				validate={handleValidate}
 			>
 				{({ values, resetForm }) => {
 					return (

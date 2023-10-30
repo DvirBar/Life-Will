@@ -5,17 +5,22 @@ import * as Yup from "yup";
 import { SiteContext } from '../../store/context';
 import { PartnerDetails } from '../formikcomponents/partner-details';
 
-const validatePartnerDetails = ((errors, status, ...partnerData) => {
+const validatePartnerDetails = ((errors, status, allocateToDivorsed, ...partnerData) => {
 	const [
 		firstName,
 		lastName,
 		id
 	] = partnerData;
 
-	if (!(firstName && lastName && id))
+	const toAllocateForDivorsed = allocateToDivorsed === "כן" ? true : false;
+	const isPartnerDetailsRequired = ["שותפות", "נשוי"].includes(status) || (toAllocateForDivorsed && status === "גרוש");
+
+	if (isPartnerDetailsRequired && !(firstName && lastName && id)) {
 		errors.partnerError = "יש למלא את פרטים הנדרשים";
-	else
+	}
+	else {
 		errors = {};
+	}
 })
 
 const stepTwoValidationSchema = Yup.object({
@@ -34,12 +39,12 @@ export default function StepTwo() {
 		moveNextStep();
 	}
 
-	const validate = (values, props) => {
-		debugger;
+	const handleValidate = (values) => {
 		const errors = {};
 		validatePartnerDetails(
 			errors,
 			values.status,
+			values.ex_partner_gain,
 			values.partner_first_name,
 			values.partner_last_name,
 			values.partner_id)
@@ -52,9 +57,9 @@ export default function StepTwo() {
 				validationSchema={stepTwoValidationSchema}
 				initialValues={data}
 				onSubmit={handleSubmit}
-				validate={validate}
+				validate={handleValidate}
 			>
-				{({ values }) => {
+				{({ values, errors, touched }) => {
 					return (
 						<Form className="input-container" style={{ width: "500px" }}>
 							<div>סטטוס</div>
@@ -153,7 +158,7 @@ export default function StepTwo() {
 							</div>}
 							{/* <StepTwoContinue next={next} prev={prev} data={data} />
             				<StepTwoContinue2 next={next} prev={prev} data={data} /> */}
-
+							{touched.status && errors.partnerError && <div>{errors.partnerError}</div>}
 							<button type="submit">המשך</button>
 						</Form>
 					)
