@@ -1,6 +1,7 @@
 import { Field } from "formik"
 
 export const ChildDetails = ({ values, arrayHelpers, i }) => {
+	debugger;
 	return (
 		<div key={i} className="flex gap direction-rtl">
 			<div
