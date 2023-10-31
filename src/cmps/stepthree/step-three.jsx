@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 
-import { Formik, Form, Field } from "formik";
-import { SiteContext } from '../../store/context';
+import { Formik, Form, Field, FieldArray } from "formik";
+import { SiteContext, defaultRealEstateData } from '../../store/context';
 import translation, { answers } from '../../store/translation';
-import { InputLabel, Select } from '@mui/material';
+import { Button, InputLabel, Select } from '@mui/material';
 import YesNoRadio from '../formikcomponents/YesNoRadio';
 import ItemsList from '../formikcomponents/ItemsList/ItemsList';
+import RealEstateItem from './RealEstateItem';
 
 
 export default function StepThree() {
@@ -20,6 +21,7 @@ export default function StepThree() {
 		moveNextStep(true);
 	}
 
+
 	return (
 		<>
 			<Formik
@@ -31,10 +33,16 @@ export default function StepThree() {
 					return (
 						<Form className="input-container" style={{ minWidth: "500px" }}>
 							<h4>{translation.real_estate}</h4>
-							<YesNoRadio name={"real_estate"} />
-							{/* {values.real_estate === 'כן' &&
-							} */}
-							<button onClick={() => moveNextStep(true)}>המשך</button>
+							<YesNoRadio name="real_estate" />
+							{values.real_estate === 'כן' &&
+								<ItemsList
+									name="real_estate_data"
+									values={values}
+									title={translation.real_estate_title}
+									defaultValue={defaultRealEstateData}
+									renderItem={index => <RealEstateItem index={index} />} />
+							}
+							<Button variant="contained" onClick={() => moveNextStep(true)}>המשך</Button>
 						</Form>
 					)
 				}

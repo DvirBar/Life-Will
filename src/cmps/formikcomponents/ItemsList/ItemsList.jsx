@@ -4,26 +4,35 @@ import { FieldArray } from 'formik'
 import React from 'react'
 import Item from "./Item"
 
-function ItemsList({ name, values, onAppend, itemRender }) {
+function ItemsList({ name, title, values, defaultValue, renderItem }) {
     return (
-        <div>
-            <FieldArray
-                name={name}
-                render={arrayHelpers =>
-                    <div>
+        <FieldArray
+            name={name}
+            render={arrayHelpers =>
+                <StyledItemListWrapper>
+                    <StyledItemsList>
                         {values[name]?.map((item, index) =>
-                            <Item onDelete={() => arrayHelpers.remove(index)}>
-                                {/* <itemRender  */}
+                            <Item title={title} index={index} numElements={values[name].length} key={index} onDelete={() => arrayHelpers.remove(index)}>
+                                {renderItem(index)}
                             </Item>
                         )}
-                    </div>
-                } />
-            <Button onClick={onAppend} variant='outlined'>
-                הוספה
-            </Button>
-        </div>
+                    </StyledItemsList>
+                    <Button onClick={() => arrayHelpers.push(defaultValue)} variant="contained">
+                        הוספה
+                    </Button>
+                </StyledItemListWrapper>
+            } />
     )
 }
+
+const StyledItemListWrapper = styled.div`
+    margin-bottom: 20px;
+`
+
+const StyledItemsList = styled.div`
+    display: flex;
+    flex-direction: column;
+`
 
 
 export default ItemsList

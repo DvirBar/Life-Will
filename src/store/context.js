@@ -26,7 +26,7 @@ const hebrewBirthDate = {
 	year: ''
 }
 
-const defaultRealEstateData = {
+export const defaultRealEstateData = {
 	type: '',
 	own_percentage: '',
 	country: '',
