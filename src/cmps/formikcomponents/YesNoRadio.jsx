@@ -10,11 +10,7 @@ const options = [
 
 function YesNoRadio({ name }) {
     return (
-        <Field
-            name={name}
-            component={FormikRadioGroup}
-            options={options} />
-
+        <FormikRadioGroup name={name} options={options} />
     )
 }
 
