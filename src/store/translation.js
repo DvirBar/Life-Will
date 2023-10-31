@@ -189,7 +189,10 @@ const translation = {
 	real_estate_data:
 	{
 		type: 'סוג',
-		own_percentage: 'כמה אחוז בבעלותך?',
+		own_percentage: {
+			question: 'כמה אחוז בבעלותך?',
+			answer: 'אחוז'
+		},
 		details: {
 			country: 'מדינה',
 			city: 'עיר',

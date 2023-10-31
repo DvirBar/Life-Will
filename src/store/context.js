@@ -26,6 +26,20 @@ const hebrewBirthDate = {
 	year: ''
 }
 
+export const defaultRealEstateData = {
+	type: '',
+	own_percentage: '',
+	country: '',
+	city: '',
+	street: '',
+	house_number: '',
+	block: '',
+	lot: '',
+	sub_lot: '',
+	size: '',
+	...itemData
+}
+
 const SiteProvider = ({ children }) => {
 	const [data, setData] = useState({
 		// Step 1
@@ -85,20 +99,6 @@ const SiteProvider = ({ children }) => {
 		// TODO: enum
 		real_estate: answers.no,
 		real_estate_data: [
-			// {
-			//     // TODO: enum
-			//     type: '',
-			//     own_percentage: '',
-			//     country: '',
-			//     city: '',
-			//     street: '',
-			//     house_number: '',
-			//     block: '',
-			//     lot: '',
-			//     sub_lot: '',
-			//     size: '',
-			//     ...itemData
-			// }
 		],
 		future_real_estate_data: itemNoDescription,
 
