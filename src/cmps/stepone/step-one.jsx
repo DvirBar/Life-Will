@@ -9,6 +9,8 @@ import { HebrewDayInput } from '../formikcomponents/hebrew-day-input';
 import translation from '../../store/translation';
 
 import sampleData from '../../store/sampleData';
+import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+import FormikTextField from '../formikcomponents/FormikTextField';
 
 export const validationSchema = Yup.object().shape({
 	first_name: Yup.string().required('יש להזין שם פרטי').label("שם פרטי"),
@@ -54,69 +56,43 @@ export default function StepOne() {
 					<Form>
 						<div className="input-container">
 							<div className="input-container-formik">
-								<Field name="first_name" placeholder={`${translation.first_name}`} />
+								{/* TODO: Placeholder is missing => translation.first_name*/}
+								<FormikTextField name={"first_name"} />
 								<ErrorMessage name="first_name" />
-								<Field name="last_name" placeholder={`${translation.last_name}`} />
+								{/* TODO: Placeholder is missing => translation.last_name*/}
+								<FormikTextField name={"last_name"} />
 								<ErrorMessage name="last_name" />
 							</div>
 							<div className="input-container-formik">
 								<p>מה התאריך לידה שלך</p>
-								<Field
-									name="birthDate"
-									type="date"
-									className="birthDate"
-									placeholder="dd/mm/yyyy"
-								/>
+								{/* TODO: Placeholder is missing dd/mm/yyyy*/}
+								<FormikTextField name={"birthDate"} />
 								<ErrorMessage name="birthDate" />
 								<p>תאריך לידה עברי*</p>
 								<div className="display-rows">
-									<label>
-										שנה
-										<Field name="hebrewBirthDate.year" />
-									</label>
-									<label>
-										חודש
-										<HebrewMonthInput name="hebrewBirthDate.month" />
-									</label>
-									<label>
-										יום
-										<HebrewDayInput name="hebrewBirthDate.day" />
-									</label>
-
+									<FormikTextField name={"hebrewBirthDate.year"} label={"שנה"} />
+									<HebrewMonthInput name="hebrewBirthDate.month" label={"חודש"} />
+									<HebrewDayInput name={"hebrewBirthDate.day"} label={"יום"} />
 								</div>
-
-
-								<div role="group">
-									<p>מגדר</p>
-									<div className="status-group flex space-between input-btn">
-										<label className={`${values.gender === "זכר" ? 'active' : ''}`}>
-											<Field type="radio" name="gender" value="זכר" />
-											זכר
-										</label>
-										<label className={`${values.gender === "נקבה" ? 'active' : ''}`}>
-											<Field type="radio" name="gender" value="נקבה" />
-											נקבה
-										</label>
-										<label className={`${values.gender === "אחר" ? 'active' : ''}`}>
-											<Field type="radio" name="gender" value="אחר" />
-											אחר
-										</label>
-									</div>
-								</div>
+								<FormikRadioGroup
+									name={"gender"}
+									options={[
+										{
+											value: "זכר",
+											label: "זכר"
+										},
+										{
+											value: "נקבה",
+											label: "נקבה"
+										},
+										{
+											value: "אחר",
+											label: "אחר"
+										}]} />
 								<ErrorMessage name="gender" />
-								<div role="group">
-									<p>{`${translation.edited_by}`}</p>
-									<div className="status-group flex space-between input-btn">
-										<label className={`${values.edited_by === "לא" ? 'active' : ''}`}>
-											<Field type="radio" name="edited_by" value="לא" />
-											לא
-										</label>
-										<label className={`${values.edited_by === "כן" ? 'active' : ''}`}>
-											<Field type="radio" name="edited_by" value="כן" />
-											כן
-										</label>
-									</div>
-								</div>
+								<FormikRadioGroup
+									name={"edited_by"}
+									options={[{ value: "לא", label: "לא" }, { value: "כן", label: "כן" }]} />
 								<ErrorMessage name="edited_by" />
 							</div>
 							{/* <button onClick={() => moveNextStep()}>המשך</button> */}
