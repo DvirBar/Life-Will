@@ -76,13 +76,20 @@ const sampleData = {
 	...sampleNoDescription
 }
 
+const hebrewBirthDate = {
+	day: '',
+	month: '',
+	year: ''
+}
+
+
 const data = {
 	// Step 1
 	first_name: 'ישראל',
 	last_name: 'ישראלי',
 	birthDate: '01/01/1900',
 	// TODO: Should probably be enum
-	hebrewBirthDate: "א׳ בשבט תר״ס",
+	hebrewBirthDate,
 	gender: 'זכר',
 	edited_by: answers.yes,
 	// TODO: Add field

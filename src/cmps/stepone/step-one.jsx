@@ -12,6 +12,12 @@ import sampleData from '../../store/sampleData';
 import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
 import FormikTextField from '../formikcomponents/FormikTextField';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 export const validationSchema = Yup.object().shape({
 	first_name: Yup.string().required('יש להזין שם פרטי').label("שם פרטי"),
 	last_name: Yup.string().required('יש להזין שם משפחה').label("שם משפחה"),
@@ -54,8 +60,8 @@ export default function StepOne() {
 				console.log(values);
 				return (
 					<Form>
-						<div className="input-container">
-							<div className="input-container-formik">
+						<div>
+							<div>
 								{/* TODO: Placeholder is missing => translation.first_name*/}
 								<FormikTextField name={"first_name"} />
 								<ErrorMessage name="first_name" />
@@ -63,17 +69,25 @@ export default function StepOne() {
 								<FormikTextField name={"last_name"} />
 								<ErrorMessage name="last_name" />
 							</div>
-							<div className="input-container-formik">
+							<div>
 								<p>מה התאריך לידה שלך</p>
 								{/* TODO: Placeholder is missing dd/mm/yyyy*/}
 								<FormikTextField name={"birthDate"} />
 								<ErrorMessage name="birthDate" />
-								<p>תאריך לידה עברי*</p>
-								<div className="display-rows">
-									<FormikTextField name={"hebrewBirthDate.year"} label={"שנה"} />
-									<HebrewMonthInput name="hebrewBirthDate.month" label={"חודש"} />
-									<HebrewDayInput name={"hebrewBirthDate.day"} label={"יום"} />
-								</div>
+								<Accordion>
+									<AccordionSummary
+										expandIcon={<ExpandMoreIcon />}
+										aria-controls="panel1a-content"
+										id="panel1a-header"
+									>
+										<Typography>תאריך לידה עברי*</Typography>
+									</AccordionSummary>
+									<AccordionDetails>
+										<FormikTextField name={"hebrewBirthDate.year"} label={"שנה"} />
+										<HebrewMonthInput name="hebrewBirthDate.month" label={"חודש"} />
+										<HebrewDayInput name={"hebrewBirthDate.day"} label={"יום"} />
+									</AccordionDetails>
+								</Accordion>
 								<FormikRadioGroup
 									name={"gender"}
 									options={[
@@ -90,6 +104,7 @@ export default function StepOne() {
 											label: "אחר"
 										}]} />
 								<ErrorMessage name="gender" />
+								<Typography variant='string' gutterBottom>האם ערכת את הצוואה לבד?</Typography>
 								<FormikRadioGroup
 									name={"edited_by"}
 									options={[{ value: "לא", label: "לא" }, { value: "כן", label: "כן" }]} />
