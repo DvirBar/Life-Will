@@ -38,7 +38,6 @@ export default function StepOne() {
 			onSubmit={handleSubmit}
 		>
 			{({ values }) => {
-				console.log(values);
 				return (
 					<Form>
 						<div className="input-container">

@@ -66,6 +66,50 @@ export const realEstateTypes = {
     building: 'בניין'
 }
 
+export const realEstateDetailsFieldTypes = {
+    country: 'מדינה',
+    city: 'עיר',
+    street: 'רחוב',
+    house_number: 'מספר',
+    block: 'גוש',
+    lot: 'חלקה',
+    sub_lot: 'תת חלקה',
+    size: 'גודל',
+}
+
+export const realEstateTypesDetailsMap = (type) => {
+    switch (type) {
+        case realEstateTypes.appartment:
+        case realEstateTypes.warehouse:
+        case realEstateTypes.parking:
+            return [
+                realEstateDetailsFieldTypes.country,
+                realEstateDetailsFieldTypes.city,
+                realEstateDetailsFieldTypes.street,
+                realEstateDetailsFieldTypes.house_number,
+                realEstateDetailsFieldTypes.block,
+                realEstateDetailsFieldTypes.lot,
+                realEstateDetailsFieldTypes.sub_lot
+            ]
+        case realEstateTypes.lands:
+            return [
+                realEstateDetailsFieldTypes.country,
+                realEstateDetailsFieldTypes.block,
+                realEstateDetailsFieldTypes.lot,
+                realEstateDetailsFieldTypes.size
+            ]
+        case realEstateTypes.building:
+            return [
+                realEstateDetailsFieldTypes.country,
+                realEstateDetailsFieldTypes.city,
+                realEstateDetailsFieldTypes.street,
+                realEstateDetailsFieldTypes.house_number
+            ]
+        default:
+            return []
+    }
+}
+
 export const vehicleTypes = {
     truck: 'משאית',
     bus: 'אוטובוס',
@@ -193,16 +237,7 @@ const translation = {
             question: 'כמה אחוז בבעלותך?',
             answer: 'אחוז'
         },
-        details: {
-            country: 'מדינה',
-            city: 'עיר',
-            street: 'רחוב',
-            house_number: 'מספר',
-            block: 'גוש',
-            lot: 'חלקה',
-            sub_lot: 'תת חלקה',
-            size: 'גודל',
-        },
+        details: realEstateDetailsFieldTypes,
         ...assetsData
     },
     future_real_estate_title: 'הורשה בעתיד',

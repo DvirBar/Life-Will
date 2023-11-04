@@ -9,11 +9,13 @@ function MuiTextField({
     options,
     children,
     label,
+    fullWidth,
     ...props
 }) {
     const fieldName = name || field.name;
     return (
         <TextField
+            fullWidth={fullWidth}
             {...props}
             {...field}
             name={fieldName}
@@ -23,12 +25,13 @@ function MuiTextField({
     )
 }
 
-function FormikTextField({ name, label }) {
+function FormikTextField({ name, label, fullWidth }) {
     return (
         <Field
             name={name}
             component={MuiTextField}
             label={label}
+            fullWidth={fullWidth}
         />
     )
 }
