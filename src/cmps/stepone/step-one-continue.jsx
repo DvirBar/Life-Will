@@ -3,6 +3,13 @@ import { useContext } from "react";
 import * as Yup from "yup";
 import { SiteContext } from "../../store/context";
 import translation from '../../store/translation';
+
+import FormikTextField from '../formikcomponents/FormikTextField';
+import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
+
 const stepOneContinueValidationSchema = Yup.object({
 	email: Yup.string().required("יש להזין את הדואר האלקטרוני").email().label("Email"),
 	citizenship: Yup.string().oneOf(["כן", "לא"]).required("יש לבחור האם קיימת אזרחות"),
@@ -31,14 +38,19 @@ export default function StepOneContinue() {
 				onSubmit={handleSubmit}
 			>
 				{({ values }) => {
+					console.log(values);
 					return (
-						<Form className="input-container">
-							<div className="input-container-formik">
-								<Field name="person_id" type="number" placeholder='תז' />
+						<Form>
+							<div>
+								<FormikTextField name="person_id" type="number" placeholder={translation.person_id} />
 								<ErrorMessage name="person_id" />
-								<div role="group">
-									<p>{translation.citizenship}</p>
-									<div className="status-group flex space-between input-btn">
+
+								<Typography variant='h6' gutterBottom>{translation.citizenship}</Typography>
+								<FormikRadioGroup
+									name={"citizenship"}
+									options={[{ value: "לא", label: "לא" }, { value: "כן", label: "כן" }]}
+								/>
+								{/* <div className="status-group flex space-between input-btn">
 										<label className={`${values.citizenship === "לא" ? 'active' : ''}`}>
 											<Field type="radio" name="citizenship" value="לא" />
 											לא
@@ -47,14 +59,13 @@ export default function StepOneContinue() {
 											<Field type="radio" name="citizenship" value="כן" />
 											כן
 										</label>
-									</div>
-								</div>
-								{values.citizenship === "כן" && <Field name="passport_id" type="number" placeholder='מספר דרכון' />}
-								<Field name="email" placeholder="מייל" />
+									</div> */}
+								{values.citizenship === "כן" && <FormikTextField name="passport_id" type="number" placeholder={translation.passport_id} />}
+								<FormikTextField name="email" placeholder={translation.email} />
 								<ErrorMessage name="email" />
-								<Field name="phone" type="number" placeholder='פלאפון' />
+								<FormikTextField name="phone" type="text" placeholder={translation.phone} />
 								<ErrorMessage name="phone" />
-								<Field name="address" placeholder='עיר, רחוב ומספר בית' />
+								<FormikTextField name="address" placeholder={translation.address} />
 								<ErrorMessage name="address" />
 								{/* <Field name="company" placeholder='שם חברה / עסק' /> */}
 								{/* <Field name="city" placeholder='עיר / יישוב' /> */}
@@ -62,7 +73,7 @@ export default function StepOneContinue() {
 								{/* <Field name="" placeholder='' /> */}
 							</div>
 							{/* <button type="button" onClick={() => prev(values)}>Back</button> */}
-							<button type="submit">המשך</button>
+							<Button variant="contained" type="submit">המשך</Button>
 						</Form>
 					)
 				}

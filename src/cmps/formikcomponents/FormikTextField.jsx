@@ -23,12 +23,14 @@ function MuiTextField({
 	)
 }
 
-function FormikTextField({ name, label }) {
+function FormikTextField({ name, label, placeholder, type = "text" }) {
 	return (
 		<Field
 			name={name}
 			component={MuiTextField}
 			label={label}
+			placeholder={placeholder}
+			type={type}
 		/>
 	)
 }

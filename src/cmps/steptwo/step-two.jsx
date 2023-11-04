@@ -5,6 +5,12 @@ import * as Yup from "yup";
 import { SiteContext } from '../../store/context';
 import { PartnerDetails } from '../formikcomponents/partner-details';
 
+import FormikTextField from '../formikcomponents/FormikTextField';
+import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
+
 const validatePartnerDetails = ((errors, status, allocateToDivorsed, ...partnerData) => {
 	const [
 		firstName,
@@ -61,7 +67,7 @@ export default function StepTwo() {
 			>
 				{({ values, errors, touched }) => {
 					return (
-						<Form className="input-container" style={{ width: "500px" }}>
+						<Form >
 							<div>סטטוס</div>
 							<div role="group" className="status-group flex space-between input-btn">
 								<label className={`${values.status === "נשוי" ? 'active' : ''}`}>

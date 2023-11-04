@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { useContext } from "react";
 import { SiteContext } from "../../store/context";
 import * as Yup from 'yup';
@@ -8,15 +8,17 @@ import { HebrewDayInput } from '../formikcomponents/hebrew-day-input';
 
 import translation from '../../store/translation';
 
-import sampleData from '../../store/sampleData';
 import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
 import FormikTextField from '../formikcomponents/FormikTextField';
+import FormikDatePicker from '../formikcomponents/FormikDatePicker';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
+import sampleData from '../../store/sampleData';
 
 export const validationSchema = Yup.object().shape({
 	first_name: Yup.string().required('יש להזין שם פרטי').label("שם פרטי"),
@@ -63,16 +65,16 @@ export default function StepOne() {
 						<div>
 							<div>
 								{/* TODO: Placeholder is missing => translation.first_name*/}
-								<FormikTextField name={"first_name"} />
+								<FormikTextField name={"first_name"} placeholder={translation.first_name} />
 								<ErrorMessage name="first_name" />
 								{/* TODO: Placeholder is missing => translation.last_name*/}
-								<FormikTextField name={"last_name"} />
+								<FormikTextField name={"last_name"} placeholder={translation.last_name} />
 								<ErrorMessage name="last_name" />
 							</div>
 							<div>
 								<p>מה התאריך לידה שלך</p>
 								{/* TODO: Placeholder is missing dd/mm/yyyy*/}
-								<FormikTextField name={"birthDate"} />
+								<FormikDatePicker name={"birthDate"} label={"תאריך לידה"} />
 								<ErrorMessage name="birthDate" />
 								<Accordion>
 									<AccordionSummary
@@ -112,7 +114,7 @@ export default function StepOne() {
 							</div>
 							{/* <button onClick={() => moveNextStep()}>המשך</button> */}
 							{/* <button onClick={() => nextStepHandler(formikProps, false, submitForm)}>המשך</button> */}
-							<button type="submit">המשך</button>
+							<Button variant="contained" type="submit">המשך</Button>
 						</div>
 					</Form>
 				)
