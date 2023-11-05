@@ -1,0 +1,30 @@
+html {
+    font-size: 10px;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'NotoSansHebrew';
+    src: url('./assets/fonts/NotoSansHebrew-Regular.ttf') format("truetype");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'NotoSansHebrew';
+    src: url('./assets/fonts/NotoSansHebrew-Light.ttf') format("truetype");
+    font-weight: 400;
+}
+
+/* @font-face {
+    font-family: 'NotoSansHebrew';
+    src: url('./assets/fonts/NotoSansHebrew-SemiBold.ttf') format("truetype");
+    font-weight: 300;
+} */
+
+* {
+    font-family: 'NotoSansHebrew';
+}
+
+body {
+    font-size: 1.6rem;
+}
