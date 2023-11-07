@@ -210,7 +210,7 @@ const SiteProvider = ({ children }) => {
 		relatives_message_content: 'הודעה שנכתבה ליקירים'
 	})
 
-	const [selectedStage, setSelectedStage] = useState(0)
+	const [selectedStage, setSelectedStage] = useState(1)
 	const [selectedStep, setSelectedStep] = useState(0)
 
 	const moveNextStep = (isFinalStep = false) => {

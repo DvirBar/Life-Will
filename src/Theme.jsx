@@ -1,13 +1,16 @@
 import { createTheme } from "@mui/material";
 
+
 let theme = createTheme({
     palette: {
+        // background: {
+        //     default: '#662A6810'
+        // },
         primary: {
             main: '#C85FCE'
         },
         secondary: {
             main: '#662A68'
-
         }
     },
     direction: "rtl"

@@ -4,16 +4,21 @@ import "./index.css"
 import { BrowserRouter as Router } from "react-router-dom";
 import { RootCmp } from "./root-cmp";
 import SiteProvider from "./store/context";
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./Theme";
+import RTL from "./RTL";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <SiteProvider>
-    <ThemeProvider theme={theme}>
-      <Router>
-        <RootCmp />
-      </Router>
-    </ThemeProvider>
-  </SiteProvider>
+  <RTL>
+    <SiteProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <RootCmp />
+        </Router>
+      </ThemeProvider>
+    </SiteProvider>
+  </RTL>
+
 );

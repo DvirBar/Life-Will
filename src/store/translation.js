@@ -153,6 +153,16 @@ export const inheritanceKeys = {
     real_estate: 'real_estate',
     future_real_estate: 'future_real_estate'
 }
+
+export const stepNames = [
+    "הזדהות",
+    "מצב משפחתי ויורשים",
+    "מקרקעין",
+    "מטלטלין",
+    "כספים",
+    "לוויה ורצונות"
+]
+
 export const inheritanceKeysStep4 = {
     vehicle: 'vehicle',
     jewelry: 'jewelry',
@@ -176,7 +186,7 @@ export const inheritanceKeysStep4 = {
 
 const translation = {
     // Step 1
-    step1: 'שלב א׳ - הזדהות',
+    step1: `שלב א׳ - ${stepNames[0]}`,
     first_name: first_name,
     last_name: last_name,
     birthDate: birth_date,
@@ -191,7 +201,7 @@ const translation = {
     passport_id: 'מספר דרכון',
 
     // Step 2
-    step2: 'שלב ב׳ - מצב משפחתי ויורשים',
+    step2: `שלב ב׳ - ${stepNames[1]}`,
     status: 'סטטוס',
     partner_married_gender: 'אני נשוי ל-',
     partner_spouse_gender: 'אני מנהל זוגיות עם-',
@@ -227,7 +237,7 @@ const translation = {
         [giveToFamilyTypesKeys.grandChildren]: personInfo
     },
     // Step 3
-    step3: 'שלב ג׳ - מקרקעין',
+    step3: `שלב ג׳ - ${stepNames[2]}`,
     real_estate_title: 'נדלן',
     real_estate: 'האם קיימים ברשותך נכסי נדלן?',
     real_estate_data:
@@ -247,7 +257,7 @@ const translation = {
     inheritorsText: 'יורשים',
 
     // Step 4
-    step4: 'שלב ד׳ - מטלטלין',
+    step4: `שלב ד׳ - ${stepNames[3]}`,
     vehicle_title: 'רכב',
     vehicle: 'האם קיים ברשותך כלי תחבורה?',
     vehicle_data:
@@ -330,7 +340,7 @@ const translation = {
     future_items_data: assetsData,
 
     // Step 5
-    step5: 'שלב ה׳ - כספים',
+    step5: `שלב ה׳ - ${stepNames[4]}`,
     money_title: 'כסף',
     money: 'כמה כסף בערך קיים ברשותך או בבנק?',
     money_ils: 'ש״ח',
@@ -363,7 +373,7 @@ const translation = {
     },
 
     // Step 6
-    step6: 'שלב ו׳ - לוויה ורצונות',
+    step6: `שלב ו׳ - ${stepNames[5]}`,
     not_applied_before_spouse: 'תרצה להוסיף סעיף שכל האמור בצוואה לא יחול לפני פטירת אשתך?',
     burial_location: 'איפה תרצה להיקבר?',
     funeral_in_charge: 'תרצה שמישהו יהיה אחראי על טקס ההלוויה?',

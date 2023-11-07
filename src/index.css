@@ -1,5 +1,5 @@
 html {
-    font-size: 10px;
+    font-size: 16px;
     font-weight: 400;
 }
 
@@ -23,8 +23,4 @@ html {
 
 * {
     font-family: 'NotoSansHebrew';
-}
-
-body {
-    font-size: 1.6rem;
 }
