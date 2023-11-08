@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { answers, giveToFamilyTypesKeys } from "./translation";
+import { answers, giveToFamilyTypesKeys, inheritorsTypes } from "./translation";
 
 export const SiteContext = createContext(null);
 // TODO: Add types of non profits
@@ -210,7 +210,7 @@ const SiteProvider = ({ children }) => {
 		relatives_message_content: 'הודעה שנכתבה ליקירים'
 	})
 
-	const [selectedStage, setSelectedStage] = useState(0)
+	const [selectedStage, setSelectedStage] = useState(1)
 	const [selectedStep, setSelectedStep] = useState(0)
 
 	const moveNextStep = (isFinalStep = false) => {
@@ -246,6 +246,46 @@ const SiteProvider = ({ children }) => {
 		setSelectedStep(0)
 	}
 
+	let inheritors = null
+
+	// TODO: in inheritors - what about ex partners?
+	const getInheritors = () => {
+		inheritors = [
+			...(data.kids_data.map(kid => ({
+				first_name: kid.first_name,
+				last_name: kid.last_name,
+				person_id: kid.person_id,
+				type: inheritorsTypes.children
+			}))),
+			{
+				first_name: data.partner_first_name,
+				last_name: data.partner_last_name,
+				person_id: data.partner_id,
+				type: inheritorsTypes.spouse,
+			},
+			...(data.ex_partners.map(ex => ({
+				first_name: ex.first_name,
+				last_name: ex.last_name,
+				person_id: ex.person_id,
+				type: inheritorsTypes.inheritors
+			}))),
+		]
+
+		for (const key of Object.keys(data.give_to_family_type)) {
+			const currentTypeItem = data.give_to_family_type[key]
+			for (const item of currentTypeItem) {
+				inheritors.push({
+					first_name: item.first_name,
+					last_name: item.last_name,
+					person_id: item.person_id,
+					type: inheritorsTypes.inheritors
+				})
+			}
+		}
+
+		return inheritors
+	}
+
 	const value = {
 		data,
 		setData,
@@ -253,7 +293,8 @@ const SiteProvider = ({ children }) => {
 		selectedStep,
 		selectStage,
 		moveNextStep,
-		movePrevStep
+		movePrevStep,
+		getInheritors
 	}
 
 	return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

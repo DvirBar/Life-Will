@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
 import FormStepsWrapper from "./form-steps-wrapper";
-import { SiteContext } from "../store/context";
-import { useRef } from 'react';
+import styled from "@emotion/styled";
 
 
 export default function MultiStepForm() {
-
-
 	return (
-		<div className='form'>
+		<StyledForm>
 			<FormStepsWrapper />
-		</div>
+		</StyledForm>
 	)
 }
+
+const StyledForm = styled.div`
+	padding: 0 2rem;
+`
