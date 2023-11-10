@@ -7,7 +7,7 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
     const displayTitle = `${title} ${index + 1}/${numElements}`
 
     if (numElements === 0) {
-        return <Typography variant="h3">אין נתונים עדיין. לחצו על ״הוספה״</Typography>
+        return <Typography variant="subtitle1">אין נתונים עדיין. לחצו על ״הוספה״</Typography>
     }
 
     return (
@@ -16,9 +16,7 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
                 <IconButton disabled={index <= 0} onClick={movePrevIndex}>
                     <ChevronRight />
                 </IconButton>
-                <div>
-                    {displayTitle}
-                </div>
+                <Typography variant='subtitle1'>{displayTitle}</Typography>
                 <IconButton disabled={index + 1 >= numElements} onClick={moveNextIndex}>
                     <ChevronLeft />
                 </IconButton>
@@ -30,13 +28,13 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
 
 const StyledItemListNavigation = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    margin-bottom: 5px;
 `
 
 const StyledStepsHeader = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     color: #662A68;
     gap: 10px;
 `

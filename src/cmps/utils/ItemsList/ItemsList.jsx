@@ -40,9 +40,6 @@ function ItemsList({ name, title, values, defaultValue, renderItem }) {
             render={arrayHelpers =>
                 <StyledItemListWrapper>
                     <StyledListHeader>
-                        <Button onClick={() => arrayHelpers.push(defaultValue)} variant="contained">
-                            הוספה
-                        </Button>
                         <ItemListNavigation
                             title={title}
                             index={selectedItemIndex}
@@ -50,43 +47,52 @@ function ItemsList({ name, title, values, defaultValue, renderItem }) {
                             moveNextIndex={moveNextItem}
                             movePrevIndex={movePrevItem}
                         />
-                        <div></div>
+                        <ItemListPageNumbers
+                            moveToIndex={moveToIndex}
+                            selectedIndex={selectedItemIndex}
+                            numElements={items.length}
+                        />
                     </StyledListHeader>
 
                     {selectedItem &&
-                        <>
-                            <ItemListPageNumbers
-                                moveToIndex={moveToIndex}
-                                selectedIndex={selectedItemIndex}
-                                numElements={items.length}
-                            />
-                            <StyledItemsList>
-                                <Item key={selectedItemIndex} onDelete={() => arrayHelpers.remove(selectedItemIndex)}>
-                                    {renderItem(selectedItem, nameWithIndex)}
-                                </Item>
-                            </StyledItemsList>
-                        </>
-
+                        <StyledItemsList>
+                            <Item key={selectedItemIndex} onDelete={() => arrayHelpers.remove(selectedItemIndex)}>
+                                {renderItem(selectedItem, nameWithIndex)}
+                            </Item>
+                        </StyledItemsList>
                     }
-
+                    <AddItemButton variant="outlined" onClick={() => arrayHelpers.push(defaultValue)}>
+                        + הוספה
+                    </AddItemButton>
                 </StyledItemListWrapper>
             } />
     )
 }
 
 const StyledItemListWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
     width: 100%;
 `
 
 const StyledListHeader = styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
 `
 
 const StyledItemsList = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
+`
+
+const AddItemButton = styled(Button)`
+    width: 100%;
+    font-weight: bold;
+    font-size: 1rem;
 `
 
 
