@@ -25,15 +25,13 @@ export default function StepThree() {
 	return (
 		<>
 			<Formik
-				//validationSchema={validationSchema}
 				initialValues={data}
 				onSubmit={handleSubmit}
 			>
 				{({ values }) => {
 					return (
 						<Form className="input-container" style={{ minWidth: "500px" }}>
-							<h4>{translation.real_estate}</h4>
-							<YesNoRadio name="real_estate" />
+							<YesNoRadio name="real_estate" question={translation.real_estate} />
 							{values.real_estate === answers.yes &&
 								<ItemsList
 									name="real_estate_data"

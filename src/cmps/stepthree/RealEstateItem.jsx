@@ -1,35 +1,44 @@
-import { MenuItem } from '@mui/material'
+import { Typography } from '@mui/material'
 import React from 'react'
 import translation, { realEstateDetailsFieldTypes, realEstateTypes, realEstateTypesDetailsMap } from '../../store/translation'
-import FormikSelect from '../formikcomponents/FormikSelect'
 import FormikTextField from '../formikcomponents/FormikTextField'
 import styled from '@emotion/styled'
+import FormikButtonSelect from '../formikcomponents/FormikButtonSelect'
+import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
+import ItemInheritors from '../utils/itemInheritors/ItemInheritors'
 
 function RealEstateItem({ dataItem, itemName }) {
-
     const type = dataItem.type
     const typeDetails = realEstateTypesDetailsMap(type)
+
     return (
         <StyledRealEstateItem>
-            <FormikSelect
+            <Typography variant="subtitle1">סוג-</Typography>
+            <FormikButtonSelect
                 name={`${itemName}.type`}
                 label={translation.real_estate_data.type}
             >
                 {Object.keys(realEstateTypes).map(key =>
-                    <MenuItem key={key} value={realEstateTypes[key]}>{realEstateTypes[key]}</MenuItem>
+                    <ButtonSelectItem key={realEstateTypes[key]} value={realEstateTypes[key]}>{realEstateTypes[key]}</ButtonSelectItem>
                 )}
-            </FormikSelect>
-            <FormikTextField
-                name={`${itemName}.own_percentage`}
-                label={translation.real_estate_data.own_percentage.question} />
+            </FormikButtonSelect>
+
+            <StyledPercentageDisplay>
+                <Typography variant="subtitle1">{translation.real_estate_data.own_percentage.question}</Typography>
+                <FormikTextField
+                    percent
+                    name={`${itemName}.own_percentage`}
+                    label={translation.real_estate_data.own_percentage.answer} />
+            </StyledPercentageDisplay>
 
             {typeDetails.length > 0 &&
                 <StyledTypeDetails>
-                    <StyledTypeDetailsTitle>פרטים</StyledTypeDetailsTitle>
+                    <Typography variant="subtitle1">פרטים-</Typography>
                     <StyledTypeDetailsContent>
                         {Object.keys(realEstateDetailsFieldTypes).map(key =>
                             typeDetails.includes(realEstateDetailsFieldTypes[key]) &&
                             <FormikTextField
+                                key={`${itemName}.details.${key}`}
                                 name={`${itemName}.details.${key}`}
                                 label={translation.real_estate_data.details[key]} />
                         )}
@@ -45,23 +54,25 @@ function RealEstateItem({ dataItem, itemName }) {
                 />
             }
 
-
+            <ItemInheritors name={`${itemName}.inheritors`} />
         </StyledRealEstateItem>
     )
 }
 
 const StyledRealEstateItem = styled.div`
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: column;
+    gap: 1rem;
 `
 
 const StyledTypeDetails = styled.div`
     flex-basis: 100%;
 `
 
-const StyledTypeDetailsContent = StyledRealEstateItem
+const StyledTypeDetailsContent = styled(StyledRealEstateItem)`
+    flex-direction: row;
+`
 
 const StyledTypeDetailsTitle = styled.div`
     font-weight: bold;
@@ -73,4 +84,12 @@ const StyledLandDescription = styled(FormikTextField)`
     flex-basis: 100%;
     width: 100%;
 `
+
+const StyledPercentageDisplay = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+`
+
 export default RealEstateItem

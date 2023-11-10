@@ -32,20 +32,26 @@ theme = createTheme(theme, {
             '"Segoe UI Symbol"',
         ].join(','),
         h1: {
-            color: theme.palette.primary.main,
             fontFamily: 'NotoSansHebrew',
             fontWeight: 400
         },
         h2: {
-            // [theme.breakpoints.down("sm")]: {
-            //     fontSize: "3.3rem"
-            // },
             fontFamily: 'NotoSansHebrew',
+            fontSize: "1.4rem",
             fontWeight: 500
         },
-        body1: {
-            fontWeight: 400,
+        subtitle1: {
             fontFamily: 'NotoSansHebrew',
+            fontWeight: 600
+        },
+        body1: {
+            fontFamily: 'NotoSansHebrew',
+            fontWeight: 400,
+        },
+        body2: {
+            fontFamily: 'NotoSansHebrew',
+            fontWeight: 400,
+            fontSize: "0.85rem"
         }
     },
     breakpoints: {

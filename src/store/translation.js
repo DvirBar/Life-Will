@@ -245,7 +245,7 @@ const translation = {
 		type: 'סוג',
 		own_percentage: {
 			question: 'כמה אחוז בבעלותך?',
-			answer: 'אחוז'
+			answer: 'סכום'
 		},
 		details: {
 			country: 'מדינה',

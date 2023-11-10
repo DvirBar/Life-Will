@@ -20,7 +20,7 @@ function Item({ children, onDelete }) {
 }
 
 const StyledItem = styled.div`
-    box-shadow: 0px 0px 12px #ccc;
+    border: 1px solid #ccc;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 30px;

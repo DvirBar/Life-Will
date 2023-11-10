@@ -2,10 +2,6 @@ import styled from '@emotion/styled'
 import React from 'react'
 
 function ItemListPageNumbers({ selectedIndex, numElements, moveToIndex }) {
-    if (numElements <= 1) {
-        return <></>
-    }
-
     return (
         <StyledItemListPageNumbers>
             {[...Array(numElements)].map((_, index) =>
@@ -26,6 +22,7 @@ const StyledItemListPageNumbers = styled.div`
     justify-content: center;
     width: 100%;
     margin-bottom: 10px;
+    height: 22px;
 `
 
 const StyledItemListPageNumberItem = styled.div`
@@ -36,10 +33,11 @@ const StyledItemListPageNumberItem = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 12px;
+    border: "1px solid #662A68";
     color: ${props => (props.isSelected ? '#fff' : '#662A68')};
     background-color: ${props => (props.isSelected ? '#662A68' : '#fff')};
     cursor: pointer;
-    border-color: #662A68;
+    
 `
 
 export default ItemListPageNumbers

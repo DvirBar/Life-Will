@@ -69,6 +69,9 @@ const SiteProvider = ({ children }) => {
 		ex_partners: [
 			{
 				...personInfo,
+				first_name: 'גרוש',
+				last_name: 'גרוש',
+				person_id: '0000000000',
 				gender: ''
 			}
 		],
@@ -78,6 +81,9 @@ const SiteProvider = ({ children }) => {
 		kids_data: [
 			{
 				...personInfo,
+				first_name: 'ילד',
+				last_name: 'ילד',
+				person_id: '12333333333',
 				gender: '',
 				birthDate: '',
 				hebrewBirthDate,
@@ -89,17 +95,44 @@ const SiteProvider = ({ children }) => {
 		// TODO: make it multi option
 		// TODO: enum
 		give_to_family_type: {
-			[giveToFamilyTypesKeys.parents]: [],
-			[giveToFamilyTypesKeys.siblings]: [],
-			[giveToFamilyTypesKeys.friends]: [],
-			[giveToFamilyTypesKeys.grandChildren]: []
+			[giveToFamilyTypesKeys.parents]: [
+				{
+					gender: 'זכר',
+					first_name: 'הורה',
+					last_name: 'ישראלי',
+					person_id: '222222223',
+				}
+			],
+			[giveToFamilyTypesKeys.siblings]: [
+				{
+					gender: 'נקבה',
+					first_name: 'אחות',
+					last_name: 'ישראלי',
+					person_id: '222222222',
+				}
+			],
+			[giveToFamilyTypesKeys.friends]: [
+				{
+					gender: 'זכר',
+					first_name: 'חבר',
+					last_name: 'ישראלי',
+					person_id: '222222224',
+				}
+			],
+			[giveToFamilyTypesKeys.grandChildren]: [
+				{
+					gender: 'נקבה',
+					first_name: 'נכדה',
+					last_name: 'ישראלי',
+					person_id: '222222225',
+				}
+			]
 		},
 
 		// Step 3
 		// TODO: enum
 		real_estate: answers.no,
-		real_estate_data: [
-		],
+		real_estate_data: [],
 		future_real_estate_data: itemNoDescription,
 
 		// Step 4
@@ -249,21 +282,27 @@ const SiteProvider = ({ children }) => {
 	let inheritors = null
 
 	// TODO: in inheritors - what about ex partners?
-	const getInheritors = () => {
+	const getInheritors = (inputValues) => {
+		const values = inputValues || data
+		if (values.partner_first_name?.length > 0) {
+			inheritors = [
+				{
+					first_name: values.partner_first_name,
+					last_name: values.partner_last_name,
+					person_id: values.partner_id,
+					type: inheritorsTypes.spouse,
+				}
+			]
+		}
+
 		inheritors = [
-			...(data.kids_data.map(kid => ({
+			...(values.kids_data.map(kid => ({
 				first_name: kid.first_name,
 				last_name: kid.last_name,
 				person_id: kid.person_id,
 				type: inheritorsTypes.children
 			}))),
-			{
-				first_name: data.partner_first_name,
-				last_name: data.partner_last_name,
-				person_id: data.partner_id,
-				type: inheritorsTypes.spouse,
-			},
-			...(data.ex_partners.map(ex => ({
+			...(values.ex_partners.map(ex => ({
 				first_name: ex.first_name,
 				last_name: ex.last_name,
 				person_id: ex.person_id,
@@ -271,8 +310,8 @@ const SiteProvider = ({ children }) => {
 			}))),
 		]
 
-		for (const key of Object.keys(data.give_to_family_type)) {
-			const currentTypeItem = data.give_to_family_type[key]
+		for (const key of Object.keys(values.give_to_family_type)) {
+			const currentTypeItem = values.give_to_family_type[key]
 			for (const item of currentTypeItem) {
 				inheritors.push({
 					first_name: item.first_name,
