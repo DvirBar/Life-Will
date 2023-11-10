@@ -5,7 +5,7 @@ import { SiteContext, defaultRealEstateData } from '../../store/context';
 import translation, { answers } from '../../store/translation';
 import { Button } from '@mui/material';
 import YesNoRadio from '../formikcomponents/YesNoRadio';
-import ItemsList from '../formikcomponents/ItemsList/ItemsList';
+import ItemsList from '../utils/ItemsList/ItemsList';
 import RealEstateItem from './RealEstateItem';
 
 
