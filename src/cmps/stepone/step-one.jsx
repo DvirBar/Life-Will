@@ -20,6 +20,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import sampleData from '../../store/sampleData';
 
+import styled from '@emotion/styled'
+
 export const validationSchema = Yup.object().shape({
 	first_name: Yup.string().required('יש להזין שם פרטי').label("שם פרטי"),
 	last_name: Yup.string().required('יש להזין שם משפחה').label("שם משפחה"),
@@ -59,36 +61,41 @@ export default function StepOne() {
 			onSubmit={handleSubmit}
 		>
 			{({ values }) => {
+				console.log(values);
 				return (
 					<Form>
 						<div>
-							<div>
+							<StyledPersonalDetails>
 								{/* TODO: Placeholder is missing => translation.first_name*/}
 								<FormikTextField name={"first_name"} placeholder={translation.first_name} />
 								<ErrorMessage name="first_name" />
 								{/* TODO: Placeholder is missing => translation.last_name*/}
 								<FormikTextField name={"last_name"} placeholder={translation.last_name} />
 								<ErrorMessage name="last_name" />
-							</div>
-							<div>
-								<p>מה התאריך לידה שלך</p>
+							</StyledPersonalDetails>
+
+							<StyledPersonalBirthdate>
+								<Typography variant="subtitle1">מה התאריך לידה שלך</Typography>
 								{/* TODO: Placeholder is missing dd/mm/yyyy*/}
 								<FormikDatePicker name={"birthDate"} label={"תאריך לידה"} />
 								<ErrorMessage name="birthDate" />
 								<Accordion>
 									<AccordionSummary
 										expandIcon={<ExpandMoreIcon />}
-										aria-controls="panel1a-content"
-										id="panel1a-header"
+
 									>
-										<Typography>תאריך לידה עברי*</Typography>
+										<Typography>הוספת תאריך עברי?</Typography>
 									</AccordionSummary>
 									<AccordionDetails>
-										<FormikTextField name={"hebrewBirthDate.year"} label={"שנה"} />
-										<HebrewMonthInput name="hebrewBirthDate.month" label={"חודש"} />
-										<HebrewDayInput name={"hebrewBirthDate.day"} label={"יום"} />
+										<StyledHebrewDateItems>
+											<FormikTextField name={"hebrewBirthDate.year"} label={"שנה"} />
+											<HebrewMonthInput name="hebrewBirthDate.month" label={"חודש"} />
+											<HebrewDayInput name={"hebrewBirthDate.day"} label={"יום"} />
+										</StyledHebrewDateItems>
 									</AccordionDetails>
 								</Accordion>
+							</StyledPersonalBirthdate>
+							<StyledColumnCenter>
 								<FormikRadioGroup
 									name={"gender"}
 									options={[
@@ -105,15 +112,22 @@ export default function StepOne() {
 											label: "אחר"
 										}]} />
 								<ErrorMessage name="gender" />
+							</StyledColumnCenter>
+
+							<StyledColumnCenter>
 								<Typography variant='string' gutterBottom>האם ערכת את הצוואה לבד?</Typography>
 								<FormikRadioGroup
 									name={"edited_by"}
 									options={[{ value: "לא", label: "לא" }, { value: "כן", label: "כן" }]} />
 								<ErrorMessage name="edited_by" />
-							</div>
+							</StyledColumnCenter>
+							<StyledColumnCenter>
+								<Button variant="contained" type="submit">המשך</Button>
+							</StyledColumnCenter>
+
 							{/* <button onClick={() => moveNextStep()}>המשך</button> */}
 							{/* <button onClick={() => nextStepHandler(formikProps, false, submitForm)}>המשך</button> */}
-							<Button variant="contained" type="submit">המשך</Button>
+
 						</div>
 					</Form>
 				)
@@ -123,3 +137,38 @@ export default function StepOne() {
 
 	)
 }
+
+
+const StyledPersonalDetails = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+	justify-content:center;
+`
+
+const StyledPersonalBirthdate = styled.div`
+	padding:1rem 0;
+	display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem;
+	justify-content:center;
+	&>*{
+		max-width:200px
+	}
+	align-items:center
+`
+
+const StyledColumnCenter = styled.div`
+    padding:1rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items:center
+`
+const StyledHebrewDateItems = styled.div`
+	&>*{
+		max-width: 120px;
+		padding-bottom:1rem;
+	}	
+`

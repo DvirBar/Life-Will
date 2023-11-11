@@ -96,7 +96,7 @@ const data = {
 	person_id: '123456789',
 	email: 'example@gmail.com',
 	phone: '000-0000000',
-	address: 'רחוב 1, תל אביב',
+	address: '',
 	citizenship: answers.yes,
 	passport_id: '123456789',
 	// Step 2
