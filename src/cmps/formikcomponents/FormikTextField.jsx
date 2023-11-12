@@ -10,6 +10,8 @@ function MuiTextField({
     children,
     label,
     fullWidth,
+    multiline,
+    rows,
     percent,
     ...props
 }) {
@@ -43,12 +45,14 @@ function MuiTextField({
             label={label}
             variant="outlined"
             size='small'
+            multiline={multiline}
+            rows={rows}
             sx={percent ? percentFieldWidthStyle : {}}
         />
     )
 }
 
-function FormikTextField({ name, label, fullWidth, percent }) {
+function FormikTextField({ name, label, fullWidth, percent, multiline, rows }) {
     return (
         <FastField
             name={name}
@@ -56,6 +60,8 @@ function FormikTextField({ name, label, fullWidth, percent }) {
             label={label}
             fullWidth={fullWidth}
             percent={percent}
+            multiline={multiline}
+            rows={rows}
         />
     )
 }
