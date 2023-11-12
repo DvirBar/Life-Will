@@ -26,6 +26,35 @@ const hebrewBirthDate = {
 	year: ''
 }
 
+const defaults = {
+	vehicle: {
+		type: '',
+		license_plate: '',
+		manufacturer: '',
+		model: '',
+		year: '',
+		color: '',
+		...itemData
+	},
+	jewelry: itemData,
+	tool: {
+		type: '',
+		...itemData
+	},
+	art: itemData,
+	musical_instruments: itemData,
+	unique_collection: itemData,
+	furniture: itemData,
+	books: itemData,
+	clothes: itemData,
+	appliances: itemData,
+	sport_equipment: itemData,
+	pets: itemData,
+	digital_assets: itemData,
+	items: itemData,
+	other_inheritance: itemData,
+}
+
 export const defaultRealEstateData = {
 	type: '',
 	own_percentage: '',
@@ -139,20 +168,9 @@ const SiteProvider = ({ children }) => {
 
 		// Step 4
 		vehicle: 'לא',
-		vehicle_data: [
-			{
-				// TODO: enum
-				type: '',
-				license_plate: '',
-				manufacturer: '',
-				model: '',
-				year: '',
-				color: '',
-				...itemData
-			}
-		],
+		vehicle_data: [],
 		jewelry: 'לא',
-		jewelry_data: [itemData],
+		jewelry_data: [],
 		tool: 'לא',
 		tool_data: [
 			{
