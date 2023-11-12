@@ -5,13 +5,10 @@ import * as Yup from "yup";
 import { SiteContext } from '../../store/context';
 import { PartnerDetails } from './PartnerDetails';
 
-import FormikTextField from '../formikcomponents/FormikTextField';
 import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
 
 import Button from '@mui/material/Button';
 
-import FormikButtonSelect from '../formikcomponents/FormikButtonSelect'
-import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
 import { Typography } from '@mui/material';
 
 import translation, { statusTypes } from '../../store/translation'

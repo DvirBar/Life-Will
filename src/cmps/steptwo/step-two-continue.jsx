@@ -1,8 +1,19 @@
 import React, { useContext, useState } from 'react';
 
 import { Formik, Form, Field, FieldArray } from "formik";
-import { SiteContext } from '../../store/context';
-import { ChildDetails } from '../formikcomponents/child-details';
+import { SiteContext, defaultChildData } from '../../store/context';
+
+import YesNoRadio from '../formikcomponents/YesNoRadio';
+import ItemsList from "../utils/ItemsList/ItemsList";
+import { ChildDetails } from './ChildDetails';
+
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
+
+import translation, { statusTypes } from '../../store/translation'
+
+import styled from '@emotion/styled'
+
 
 export default function StepTwoContinue() {
 
@@ -22,52 +33,6 @@ export default function StepTwoContinue() {
 		return errors;
 	}
 
-	const addKid = (arrayHelpers) => {
-		const personInfo = {
-			first_name: '',
-			last_name: '',
-			person_id: '',
-		}
-		const hebrewBirthDate = {
-			day: '',
-			month: '',
-			year: ''
-		}
-		const initialModel = {
-			...personInfo,
-			gender: '',
-			birthDate: '',
-			hebrewBirthDate,
-			has_disability: '',
-			guardian_data: null
-		}
-
-		arrayHelpers.push({ initialModel });
-	}
-
-	const renderKidsForm = (values) => {
-		return (
-			<FieldArray
-				name="kids_data"
-				render={arrayHelpers => {
-					return (
-						<div>
-							{
-
-								(
-									values.kids_data.map((kid, i) => (
-										<ChildDetails {...{ values, arrayHelpers, i }} />
-									))
-								)
-							}
-						</div >
-					)
-				}
-				}
-			/>
-		);
-	}
-
 	return (
 		<>
 			<Formik
@@ -78,42 +43,41 @@ export default function StepTwoContinue() {
 			>
 				{({ values, resetForm }) => {
 					return (
-						<Form className="input-container" style={{ width: "500px" }}>
-							<div role="group">
-								<p>ילדים-</p>
-								<div className="status-group input-btn">
-									<label className={`${values.kids === "לא" ? 'active' : ''}`}>
-										<Field type="radio" name="kids" value="לא" />
-										לא
-									</label>
-									<label className={`${values.kids === "כן" ? 'active' : ''}`}>
-										<Field type="radio" name="kids" value="כן" />
-										כן
-									</label>
-								</div>
-							</div>
-							{values.kids === 'כן' &&
+						<Form>
+							<StyledChildQuestion>
+								<Typography>ילדים-</Typography>
+								<YesNoRadio name="kids" />
+							</StyledChildQuestion>
+							{
+								values.kids === 'כן' &&
 								<>
 									{/* <div className="input-container-formik" >
 										<p>מספר-</p>
 										<Field name="num_of_kids" type="number" placeholder='מספר' />
 									</div> */}
-									<div>
-										<div className="input-container-formik child-container direction-ltr" >
-											{renderKidsForm(values)}
-										</div>
+									<ItemsList
+										name="kids_data"
+										values={values}
+										title={translation.kids}
+										defaultValue={defaultChildData}
+										renderItem={(dataItem, itemName) => <ChildDetails dataItem={dataItem} itemName={itemName} />} />
 
-									</div>
 								</>
 
 							}
-							<button type="submit">המשך</button>
+							<Button variant="contained" type="submit">המשך</Button>
 						</Form>
 					)
 				}
 				}
-			</Formik>
+			</Formik >
 
 		</>
 	)
 }
+
+const StyledChildQuestion = styled.div`
+	display:flex;
+	flex-direction:row;
+	
+`

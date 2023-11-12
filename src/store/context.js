@@ -40,6 +40,17 @@ export const defaultRealEstateData = {
 	...itemData
 }
 
+export const defaultChildData = {
+	person_id: '',
+	gender: '',
+	first_name: '',
+	last_name: '',
+	birthDate: '',
+	hebrewBirthDate: '',
+	has_disability: 'לא',
+	guardian: null
+}
+
 const SiteProvider = ({ children }) => {
 	const [data, setData] = useState({
 		// Step 1
@@ -81,12 +92,9 @@ const SiteProvider = ({ children }) => {
 		kids_data: [
 			{
 				...personInfo,
-				first_name: 'ילד',
-				last_name: 'ילד',
-				person_id: '12333333333',
 				gender: '',
 				birthDate: '',
-				hebrewBirthDate,
+				hebrewBirthDate: '',
 				has_disability: '',
 				guardian_data: null
 			}
@@ -243,8 +251,8 @@ const SiteProvider = ({ children }) => {
 		relatives_message_content: 'הודעה שנכתבה ליקירים'
 	})
 
-	const [selectedStage, setSelectedStage] = useState(0)
-	const [selectedStep, setSelectedStep] = useState(0)
+	const [selectedStage, setSelectedStage] = useState(1)
+	const [selectedStep, setSelectedStep] = useState(1)
 
 	const moveNextStep = (isFinalStep = false) => {
 		setSelectedStep(currStep => {
