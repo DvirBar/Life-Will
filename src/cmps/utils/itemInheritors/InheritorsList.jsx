@@ -3,6 +3,9 @@ import { Typography, useTheme } from '@mui/material'
 import { useField } from 'formik'
 import FormikTextField from "../../formikcomponents/FormikTextField"
 import styled from '@emotion/styled'
+import Error from '../Error'
+
+const FIELD_META_INDEX = 1
 
 function InheritorsList({ name, inheritorString }) {
     const [field] = useField(name)
@@ -11,12 +14,16 @@ function InheritorsList({ name, inheritorString }) {
 
     const theme = useTheme()
 
+    const inheritorsListMeta = useField(name)[FIELD_META_INDEX]
+    const isErrorEmptyInheritorsList = inheritorsListMeta.touched && inheritorsListMeta.error
+
     if (!inheritors || inheritors.length === 0) {
         return (
-            <StyledInheritorsList>
+            <StyledInheritorsList isError={isErrorEmptyInheritorsList}>
                 <StyledNoInheritors>
                     <Typography variant="subtitle1">יש לבחור יורשים מהרשימה מימין.</Typography>
                 </StyledNoInheritors>
+                <Error isError={isErrorEmptyInheritorsList}>{inheritorsListMeta.error}</Error>
             </StyledInheritorsList>
         )
     }
@@ -69,20 +76,25 @@ function InheritorsList({ name, inheritorString }) {
                         <Typography variant="subtitle1">%</Typography>
                         <Typography variant="subtitle1">{sum}</Typography>
                     </StyledPercentInput>
-
                 </StyledSumBlock>
             </StyledWrapper>
+            <Error>{inheritorsListMeta.error}</Error>
         </StyledInheritorsList>
     )
 }
 
 
-const StyledInheritorsList = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    width: 18rem;
-`
+const StyledInheritorsList = styled("div")(({ theme, isError }) => ({
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+    width: "18rem",
+    border: `2px solid ${isError ? theme.palette.error.light : "transparent"}`,
+    padding: "0.5rem",
+    borderRadius: "5px"
+}))
+
+
 
 const StyledWrapper = styled.div`
     display: flex;

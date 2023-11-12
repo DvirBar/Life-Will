@@ -10,6 +10,7 @@ import StepFourJewelry from './stepfour/step-four-jewelry';
 import StepFourTool from './stepfour/step-four-tools';
 import StepFourArt from './stepfour/step-four-art';
 import { SiteContext } from '../store/context'
+import StepThreeFutureInheritors from './stepthree/StepThreeFutureInheritors';
 
 
 function FormStepsWrapper() {
@@ -36,6 +37,7 @@ function FormStepsWrapper() {
 		],
 		[
 			<StepThree />,
+			<StepThreeFutureInheritors />
 		],
 		[
 			<StepFourVehicle />,

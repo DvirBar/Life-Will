@@ -35,7 +35,7 @@ function ChooseInheritors({ name, inheritorString }) {
         if (index > -1) {
             arrayHelpers.remove(index)
         } else {
-            arrayHelpers.push({ ...inheritor, percent: 0 })
+            arrayHelpers.push({ ...inheritor, percent: "0" })
         }
     }
 

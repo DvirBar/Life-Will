@@ -29,14 +29,16 @@ const hebrewBirthDate = {
 export const defaultRealEstateData = {
 	type: '',
 	own_percentage: '',
-	country: '',
-	city: '',
-	street: '',
-	house_number: '',
-	block: '',
-	lot: '',
-	sub_lot: '',
-	size: '',
+	details: {
+		country: '',
+		city: '',
+		street: '',
+		house_number: '',
+		block: '',
+		lot: '',
+		sub_lot: '',
+		size: '',
+	},
 	...itemData
 }
 
@@ -260,16 +262,16 @@ const SiteProvider = ({ children }) => {
 		}
 	}
 
-	const movePrevStep = () => {
-		setSelectedStep(currStep => {
-			if (currStep > 0) {
-				return currStep - 1
+	const movePrevStep = (isFirstStep) => {
+		setSelectedStage(currStage => {
+			if (currStage > 0) {
+				return currStage - 1
 			}
 		})
 
-		setSelectedStage(currStage => {
-			if (currStage > 0) {
-				return currStage + 1
+		setSelectedStep(currStep => {
+			if (currStep > 0) {
+				return currStep + 1
 			}
 		})
 	}
@@ -325,6 +327,11 @@ const SiteProvider = ({ children }) => {
 		return inheritors
 	}
 
+	const submitForm = (values) => {
+		setData(values)
+		moveNextStep();
+	}
+
 	const value = {
 		data,
 		setData,
@@ -333,7 +340,8 @@ const SiteProvider = ({ children }) => {
 		selectStage,
 		moveNextStep,
 		movePrevStep,
-		getInheritors
+		getInheritors,
+		submitForm
 	}
 
 	return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

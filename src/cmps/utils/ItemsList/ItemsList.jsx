@@ -1,10 +1,13 @@
 import styled from '@emotion/styled'
-import { Button } from '@mui/material'
-import { FieldArray } from 'formik'
+import { Button, Typography } from '@mui/material'
+import { FieldArray, useField } from 'formik'
 import React, { useState } from 'react'
 import Item from "./Item"
 import ItemListNavigation from './ItemListNavigation'
 import ItemListPageNumbers from './ItemListPageNumbers'
+import Error from '../Error'
+
+const FIELD_META_INDEX = 1
 
 function ItemsList({ name, title, values, defaultValue, renderItem }) {
     const items = values[name] || []
@@ -32,13 +35,19 @@ function ItemsList({ name, title, values, defaultValue, renderItem }) {
         }
     }
 
+    const meta = useField(name)[FIELD_META_INDEX]
+
+
     const selectedItem = values[name][selectedItemIndex]
     const nameWithIndex = `${name}[${selectedItemIndex}]`
+
+    const isError = !selectedItem && meta.touched && meta.error
+
     return (
         <FieldArray
             name={name}
             render={arrayHelpers =>
-                <StyledItemListWrapper>
+                <StyledItemListWrapper isError={isError}>
                     <StyledListHeader>
                         <ItemListNavigation
                             title={title}
@@ -64,18 +73,30 @@ function ItemsList({ name, title, values, defaultValue, renderItem }) {
                     <AddItemButton variant="outlined" onClick={() => arrayHelpers.push(defaultValue)}>
                         + הוספה
                     </AddItemButton>
+                    <Error isError={isError}>{meta.error}</Error>
                 </StyledItemListWrapper>
             } />
     )
 }
 
-const StyledItemListWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-    width: 100%;
-`
+const StyledItemListWrapper = styled("div")(({ theme, isError }) => ({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: "20px",
+    width: "100%",
+    border: `2px solid ${isError ? theme.palette.error.light : "transparent"}`,
+    padding: "0.5rem",
+    borderRadius: "5px"
+}))
+
+const StyledError = styled(Typography)(({ theme }) => ({
+    color: theme.palette.error.light,
+    fontSize: "0.85rem",
+    fontWeight: 600,
+    alignSelf: "flex-start",
+}))
+
 
 const StyledListHeader = styled.div`
     display: flex;
@@ -93,6 +114,7 @@ const AddItemButton = styled(Button)`
     width: 100%;
     font-weight: bold;
     font-size: 1rem;
+    margin-bottom: 1rem;
 `
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { TextField } from '@mui/material'
-import { FastField } from 'formik'
+import { FastField, getIn } from 'formik'
 
 function MuiTextField({
     field,
@@ -16,7 +16,7 @@ function MuiTextField({
     const fieldName = name || field.name;
     const handleChange = (event) => {
         if (percent) {
-            if ((!isNaN(event.target.value) && (event.target.value >= 0 && event.target.value <= 100)) || event.target.value === "." || event.target.value === '') {
+            if ((!isNaN(event.target.value) && (event.target.value > 0 && event.target.value <= 100)) || event.target.value === "." || event.target.value === '') {
                 field.onChange(event)
             }
         }
@@ -28,12 +28,15 @@ function MuiTextField({
     const percentFieldWidthStyle = {
         width: "60px"
     }
-
+    const isTouched = getIn(touched, fieldName);
+    const error = isTouched ? getIn(errors, fieldName) : ""
     return (
         <TextField
             fullWidth={fullWidth}
             {...props}
             {...field}
+            error={error ? true : false}
+            helperText={error}
             value={field.value}
             onChange={handleChange}
             name={fieldName}
