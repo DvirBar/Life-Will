@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik';
 import NavigationButtons from './NavigationButtons';
 import styled from '@emotion/styled';
 
-function FormWrapper({ validationSchema, renderItem }) {
+function FormWrapper({ validationSchema, renderItem, isFinalStep }) {
     const {
         data,
         submitForm
@@ -13,7 +13,7 @@ function FormWrapper({ validationSchema, renderItem }) {
     return (
         <Formik
             initialValues={data}
-            onSubmit={submitForm}
+            onSubmit={(values) => submitForm(values, isFinalStep)}
             validationSchema={validationSchema}
         >
             {({ values }) => {

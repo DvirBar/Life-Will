@@ -5,12 +5,11 @@ import StepTwo from './steptwo/step-two';
 import StepTwoContinue from './steptwo/step-two-continue';
 import StepTwoContinue2 from './steptwo/step-two-continue2';
 import StepThree from './stepthree/step-three';
-import StepFourVehicle from './stepfour/step-four-vehicle';
-import StepFourJewelry from './stepfour/step-four-jewelry';
-import StepFourTool from './stepfour/step-four-tools';
-import StepFourArt from './stepfour/step-four-art';
 import { SiteContext } from '../store/context'
 import StepThreeFutureInheritors from './stepthree/StepThreeFutureInheritors';
+import { inheritanceKeysStep4 } from '../store/translation';
+import InheritedItemForm from './utils/InheritedItem/InheritedItemForm';
+import FutureInheritedItem from './utils/InheritedItem/FutureInheritedItem';
 
 
 function FormStepsWrapper() {
@@ -37,13 +36,14 @@ function FormStepsWrapper() {
 		],
 		[
 			<StepThree />,
-			<StepThreeFutureInheritors />
+			<FutureInheritedItem name="future_real_estate" />
 		],
 		[
-			<StepFourVehicle />,
-			<StepFourJewelry />,
-			<StepFourTool />,
-			<StepFourArt />,
+			...Object.keys(inheritanceKeysStep4).map((key) =>
+				key === inheritanceKeysStep4.future_items
+					? <FutureInheritedItem name={inheritanceKeysStep4.future_items} />
+					: <InheritedItemForm name={key} />
+			)
 		],
 	]
 

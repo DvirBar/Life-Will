@@ -26,14 +26,33 @@ const hebrewBirthDate = {
 	year: ''
 }
 
-const defaults = {
+export const defaults = {
+	real_estate: {
+		type: '',
+		own_percentage: '',
+		details: {
+			country: '',
+			city: '',
+			street: '',
+			house_number: '',
+			block: '',
+			lot: '',
+			sub_lot: '',
+			size: '',
+			description: '',
+		},
+		...itemNoDescription
+	},
+	future_real_estate_data: itemNoDescription,
 	vehicle: {
 		type: '',
-		license_plate: '',
-		manufacturer: '',
-		model: '',
-		year: '',
-		color: '',
+		details: {
+			license_plate: '',
+			manufacturer: '',
+			model: '',
+			year: '',
+			color: '',
+		},
 		...itemData
 	},
 	jewelry: itemData,
@@ -164,45 +183,39 @@ const SiteProvider = ({ children }) => {
 		// TODO: enum
 		real_estate: answers.no,
 		real_estate_data: [],
-		future_real_estate_data: itemNoDescription,
+		future_real_estate_data: defaults.future_real_estate_data,
 
 		// Step 4
-		vehicle: 'לא',
+		vehicle: answers.no,
 		vehicle_data: [],
-		jewelry: 'לא',
+		jewelry: answers.no,
 		jewelry_data: [],
-		tool: 'לא',
-		tool_data: [
-			{
-				// TODO: enum
-				type: '',
-				...itemData
-			}
-		],
-		art: 'לא',
-		art_data: [itemData],
-		musical_instruments: 'לא',
-		musical_instruments_data: [itemData],
-		unique_collection: 'לא',
-		unique_collection_data: [itemData],
-		furniture: 'לא',
-		furniture_data: [itemData],
-		books: 'לא',
-		books_data: [itemData],
-		clothes: 'לא',
-		clothes_data: [itemData],
-		appliances: 'לא',
-		appliances_data: [itemData],
-		sport_equipment: 'לא',
-		sport_equipment_data: [itemData],
-		pets: 'לא',
-		pets_data: [itemData],
-		digital_assets: 'לא',
-		digital_assets_data: [itemData],
-		items: 'לא',
-		items_data: [itemData],
-		other_inheritance: 'לא',
-		other_inheritance_data: [itemData],
+		tool: answers.no,
+		tool_data: [],
+		art: answers.no,
+		art_data: [],
+		musical_instruments: answers.no,
+		musical_instruments_data: [],
+		unique_collection: answers.no,
+		unique_collection_data: [],
+		furniture: answers.no,
+		furniture_data: [],
+		books: answers.no,
+		books_data: [],
+		clothes: answers.no,
+		clothes_data: [],
+		appliances: answers.no,
+		appliances_data: [],
+		sport_equipment: answers.no,
+		sport_equipment_data: [],
+		pets: answers.no,
+		pets_data: [],
+		digital_assets: answers.no,
+		digital_assets_data: [],
+		items: answers.no,
+		items_data: [],
+		other_inheritance: answers.no,
+		other_inheritance_data: [],
 		future_items_data: itemNoDescription,
 
 		// Step 5
@@ -345,9 +358,9 @@ const SiteProvider = ({ children }) => {
 		return inheritors
 	}
 
-	const submitForm = (values) => {
+	const submitForm = (values, isFinalStep) => {
 		setData(values)
-		moveNextStep();
+		moveNextStep(isFinalStep);
 	}
 
 	const value = {

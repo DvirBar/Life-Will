@@ -3,9 +3,8 @@ import React from 'react'
 import translation, { realEstateDetailsFieldTypes, realEstateTypes, realEstateTypesDetailsMap } from '../../store/translation'
 import FormikTextField from '../formikcomponents/FormikTextField'
 import styled from '@emotion/styled'
-import FormikButtonSelect from '../formikcomponents/FormikButtonSelect'
-import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
 import ItemInheritors from '../utils/itemInheritors/ItemInheritors'
+import ItemType from '../utils/InheritedItem/ItemType'
 
 function RealEstateItem({ dataItem, itemName }) {
     const type = dataItem.type
@@ -13,16 +12,11 @@ function RealEstateItem({ dataItem, itemName }) {
 
     return (
         <StyledRealEstateItem>
-            <Typography variant="subtitle1">סוג-</Typography>
-            <FormikButtonSelect
-                name={`${itemName}.type`}
-                label={translation.real_estate_data.type}
-            >
-                {Object.keys(realEstateTypes).map(key =>
-                    <ButtonSelectItem key={realEstateTypes[key]} value={realEstateTypes[key]}>{realEstateTypes[key]}</ButtonSelectItem>
-                )}
-            </FormikButtonSelect>
-
+            <ItemType
+                name="real_estate"
+                itemDataName="real_estate_data"
+                itemName={itemName}
+            />
             <StyledPercentageDisplay>
                 <Typography variant="subtitle1">{translation.real_estate_data.own_percentage.question}</Typography>
                 <FormikTextField

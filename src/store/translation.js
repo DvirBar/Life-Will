@@ -33,10 +33,14 @@ export const inheritorsTypes = {
     nonprofit: 'עמותה'
 }
 
+const itemNoDecription = {
+    remarks: 'הערות בכתב (לא חובה)',
+    inheritors: inheritorsData
+}
+
 const assetsData = {
     description: 'תיאור',
-    remarks: 'האם יש הערות בכתב שתרצה להוסיף?',
-    inheritors: inheritorsData
+    ...itemNoDecription
 }
 
 const type = 'סוג'
@@ -75,6 +79,7 @@ export const realEstateDetailsFieldTypes = {
     lot: 'חלקה',
     sub_lot: 'תת חלקה',
     size: 'גודל',
+    description: 'תיאור'
 }
 
 export const realEstateTypesDetailsMap = (type) => {
@@ -96,7 +101,8 @@ export const realEstateTypesDetailsMap = (type) => {
                 realEstateDetailsFieldTypes.country,
                 realEstateDetailsFieldTypes.block,
                 realEstateDetailsFieldTypes.lot,
-                realEstateDetailsFieldTypes.size
+                realEstateDetailsFieldTypes.size,
+                realEstateDetailsFieldTypes.description
             ]
         case realEstateTypes.building:
             return [
@@ -166,7 +172,7 @@ export const stepNames = [
 export const inheritanceKeysStep4 = {
     vehicle: 'vehicle',
     jewelry: 'jewelry',
-    tools: 'tools',
+    tool: 'tool',
     art: 'art',
     musical_instruments: 'musical_instruments',
     unique_collection: 'unique_collection',
@@ -182,7 +188,21 @@ export const inheritanceKeysStep4 = {
     future_items: 'future_items'
 }
 
-// TODO: translate enums
+export const itemTypes = {
+    real_estate: realEstateTypes,
+    vehicle: vehicleTypes
+}
+
+export const itemDetails = {
+    vehicle: {
+        license_plate: 'זיהוי',
+        manufacturer: 'יצרן',
+        model: 'דגם',
+        year: 'שנה',
+        color: 'צבע',
+    }
+}
+
 
 const translation = {
     // Step 1
@@ -248,7 +268,7 @@ const translation = {
             answer: 'סכום'
         },
         details: realEstateDetailsFieldTypes,
-        ...assetsData
+        ...itemNoDecription
     },
     future_real_estate_title: 'הורשה בעתיד',
     future_real_estate: 'נכס נדלני, בין אם יש לך עכשיו ובין אם יהיה לך בעתיד, ששכחת או לא ציינת למי היית רוצה להוריש אותו?',
@@ -264,21 +284,15 @@ const translation = {
     {
         // TODO: enum
         type: 'סוג',
-        details: {
-            license_plate: 'זיהוי',
-            manufacturer: 'יצרן',
-            model: 'דגם',
-            year: 'שנה',
-            color: 'צבע',
-        },
+        details: itemDetails.vehicle,
         ...assetsData
     },
     jewelry_title: 'תכשיטים',
     jewelry: 'האם קיים ברשותך תכשיטים שהיית רוצה להוריש?',
     jewelry_data: assetsData,
-    tools_title: 'כלים',
-    tools: 'האם קיים ברשותך כלים שהיית רוצה להוריש?',
-    tools_data:
+    tool_title: 'כלים',
+    tool: 'האם קיים ברשותך כלים שהיית רוצה להוריש?',
+    tool_data:
     {
         // TODO: enum
         type: 'סוג',

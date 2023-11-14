@@ -25,15 +25,6 @@ const RealEstateDataValidation = Yup.object().shape({
                 })
         )
         .min(1, "רשימת היורשים לא יכולה להיות ריקה")
-    // .test("sumOfPercentage",
-    //     "סכום החלוקה חייב להיות 100",
-    //     (inheritors) => {
-    //         const sum =
-    //             inheritors?.reduce((acc, inheritor) => {
-    //                 return acc + inheritor.percentage;
-    //             }, 0) || 0
-    //         return sum
-    //     })
 })
 
 const RealEstateSchema = Yup.object().shape({
