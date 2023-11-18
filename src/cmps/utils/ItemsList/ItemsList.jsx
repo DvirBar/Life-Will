@@ -43,6 +43,8 @@ function ItemsList({ name, title, values, defaultValue, renderItem }) {
 
     const isError = !selectedItem && meta.touched && meta.error
 
+    // TODO: if someone chooses a type, fills its repective fields and then changes it to another types - these fields will still be filled
+
     return (
         <FieldArray
             name={name}

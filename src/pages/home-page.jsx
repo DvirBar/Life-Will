@@ -2,25 +2,38 @@ import React from 'react'
 import MultiStepForm from '../cmps/multi-step-form'
 import FormNavigation from '../cmps/layout/FormNavigation'
 import styled from '@emotion/styled'
+import Background from '../cmps/Background'
 
 
 export function HomePage() {
 	return (
-		<StyledWrapper>
-			<StyledLayout>
+		<StyledCenteredWrapper>
+			<StyledWrapper>
+				<Background />
 				<FormNavigation />
-				<MultiStepForm />
-			</StyledLayout>
-		</StyledWrapper>
+				<StyledLayout>
+					<MultiStepForm />
+				</StyledLayout>
+			</StyledWrapper>
+		</StyledCenteredWrapper>
+
 	)
 }
 
+const StyledCenteredWrapper = styled.div`
+	display: flex;
+	justify-content: center;
+	padding-top: 9rem;
+`
 const StyledWrapper = styled.div`
 	width: "100%";
 	height: "100%";
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
 	align-items: center;
+	align-self: center;
+	justify-self: center;
+	width: 900px;
 `
 
 const StyledLayout = styled.div`
@@ -30,8 +43,8 @@ const StyledLayout = styled.div`
 	padding: 3rem;
 	background-color: #fff;
 	padding: 2rem;
-	box-shadow: 0px 0px 12px #aaa;
+	border: 1px solid #ccc;
 	border-radius: 10px;
 	margin: 2rem;
-	width: 900px;
+	width: 100%;
 `

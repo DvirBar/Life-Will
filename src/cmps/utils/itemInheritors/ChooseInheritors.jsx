@@ -1,10 +1,13 @@
-import { Checkbox, FormControlLabel } from '@mui/material'
-import React, { useContext } from 'react'
+import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
+import React, { useContext, useState } from 'react'
 import { SiteContext } from '../../../store/context'
 import styled from '@emotion/styled'
 import { FieldArray, useField } from 'formik'
+import ModalBox from '../../layout/ModalBox'
+import NonProfitsList from './NonProfitsList'
+import FindNonProfits from './FindNonProfits'
 
-function ChooseInheritors({ name, inheritorString }) {
+function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
     const {
         getInheritors,
     } = useContext(SiteContext)
@@ -39,50 +42,82 @@ function ChooseInheritors({ name, inheritorString }) {
         }
     }
 
-    // TODO: improve perfomance
+    const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+    const inheritors = getInheritors()
 
     return (
-        <StyledInheritorsModalContent>
+        <StyledInheritorsModalContent
+            open={isOpen}
+            handleClose={handleClose}
+        >
+            <FindNonProfits
+                isOpen={isSearchOpen}
+                handleClose={() => setIsSearchOpen(false)}
+            />
             <StyledInheritorsListContainer>
-                {getInheritors().map((inheritor, index) =>
-                    <StyledInheritorsListItem key={index}>
-                        <FieldArray
-                            name={name}
-                            render={(arrayHelpers) => (
-                                <FormControlLabel
-                                    control={<Checkbox
-                                        checked={isChecked(inheritor.person_id)}
-                                        onChange={() => onChange(arrayHelpers, inheritor)}
-                                    />}
-                                    label={inheritorString(inheritor)}
-                                />
-                            )} />
+                {Object.keys(inheritors).map((inheritorType) => {
+                    if (inheritors[inheritorType]?.length > 0) {
+                        return (
+                            <>
+                                <Typography variant="subtitle1">{inheritorType}</Typography>
+                                <StyledTypeInheritorsListContainer>
+                                    {inheritors[inheritorType]?.map((inheritor, index) =>
+                                        <StyledInheritorsListItem key={index}>
+                                            <FieldArray
+                                                name={name}
+                                                render={(arrayHelpers) => (
+                                                    <FormControlLabel
+                                                        control={<Checkbox
+                                                            checked={isChecked(inheritor.person_id)}
+                                                            onChange={() => onChange(arrayHelpers, inheritor)}
+                                                        />}
+                                                        label={inheritorString(inheritor)}
+                                                    />
+                                                )} />
 
-                    </StyledInheritorsListItem>
+                                        </StyledInheritorsListItem>
+                                    )}
+                                </StyledTypeInheritorsListContainer>
+                            </>
+                        )
+                    }
+                    return <></>
+                }
                 )}
+                <NonProfitsList openSearch={() => setIsSearchOpen(true)} />
             </StyledInheritorsListContainer>
+            <StyledEndButton onClick={handleClose} variant="contained">סיום</StyledEndButton>
         </StyledInheritorsModalContent>
-
     )
 }
 
-const StyledInheritorsModalContent = styled.div`
+const StyledInheritorsModalContent = styled(ModalBox)`
     display: flex;
     flex-direction: column;
     border-right: 1px solid #aaa;
-    flex: 1;
+    align-items: center;
+    justify-content: center;
 `
 
 const StyledInheritorsListContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 100%;
     gap: 0.5rem;
     margin: 1rem 0;
 `
 
 const StyledInheritorsListItem = styled.div`
     padding: 0.2rem;
+`
+
+const StyledTypeInheritorsListContainer = styled.div`
+    padding: 0 1rem;
+`
+
+const StyledEndButton = styled(Button)`
+    width: 100%;
 `
 
 export default ChooseInheritors

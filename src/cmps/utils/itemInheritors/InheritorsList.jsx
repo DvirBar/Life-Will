@@ -1,13 +1,13 @@
 import React from 'react'
-import { Typography, useTheme } from '@mui/material'
-import { useField, useFormikContext } from 'formik'
+import { Button, Typography, useTheme } from '@mui/material'
+import { useField } from 'formik'
 import FormikTextField from "../../formikcomponents/FormikTextField"
 import styled from '@emotion/styled'
 import Error from '../Error'
 
 const FIELD_META_INDEX = 1
 
-function InheritorsList({ name, inheritorString }) {
+function InheritorsList({ name, inheritorString, handleOpen }) {
     const [field] = useField(name)
 
     const inheritors = field.value
@@ -21,7 +21,13 @@ function InheritorsList({ name, inheritorString }) {
         return (
             <StyledInheritorsList isError={isErrorEmptyInheritorsList}>
                 <StyledNoInheritors>
-                    <Typography variant="subtitle1">יש לבחור יורשים מהרשימה מימין.</Typography>
+                    <Typography variant="subtitle1">עדיין אין יורשים ברשימה</Typography>
+                    <Button
+                        variant="contained"
+                        onClick={handleOpen}
+                    >
+                        לחצו להוספה
+                    </Button>
                 </StyledNoInheritors>
                 <Error isError={isErrorEmptyInheritorsList}>{inheritorsListMeta.error}</Error>
             </StyledInheritorsList>
@@ -39,6 +45,7 @@ function InheritorsList({ name, inheritorString }) {
     }
 
     const sum = CalculateSum()
+    const sumDiff = 100 - sum
 
     const sumBlockColor = () => {
         if (sum < 100) {
@@ -72,11 +79,23 @@ function InheritorsList({ name, inheritorString }) {
                 </StyledListWrapper>
                 <StyledSumBlock blockBackground={sumBlockColor}>
                     <Typography variant="subtitle1">סה״כ</Typography>
+                    {sumDiff > 0 &&
+                        <Typography>{`חסרים ${sumDiff} אחוזים`}</Typography>
+                    }
+                    {sumDiff < 0 &&
+                        <Typography>{`יש עודף של ${Math.abs(sumDiff)} אחוזים`}</Typography>
+                    }
                     <StyledPercentInput>
                         <Typography variant="subtitle1">%</Typography>
                         <Typography variant="subtitle1">{sum}</Typography>
                     </StyledPercentInput>
                 </StyledSumBlock>
+                <Button
+                    variant="contained"
+                    onClick={handleOpen}
+                >
+                    יורשים נוספים
+                </Button>
             </StyledWrapper>
             <Error>{inheritorsListMeta.error}</Error>
         </StyledInheritorsList>
@@ -88,7 +107,7 @@ const StyledInheritorsList = styled("div")(({ theme, isError }) => ({
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
-    width: "18rem",
+    width: "100%",
     border: `2px solid ${isError ? theme.palette.error.light : "transparent"}`,
     padding: "0.5rem",
     borderRadius: "5px"
@@ -116,6 +135,9 @@ const StyledInheritorsListItem = styled.div`
 `
 
 const StyledNoInheritors = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     background-color: #eee;
     padding: 1rem;
     border-radius: 10px;

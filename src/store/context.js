@@ -312,29 +312,29 @@ const SiteProvider = ({ children }) => {
 		setSelectedStep(0)
 	}
 
-	let inheritors = null
+	const inheritors = {}
 
 	// TODO: in inheritors - what about ex partners?
 	const getInheritors = (inputValues) => {
 		const values = inputValues || data
 		if (values.partner_first_name?.length > 0) {
-			inheritors = [
-				{
-					first_name: values.partner_first_name,
-					last_name: values.partner_last_name,
-					person_id: values.partner_id,
-					type: inheritorsTypes.spouse,
-				}
-			]
+			inheritors[inheritorsTypes.spouse] = [{
+				first_name: values.partner_first_name,
+				last_name: values.partner_last_name,
+				person_id: values.partner_id,
+				type: inheritorsTypes.spouse,
+			}]
 		}
 
-		inheritors = [
+		inheritors[inheritorsTypes.children] = [
 			...(values.kids_data.map(kid => ({
 				first_name: kid.first_name,
 				last_name: kid.last_name,
 				person_id: kid.person_id,
 				type: inheritorsTypes.children
-			}))),
+			})))
+		]
+		inheritors[inheritorsTypes.inheritors] = [
 			...(values.ex_partners.map(ex => ({
 				first_name: ex.first_name,
 				last_name: ex.last_name,
@@ -346,7 +346,7 @@ const SiteProvider = ({ children }) => {
 		for (const key of Object.keys(values.give_to_family_type)) {
 			const currentTypeItem = values.give_to_family_type[key]
 			for (const item of currentTypeItem) {
-				inheritors.push({
+				inheritors[inheritorsTypes.inheritors].push({
 					first_name: item.first_name,
 					last_name: item.last_name,
 					person_id: item.person_id,

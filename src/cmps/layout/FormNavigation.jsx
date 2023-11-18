@@ -10,21 +10,26 @@ const StyledStepper = styled(Stepper)(({ theme }) => ({
         borderColor: theme.palette.secondary.main,
         borderRadius: "50%",
         color: "#fff",
-        transition: "all 200ms ease-in-out",
-        transform: "scale(1)",
+        transition: "all 300ms ease-in-out",
         fontWeight: "bold",
+        transform: "scale(1.7)",
+        zIndex: 1,
+
+        "&.Mui-active": {
+            color: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main,
+            transform: "scale(2.2)"
+        },
+
+        "&.Mui-completed": {
+            color: theme.palette.secondary.main,
+        },
 
         "&.Mui-active, &.Mui-completed": {
-            color: theme.palette.secondary.main,
-
             "& .MuiStepIcon-text": {
                 fill: "#fff",
             }
         },
-
-        "&.Mui-active": {
-            transform: "scale(1.3)",
-        }
     },
 
     "& .MuiStepIcon-text": {
@@ -32,7 +37,7 @@ const StyledStepper = styled(Stepper)(({ theme }) => ({
     },
 
     [`& .${stepConnectorClasses.line}`]: {
-        "border-width": "2px"
+        "border-width": "3px"
     }
 
 
@@ -44,7 +49,7 @@ function FormNavigation() {
         selectedStage,
     } = useContext(SiteContext)
     return (
-        <Box>
+        <StyledBoxWrapper>
             <StyledStepper
                 activeStep={selectedStage}
                 alternativeLabel>
@@ -54,9 +59,13 @@ function FormNavigation() {
                     </Step>
                 )}
             </StyledStepper>
-        </Box>
+        </StyledBoxWrapper>
     )
 }
+
+const StyledBoxWrapper = styled(Box)`
+    width: 100%;
+`
 
 
 export default FormNavigation
