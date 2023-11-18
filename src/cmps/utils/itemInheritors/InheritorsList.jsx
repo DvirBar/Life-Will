@@ -4,6 +4,7 @@ import { useField } from 'formik'
 import FormikTextField from "../../formikcomponents/FormikTextField"
 import styled from '@emotion/styled'
 import Error from '../Error'
+import { rgba } from '../../../Theme'
 
 const FIELD_META_INDEX = 1
 
@@ -108,9 +109,10 @@ const StyledInheritorsList = styled("div")(({ theme, isError }) => ({
     flexDirection: "column",
     gap: "0.5rem",
     width: "100%",
-    border: `2px solid ${isError ? theme.palette.error.light : "transparent"}`,
+    border: `2px solid ${isError ? theme.palette.error.light : "#ccc"}`,
+    backgroundColor: rgba(isError ? theme.palette.error.light : "#ccc", 0.1),
     padding: "0.5rem",
-    borderRadius: "5px"
+    borderRadius: "5px",
 }))
 
 
@@ -118,7 +120,6 @@ const StyledInheritorsList = styled("div")(({ theme, isError }) => ({
 const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 1rem;
     width: 100%;
     align-items: center;
     gap: 1rem;
@@ -140,7 +141,7 @@ const StyledNoInheritors = styled.div`
     gap: 1rem;
     background-color: #eee;
     padding: 1rem;
-    border-radius: 10px;
+    border-radius: 10px; 
     width: 100%;
     height: 100%;
     display: flex;

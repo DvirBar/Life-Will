@@ -1,45 +1,81 @@
 import styled from '@emotion/styled'
 import { Close } from '@mui/icons-material';
-import { Box, IconButton, Modal } from '@mui/material'
+import { Box, IconButton, Modal, Typography } from '@mui/material'
 import React from 'react'
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
+    position: "relative",
+    width: 600,
     bgcolor: 'background.paper',
     borderRadius: "10px",
     boxShadow: 24,
-    padding: "1rem"
+    padding: "1rem",
+    margin: "2rem auto",
 };
-function ModalBox({ open, handleClose, children }) {
+
+function ModalBox({ open, handleClose, title, children }) {
     return (
-        <Modal
+        <StyledModal
             open={open}
             onClose={handleClose}
         >
-            <Box sx={style}>
+            <StyledBox sx={style}>
                 <StyledModalHeader>
-                    <IconButton onClick={handleClose}>
-                        <Close />
-                    </IconButton>
+                    <StyledCloseIconWrapper>
+                        <IconButton onClick={handleClose}>
+                            <Close />
+                        </IconButton>
+                    </StyledCloseIconWrapper>
+
+                    <StyledTitle variant="h1">
+                        {title}
+                    </StyledTitle>
+                    <StyledHeaderDummyDiv />
                 </StyledModalHeader>
                 <StyledContentContainer>
                     {children}
                 </StyledContentContainer>
-            </Box>
-        </Modal>
+            </StyledBox>
+        </StyledModal>
     )
 }
 
+const StyledModal = styled(Modal)`
+    overflow-y: auto;
+    display: block;
+`
+
 const StyledModalHeader = styled.div`
     display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const StyledContentContainer = styled.div`
     padding: 0.5rem;
+`
+
+const StyledBox = styled(Box)`
+    position: relative;
+    width: 600;
+    background-color: 'background.paper';
+    border-radius: "10px";
+    box-shadow: 24;
+    padding: 1rem;
+    margin: 2rem auto;
+`
+
+const StyledCloseIconWrapper = styled.div`
+    flex: 1;
+`
+
+const StyledTitle = styled(Typography)`
+    flex: 1;
+    text-align: center;
+`
+
+const StyledHeaderDummyDiv = styled.div`
+    flex: 1;
 `
 
 

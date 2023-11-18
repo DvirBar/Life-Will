@@ -1,22 +1,31 @@
 import styled from '@emotion/styled'
 import { ArrowForward } from '@mui/icons-material'
-import { IconButton, TextField } from '@mui/material'
-import React from 'react'
+import { Button, TextField, Typography } from '@mui/material'
+import React, { useState } from 'react'
+import NonProfitsSearchList from './NonProfitsSearchList'
 
-function FindNonProfits({ isOpen, handleClose }) {
+function FindNonProfits({ name, isOpen, handleClose }) {
+    const [searchTerm, setSearchTerm] = useState("")
 
     return (
         <StyledFindNonProfits isOpen={isOpen}>
             <StyledSearchBoxWrapper>
-                <IconButton onClick={handleClose}>
+                <Button onClick={handleClose}>
                     <ArrowForward />
-                </IconButton>
+                    <Typography variant="subtitle1">חזרה</Typography>
+                </Button>
 
                 <TextField
                     fullWidth
                     label="חיפוש עמותות"
+                    onChange={(event) => setSearchTerm(event.target.value)}
                 />
             </StyledSearchBoxWrapper>
+            <NonProfitsSearchList
+                name={name}
+                searchTerm={searchTerm}
+                closeSearch={handleClose}
+            />
         </StyledFindNonProfits>
     )
 }
@@ -42,8 +51,8 @@ const StyledFindNonProfits = styled.div`
 
 const StyledSearchBoxWrapper = styled.div`
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 0.5rem;
 `
 

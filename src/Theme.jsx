@@ -1,5 +1,12 @@
 import { createTheme } from "@mui/material";
+import hexRgb from "hex-rgb";
 
+export const rgba = (hex, alpha) => {
+    const rgb = hexRgb(hex, { format: 'array' })
+        .slice(0, -1)
+        .join(',');
+    return `rgba(${rgb},${alpha})`;
+};
 
 let theme = createTheme({
     palette: {
@@ -33,11 +40,12 @@ theme = createTheme(theme, {
         ].join(','),
         h1: {
             fontFamily: 'NotoSansHebrew',
-            fontWeight: 400
+            fontWeight: 400,
+            fontSize: "1.6rem"
         },
         h2: {
             fontFamily: 'NotoSansHebrew',
-            fontSize: "1.4rem",
+            fontSize: "1.3rem",
             fontWeight: 500
         },
         subtitle1: {

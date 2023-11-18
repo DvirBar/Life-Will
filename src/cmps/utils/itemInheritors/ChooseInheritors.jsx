@@ -1,11 +1,11 @@
 import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import { SiteContext } from '../../../store/context'
+import { SiteContext, defaultItemInheritor } from '../../../store/context'
 import styled from '@emotion/styled'
 import { FieldArray, useField } from 'formik'
 import ModalBox from '../../layout/ModalBox'
-import NonProfitsList from './NonProfitsList'
-import FindNonProfits from './FindNonProfits'
+import NonProfitsList from './nonProfits/NonProfitsList'
+import FindNonProfits from './nonProfits/FindNonProfits'
 
 function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
     const {
@@ -38,7 +38,12 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
         if (index > -1) {
             arrayHelpers.remove(index)
         } else {
-            arrayHelpers.push({ ...inheritor, percent: "0" })
+            const inheritorItem = {
+                ...defaultItemInheritor,
+                ...inheritor
+            }
+
+            arrayHelpers.push(inheritorItem)
         }
     }
 
@@ -50,8 +55,10 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
         <StyledInheritorsModalContent
             open={isOpen}
             handleClose={handleClose}
+            title="בחירת יורשים"
         >
             <FindNonProfits
+                name={name}
                 isOpen={isSearchOpen}
                 handleClose={() => setIsSearchOpen(false)}
             />
@@ -60,7 +67,7 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
                     if (inheritors[inheritorType]?.length > 0) {
                         return (
                             <>
-                                <Typography variant="subtitle1">{inheritorType}</Typography>
+                                <Typography variant="h2">{inheritorType}</Typography>
                                 <StyledTypeInheritorsListContainer>
                                     {inheritors[inheritorType]?.map((inheritor, index) =>
                                         <StyledInheritorsListItem key={index}>
@@ -75,7 +82,6 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
                                                         label={inheritorString(inheritor)}
                                                     />
                                                 )} />
-
                                         </StyledInheritorsListItem>
                                     )}
                                 </StyledTypeInheritorsListContainer>
@@ -85,7 +91,7 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
                     return <></>
                 }
                 )}
-                <NonProfitsList openSearch={() => setIsSearchOpen(true)} />
+                <NonProfitsList name={name} openSearch={() => setIsSearchOpen(true)} />
             </StyledInheritorsListContainer>
             <StyledEndButton onClick={handleClose} variant="contained">סיום</StyledEndButton>
         </StyledInheritorsModalContent>
@@ -114,6 +120,8 @@ const StyledInheritorsListItem = styled.div`
 
 const StyledTypeInheritorsListContainer = styled.div`
     padding: 0 1rem;
+    border: 3px solid #ccc;
+    border-radius: 10px;
 `
 
 const StyledEndButton = styled(Button)`

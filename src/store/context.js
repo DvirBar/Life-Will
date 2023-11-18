@@ -74,6 +74,11 @@ export const defaults = {
 	other_inheritance: itemData,
 }
 
+export const defaultItemInheritor = {
+	...personInfo,
+	percent: ''
+}
+
 export const defaultRealEstateData = {
 	type: '',
 	own_percentage: '',

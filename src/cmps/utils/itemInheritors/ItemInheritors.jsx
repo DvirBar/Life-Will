@@ -12,9 +12,9 @@ function ItemInheritors({ name, showTitle = true }) {
     }
 
     return (
-        <div>
+        <StyledWrapper>
             {showTitle &&
-                <Typography variant="subtitle1">{translation.inheritorsText}-</Typography>
+                <Typography variant="h2">{translation.inheritorsText}</Typography>
             }
             <InheritorsList
                 name={name}
@@ -27,8 +27,15 @@ function ItemInheritors({ name, showTitle = true }) {
                 isOpen={isOpen}
                 handleClose={() => setIsOpen(false)}
             />
-        </div>
+        </StyledWrapper>
     )
 }
+
+const StyledWrapper = styled.div`
+    padding: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+`
 
 export default ItemInheritors
