@@ -8,8 +8,9 @@ import StepThree from './stepthree/step-three';
 import { SiteContext } from '../store/context'
 import StepThreeFutureInheritors from './stepthree/StepThreeFutureInheritors';
 import { inheritanceKeysStep4 } from '../store/translation';
-import InheritedItemForm from './utils/InheritedItem/InheritedItemForm';
+import InheritedTopicForm from './utils/InheritedItem/InheritedTopicForm';
 import FutureInheritedItem from './utils/InheritedItem/FutureInheritedItem';
+import StepFiveMoney from './stepfive/StepFiveMoney/StepFiveMoney';
 
 
 function FormStepsWrapper() {
@@ -42,9 +43,12 @@ function FormStepsWrapper() {
 			...Object.keys(inheritanceKeysStep4).map((key) =>
 				key === inheritanceKeysStep4.future_items
 					? <FutureInheritedItem name={inheritanceKeysStep4.future_items} />
-					: <InheritedItemForm name={key} />
+					: <InheritedTopicForm name={key} />
 			)
 		],
+		[
+			<StepFiveMoney />
+		]
 	]
 
 	return (

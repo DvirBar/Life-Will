@@ -12,33 +12,26 @@ function FutureInheritedItem({ name }) {
         <FormWrapper
             isFinalStep={true}
             validationSchema={inheritedItemValidation(name, true)}
-            renderItem={() => {
-                return (
-                    <StyledWrapper>
-                        <Typography variant="subtitle1">
-                            {translation[name]}
-                        </Typography>
-                        <ItemInheritors
-                            showTitle={false}
-                            name={`${name}_data.inheritors`} />
-                        <FormikTextField
-                            name={`${name}_data.remarks`}
-                            label={translation[`${name}_data`].remarks}
-                            fullWidth
-                            multiline
-                            rows={6}
-                        />
-                    </StyledWrapper>
-                )
-            }} />
+        >
+            <Typography variant="subtitle1">
+                {translation[name]}
+            </Typography>
+            <ItemInheritors
+                showTitle={false}
+                name={`${name}_data.inheritors`} />
+            <FormikTextField
+                name={`${name}_data.remarks`}
+                label={translation[`${name}_data`].remarks}
+                fullWidth
+                multiline
+                rows={6}
+            />
+        </FormWrapper>
+
+
+
+
     )
 }
-
-
-const StyledWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
 
 export default FutureInheritedItem

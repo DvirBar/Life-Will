@@ -355,7 +355,7 @@ const translation = {
 
     // Step 5
     step5: `שלב ה׳ - ${stepNames[4]}`,
-    money_title: 'כסף',
+    money_title: 'סכום',
     money: 'כמה כסף בערך קיים ברשותך או בבנק?',
     money_ils: 'ש״ח',
     bank_accounts_title: 'חשבונות בנק',
@@ -365,12 +365,18 @@ const translation = {
         account_number: 'מספר חשבון',
         branch_number: 'מספר סניף'
     },
-    provident_fund: 'האם קיימת ברשותך קופת גמל?',
-    provident_fund_title: 'קופת גמל',
-    provident_fund_data: fund_data,
-    study_fund: 'האם קיימת ברשותך קרן השתלמות?',
-    study_fund_title: 'קרן השתלמות',
-    study_fund_data: fund_data,
+    provident_funds: 'האם קיימת ברשותך קופת גמל?',
+    provident_funds_title: 'קופת גמל',
+    provident_funds_data: {
+        fund_name: 'שם הקופה',
+        fund_number: 'מספר הקופה'
+    },
+    study_funds: 'האם קיימת ברשותך קרן השתלמות?',
+    study_funds_title: 'קרן השתלמות',
+    study_funds_data: {
+        fund_name: 'שם הקרן',
+        fund_number: 'מספר הקרן'
+    },
     non_profit_provision: 'האם תרצה להפריש מהירושה שלך לעמותות הפועלות כאן בארץ?',
     non_profit_provision_title: 'הפרשה לעמותה',
     non_profit_provision_data: {

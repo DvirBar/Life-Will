@@ -5,6 +5,7 @@ export const SiteContext = createContext(null);
 // TODO: Add types of non profits
 
 const personInfo = {
+	uuid: '',
 	first_name: '',
 	last_name: '',
 	person_id: '',
@@ -72,6 +73,19 @@ export const defaults = {
 	digital_assets: itemData,
 	items: itemData,
 	other_inheritance: itemData,
+	bank_accounts: {
+		bank_name: '',
+		account_number: '',
+		branch_number: ''
+	},
+	provident_funds: {
+		fund_name: '',
+		fund_number: ''
+	},
+	study_funds: {
+		fund_name: '',
+		fund_number: ''
+	}
 }
 
 export const defaultItemInheritor = {
@@ -113,14 +127,16 @@ const SiteProvider = ({ children }) => {
 		citizenship: 'לא',
 		passport_id: '',
 		// Step 2
-		// TODO: should probably be enum
 		status: '',
+		// TODO: add UUID
+		partner_uuid: '',
 		partner_gender: '',
 		partner_first_name: '',
 		partner_last_name: '',
 		partner_id: '',
 		// TODO: CLARIFY - if status is married we should also show ex partners (not just when divorced) 
 		ex_partner_gain: 'לא',
+		// TODO: add UUID
 		ex_partners: [
 			{
 				...personInfo,
@@ -133,6 +149,7 @@ const SiteProvider = ({ children }) => {
 		// TODO: enum
 		kids: '',
 		num_of_kids: '',
+		// TODO: add UUID
 		kids_data: [
 			{
 				...personInfo,
@@ -149,9 +166,12 @@ const SiteProvider = ({ children }) => {
 		give_to_family: 'לא',
 		// TODO: make it multi option
 		// TODO: enum
+
+		// TODO: add UUID to each type
 		give_to_family_type: {
 			[giveToFamilyTypesKeys.parents]: [
 				{
+					uuid: '',
 					gender: 'זכר',
 					first_name: 'הורה',
 					last_name: 'ישראלי',
@@ -225,27 +245,11 @@ const SiteProvider = ({ children }) => {
 
 		// Step 5
 		money: '',
-		bank_accounts: [
-			{
-				bank_name: '',
-				account_number: '',
-				branch_number: ''
-			}
-		],
-		provident_fund: 'לא',
-		provident_fund_data: [
-			{
-				fund_name: '',
-				fund_number: ''
-			}
-		],
-		study_fund: 'לא',
-		study_fund_data: [
-			{
-				fund_name: '',
-				fund_number: ''
-			}
-		],
+		bank_accounts: [],
+		provident_funds: 'לא',
+		provident_funds_data: [],
+		study_funds: 'לא',
+		study_funds_data: [],
 		non_profit_provision: 'לא',
 		non_profit_provision_data: [
 			{

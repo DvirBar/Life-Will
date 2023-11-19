@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik';
 import NavigationButtons from './NavigationButtons';
 import styled from '@emotion/styled';
 
-function FormWrapper({ validationSchema, renderItem, isFinalStep }) {
+function FormWrapper({ validationSchema, children, isFinalStep }) {
     const {
         data,
         submitForm
@@ -16,17 +16,12 @@ function FormWrapper({ validationSchema, renderItem, isFinalStep }) {
             onSubmit={(values) => submitForm(values, isFinalStep)}
             validationSchema={validationSchema}
         >
-            {({ values }) => {
-                return (
-                    <StyledForm style={{ minWidth: "500px" }}>
-                        <div>
-                            {renderItem(values)}
-                        </div>
-                        <NavigationButtons />
-                    </StyledForm>
-                )
-            }
-            }
+            <StyledForm style={{ minWidth: "500px" }}>
+                <StyledWrapper>
+                    {children}
+                </StyledWrapper>
+                <NavigationButtons />
+            </StyledForm>
         </Formik>
     )
 }
@@ -36,6 +31,12 @@ const StyledForm = styled(Form)`
     flex-direction: column;
     gap: 1rem;
     min-width: 500px;
+`
+
+const StyledWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 `
 
 export default FormWrapper

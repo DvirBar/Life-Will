@@ -13,12 +13,24 @@ function MuiTextField({
     multiline,
     rows,
     percent,
+    numeric,
+    maxLength,
     ...props
 }) {
     const fieldName = name || field.name;
     const handleChange = (event) => {
+        if (maxLength && !isNaN(event.target.value?.length) && event.target.value.length > maxLength) {
+            return
+        }
+
         if (percent) {
             if ((!isNaN(event.target.value) && (event.target.value > 0 && event.target.value <= 100)) || event.target.value === "." || event.target.value === '') {
+                field.onChange(event)
+            }
+        }
+
+        else if (numeric) {
+            if (!isNaN(event.target.value) || event.target.value === '') {
                 field.onChange(event)
             }
         }
@@ -52,7 +64,16 @@ function MuiTextField({
     )
 }
 
-function FormikTextField({ name, label, fullWidth, percent, multiline, rows }) {
+function FormikTextField({
+    name,
+    label,
+    fullWidth,
+    percent,
+    multiline,
+    rows,
+    numeric,
+    maxLength
+}) {
     return (
         <FastField
             name={name}
@@ -62,6 +83,8 @@ function FormikTextField({ name, label, fullWidth, percent, multiline, rows }) {
             percent={percent}
             multiline={multiline}
             rows={rows}
+            numeric={numeric}
+            maxLength={maxLength}
         />
     )
 }
