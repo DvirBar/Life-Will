@@ -9,6 +9,9 @@ import { SiteContext } from '../../store/context';
 import YesNoRadio from '../formikcomponents/YesNoRadio';
 import { PartnerDetails } from './PartnerDetails';
 import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+import FormikButtonSelect from '../formikcomponents/FormikButtonSelect'
+import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
+
 import translation, { statusTypes } from '../../store/translation'
 
 const validatePartnerDetails = ((errors, status, allocateToDivorsed, ...partnerData) => {
@@ -69,11 +72,14 @@ export default function StepTwo() {
 					return (
 						<Form >
 							<Typography variant="subtitle1">{translation.status}</Typography>
-							<FormikRadioGroup
-								name={"status"}
-								options={Object.keys(statusTypes).map(key => {
-									return { value: statusTypes[key], label: statusTypes[key] }
-								})} />
+							<FormikButtonSelect
+								name={`status`}
+							>
+								{Object.keys(statusTypes).map(key =>
+									<ButtonSelectItem key={statusTypes[key]} value={statusTypes[key]}>{statusTypes[key]}</ButtonSelectItem>
+								)}
+							</FormikButtonSelect>
+
 							<ErrorMessage name="status" />
 
 							{values.status === 'נשוי' && <div>
@@ -85,7 +91,9 @@ export default function StepTwo() {
 								<PartnerDetails className="partner-details" />
 							</div>}
 							{values.status === 'גרוש' && <div>
-								<YesNoRadio name="ex_partner_gain" question="האם תרצה להקצות  לגרוש/גרושתך מהצוואה?" />
+								<StyledExPartnerQuestion>
+									<YesNoRadio name="ex_partner_gain" question="האם תרצה להקצות  לגרוש/גרושתך מהצוואה?" />
+								</StyledExPartnerQuestion>
 								{values.ex_partner_gain === 'כן' && <>
 									<Typography variant="subtitle1">פרטי זיהוי–</Typography>
 									<PartnerDetails className="partner-details" />
@@ -112,4 +120,8 @@ const StyledColumnCenter = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items:center
+`
+
+const StyledExPartnerQuestion = styled.div`
+    padding:1rem 0;
 `

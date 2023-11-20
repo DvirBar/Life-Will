@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form } from "formik";
 import { Typography } from '@mui/material';
 import styled from '@emotion/styled'
@@ -10,7 +10,6 @@ import ItemsList from "../utils/ItemsList/ItemsList";
 import { ChildDetails } from './ChildDetails';
 
 import Button from '@mui/material/Button';
-
 
 import translation from '../../store/translation'
 
@@ -40,7 +39,7 @@ export default function StepTwoContinue() {
 				onSubmit={handleSubmit}
 				validate={handleValidate}
 			>
-				{({ values, resetForm }) => {
+				{({ values }) => {
 					console.log(values);
 					return (
 						<Form>
