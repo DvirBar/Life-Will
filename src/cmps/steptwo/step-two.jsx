@@ -1,20 +1,15 @@
 import React, { useContext } from 'react';
-
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { SiteContext } from '../../store/context';
-import { PartnerDetails } from './PartnerDetails';
-
-import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
-
-import Button from '@mui/material/Button';
-
-import { Typography } from '@mui/material';
-
-import translation, { statusTypes } from '../../store/translation'
-
+import { Typography, Button } from '@mui/material';
 import styled from '@emotion/styled'
+
+import { SiteContext } from '../../store/context';
+
 import YesNoRadio from '../formikcomponents/YesNoRadio';
+import { PartnerDetails } from './PartnerDetails';
+import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+import translation, { statusTypes } from '../../store/translation'
 
 const validatePartnerDetails = ((errors, status, allocateToDivorsed, ...partnerData) => {
 	const [

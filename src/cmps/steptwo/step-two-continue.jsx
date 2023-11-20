@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
+import { Formik, Form } from "formik";
+import { Typography } from '@mui/material';
+import styled from '@emotion/styled'
 
-import { Formik, Form, Field, FieldArray } from "formik";
 import { SiteContext, defaultChildData } from '../../store/context';
 
 import YesNoRadio from '../formikcomponents/YesNoRadio';
@@ -8,12 +10,9 @@ import ItemsList from "../utils/ItemsList/ItemsList";
 import { ChildDetails } from './ChildDetails';
 
 import Button from '@mui/material/Button';
-import { Typography } from '@mui/material';
 
-import translation, { statusTypes } from '../../store/translation'
 
-import styled from '@emotion/styled'
-
+import translation from '../../store/translation'
 
 export default function StepTwoContinue() {
 
@@ -42,6 +41,7 @@ export default function StepTwoContinue() {
 				validate={handleValidate}
 			>
 				{({ values, resetForm }) => {
+					console.log(values);
 					return (
 						<Form>
 							<StyledChildQuestion>
@@ -50,22 +50,16 @@ export default function StepTwoContinue() {
 							</StyledChildQuestion>
 							{
 								values.kids === 'כן' &&
-								<>
-									{/* <div className="input-container-formik" >
-										<p>מספר-</p>
-										<Field name="num_of_kids" type="number" placeholder='מספר' />
-									</div> */}
-									<ItemsList
-										name="kids_data"
-										values={values}
-										title={translation.kids}
-										defaultValue={defaultChildData}
-										renderItem={(dataItem, itemName) => <ChildDetails dataItem={dataItem} itemName={itemName} />} />
-
-								</>
-
+								<ItemsList
+									name="kids_data"
+									values={values}
+									title={translation.kids}
+									defaultValue={defaultChildData}
+									renderItem={(dataItem, itemName) => <ChildDetails dataItem={dataItem} itemName={itemName} />} />
 							}
-							<Button variant="contained" type="submit">המשך</Button>
+							<StyledColumnCenter>
+								<Button variant="contained" type="submit">המשך</Button>
+							</StyledColumnCenter>
 						</Form>
 					)
 				}
@@ -79,5 +73,12 @@ export default function StepTwoContinue() {
 const StyledChildQuestion = styled.div`
 	display:flex;
 	flex-direction:row;
+	padding-bottom:2rem;
 	
+`
+const StyledColumnCenter = styled.div`
+    padding:1rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items:center
 `

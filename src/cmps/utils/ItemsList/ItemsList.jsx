@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
 import { Button } from '@mui/material'
-import { FieldArray } from 'formik'
+import { FieldArray, getIn } from 'formik'
 import React, { useState } from 'react'
 import Item from "./Item"
 import ItemListNavigation from './ItemListNavigation'
 import ItemListPageNumbers from './ItemListPageNumbers'
 
 function ItemsList({ name, title, values, defaultValue, renderItem }) {
-	const items = values[name] || []
+	const items = getIn(values, name) || []
 	const [selectedItemIndex, setSelectedItemIndex] = useState(0)
 
 	const moveNextItem = () => {
@@ -32,7 +32,7 @@ function ItemsList({ name, title, values, defaultValue, renderItem }) {
 		}
 	}
 
-	const selectedItem = values[name][selectedItemIndex]
+	const selectedItem = items[selectedItemIndex]
 	const nameWithIndex = `${name}[${selectedItemIndex}]`
 	return (
 		<FieldArray

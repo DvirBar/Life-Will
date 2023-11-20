@@ -51,6 +51,10 @@ export const defaultChildData = {
 	guardian: null
 }
 
+export const defaultInheritorData = {
+	...personInfo,
+	person_id: ''
+}
 const SiteProvider = ({ children }) => {
 	const [data, setData] = useState({
 		// Step 1
@@ -102,40 +106,42 @@ const SiteProvider = ({ children }) => {
 		give_to_family: 'לא',
 		// TODO: make it multi option
 		// TODO: enum
-		give_to_family_type: {
-			[giveToFamilyTypesKeys.parents]: [
-				{
-					gender: 'זכר',
-					first_name: 'הורה',
-					last_name: 'ישראלי',
-					person_id: '222222223',
-				}
-			],
-			[giveToFamilyTypesKeys.siblings]: [
-				{
-					gender: 'נקבה',
-					first_name: 'אחות',
-					last_name: 'ישראלי',
-					person_id: '222222222',
-				}
-			],
-			[giveToFamilyTypesKeys.friends]: [
-				{
-					gender: 'זכר',
-					first_name: 'חבר',
-					last_name: 'ישראלי',
-					person_id: '222222224',
-				}
-			],
-			[giveToFamilyTypesKeys.grandChildren]: [
-				{
-					gender: 'נקבה',
-					first_name: 'נכדה',
-					last_name: 'ישראלי',
-					person_id: '222222225',
-				}
-			]
-		},
+		// give_to_family_type: {
+		// 	[giveToFamilyTypesKeys.parents]: [
+		// 		// {
+		// 		// 	gender: 'זכר',
+		// 		// 	first_name: 'הורה',
+		// 		// 	last_name: 'ישראלי',
+		// 		// 	person_id: '222222223',
+		// 		// }
+		// 	],
+		// 	[giveToFamilyTypesKeys.siblings]: [
+		// 		// {
+		// 		// 	gender: 'נקבה',
+		// 		// 	first_name: 'אחות',
+		// 		// 	last_name: 'ישראלי',
+		// 		// 	person_id: '222222222',
+		// 		// }
+		// 	],
+		// 	[giveToFamilyTypesKeys.friends]: [
+		// 		// {
+		// 		// 	gender: 'זכר',
+		// 		// 	first_name: 'חבר',
+		// 		// 	last_name: 'ישראלי',
+		// 		// 	person_id: '222222224',
+		// 		// }
+		// 	],
+		// 	[giveToFamilyTypesKeys.grandChildren]: [
+		// 		// {
+		// 		// 	gender: 'נקבה',
+		// 		// 	first_name: 'נכדה',
+		// 		// 	last_name: 'ישראלי',
+		// 		// 	person_id: '222222225',
+		// 		// }
+		// 	]
+		// },
+
+		give_to_family_type: '',
 
 		// Step 3
 		// TODO: enum
@@ -252,7 +258,7 @@ const SiteProvider = ({ children }) => {
 	})
 
 	const [selectedStage, setSelectedStage] = useState(1)
-	const [selectedStep, setSelectedStep] = useState(1)
+	const [selectedStep, setSelectedStep] = useState(0)
 
 	const moveNextStep = (isFinalStep = false) => {
 		setSelectedStep(currStep => {
