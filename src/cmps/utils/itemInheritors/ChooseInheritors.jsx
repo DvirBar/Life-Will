@@ -61,8 +61,9 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
                 handleClose={() => setIsSearchOpen(false)}
             />
             <StyledInheritorsListContainer>
-                {Object.keys(inheritors).map((inheritorType) => {
+                {Object.keys(inheritors).map((inheritorType, index) => {
                     if (inheritors[inheritorType]?.length > 0) {
+                        // TODO: fix key warning
                         return (
                             <>
                                 <Typography variant="h2">{inheritorType}</Typography>

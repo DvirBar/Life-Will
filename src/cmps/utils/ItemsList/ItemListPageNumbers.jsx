@@ -6,6 +6,7 @@ function ItemListPageNumbers({ selectedIndex, numElements, moveToIndex }) {
         <StyledItemListPageNumbers>
             {[...Array(numElements)].map((_, index) =>
                 <StyledItemListPageNumberItem
+                    key={index}
                     onClick={() => moveToIndex(index)}
                     isSelected={selectedIndex === index}>
                     <div>{index + 1}</div>

@@ -9,7 +9,7 @@ import { inheritorsTypes } from '../../../../store/translation'
 function NonProfitsList({ name, openSearch }) {
     const { values } = useFormikContext()
     const inheritors = getIn(values, name)
-
+    console.log(inheritors);
     const nonProfitInheritors = inheritors?.map((item, index) => ({
         ...item,
         origIndex: index

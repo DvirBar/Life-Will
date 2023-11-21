@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { answers, giveToFamilyTypesKeys, inheritorsTypes } from "./translation";
 
 export const SiteContext = createContext(null);
@@ -110,7 +110,6 @@ export const defaultRealEstateData = {
 }
 
 const SiteProvider = ({ children }) => {
-	console.log("run");
 	const [data, setData] = useState({
 		// Step 1
 		first_name: '',
@@ -327,12 +326,12 @@ const SiteProvider = ({ children }) => {
 		setSelectedStep(0)
 	}
 
-	const [inheritors, setInheritors] = useState({})
+	const inheritors = {}
 
-	const syncInheritors = (values) => {
-		const newInheritors = {}
+	const syncInheritors = (formikValues) => {
+		const values = formikValues || data
 		if (values.partner_first_name?.length > 0) {
-			newInheritors[inheritorsTypes.spouse] = [{
+			inheritors[inheritorsTypes.spouse] = [{
 				uuid: values.partner_uuid,
 				first_name: values.partner_first_name,
 				last_name: values.partner_last_name,
@@ -341,14 +340,14 @@ const SiteProvider = ({ children }) => {
 			}]
 		}
 
-		newInheritors[inheritorsTypes.children] = [
+		inheritors[inheritorsTypes.children] = [
 			...(values.kids_data.map(kid => ({
 				...kid,
 				type: inheritorsTypes.children
 			})))
 		]
 
-		newInheritors[inheritorsTypes.inheritors] = [
+		inheritors[inheritorsTypes.inheritors] = [
 			...(values.ex_partners.map(ex => ({
 				...ex,
 				type: inheritorsTypes.inheritors
@@ -358,21 +357,20 @@ const SiteProvider = ({ children }) => {
 		for (const key of Object.keys(values.give_to_family_type)) {
 			const currentTypeItem = values.give_to_family_type[key]
 			for (const item of currentTypeItem) {
-				newInheritors[inheritorsTypes.inheritors].push({
+				inheritors[inheritorsTypes.inheritors].push({
 					...item,
 					type: inheritorsTypes.inheritors
 				})
 			}
 		}
 
-		setInheritors(newInheritors)
 		return inheritors
 	}
 
+	syncInheritors()
 
 	// TODO: in inheritors - what about ex partners?
-	const getInheritors = (values) => {
-		syncInheritors(values)
+	const getInheritors = () => {
 		return inheritors
 	}
 
@@ -393,6 +391,7 @@ const SiteProvider = ({ children }) => {
 
 
 	const submitForm = (values, isFinalStep) => {
+		syncInheritors(values)
 		setData(values)
 		moveNextStep(isFinalStep);
 	}
@@ -407,8 +406,7 @@ const SiteProvider = ({ children }) => {
 		movePrevStep,
 		getInheritors,
 		getInheritorById,
-		syncInheritors,
-		submitForm
+		submitForm,
 	}
 
 	return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

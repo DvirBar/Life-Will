@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, Typography, useTheme } from '@mui/material'
 import { useField } from 'formik'
 import FormikTextField from "../../formikcomponents/FormikTextField"
 import styled from '@emotion/styled'
 import Error from '../Error'
 import { rgba } from '../../../Theme'
+import { SiteContext } from '../../../store/context'
+import InheritorsListItem from './InheritorsListItem'
 
 const FIELD_META_INDEX = 1
 
 function InheritorsList({ name, inheritorString, handleOpen }) {
     const [field] = useField(name)
+
+    const { getInheritorById } = useContext(SiteContext)
 
     const inheritors = field.value
 
@@ -18,22 +22,22 @@ function InheritorsList({ name, inheritorString, handleOpen }) {
     const inheritorsListMeta = useField(name)[FIELD_META_INDEX]
     const isErrorEmptyInheritorsList = inheritorsListMeta.touched && inheritorsListMeta.error
 
-    // if (!inheritors || inheritors.length === 0) {
-    return (
-        <StyledInheritorsList isError={isErrorEmptyInheritorsList}>
-            <StyledNoInheritors>
-                <Typography variant="subtitle1">עדיין אין יורשים ברשימה</Typography>
-                <Button
-                    variant="contained"
-                    onClick={handleOpen}
-                >
-                    לחצו להוספה
-                </Button>
-            </StyledNoInheritors>
-            <Error isError={isErrorEmptyInheritorsList}>{inheritorsListMeta.error}</Error>
-        </StyledInheritorsList>
-    )
-    // }    
+    if (!inheritors || inheritors.length === 0) {
+        return (
+            <StyledInheritorsList isError={isErrorEmptyInheritorsList}>
+                <StyledNoInheritors>
+                    <Typography variant="subtitle1">עדיין אין יורשים ברשימה</Typography>
+                    <Button
+                        variant="contained"
+                        onClick={handleOpen}
+                    >
+                        לחצו להוספה
+                    </Button>
+                </StyledNoInheritors>
+                <Error isError={isErrorEmptyInheritorsList}>{inheritorsListMeta.error}</Error>
+            </StyledInheritorsList>
+        )
+    }
 
     const CalculateSum = () => {
         let sum = 0;
@@ -67,15 +71,12 @@ function InheritorsList({ name, inheritorString, handleOpen }) {
                 <StyledListWrapper>
                     <Typography variant="subtitle1">מה תהיה צורת החלוקה?</Typography>
                     {inheritors?.map((inheritor, index) =>
-                        <StyledInheritorsListItem>
-                            <Typography variant="body1">{inheritorString(inheritor)}</Typography>
-                            <StyledPercentInput>
-                                <div>%</div>
-                                <FormikTextField
-                                    percent
-                                    name={`${name}[${index}].percent`} />
-                            </StyledPercentInput>
-                        </StyledInheritorsListItem>
+                        <InheritorsListItem
+                            name={name}
+                            index={index}
+                            inheritorString={inheritorString}
+                            inheritorItem={inheritor}
+                        />
                     )}
                 </StyledListWrapper>
                 <StyledSumBlock blockBackground={sumBlockColor}>
@@ -126,14 +127,7 @@ const StyledWrapper = styled.div`
     justify-content: space-between;
 `
 
-const StyledInheritorsListItem = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 1rem;
-`
+
 
 const StyledNoInheritors = styled.div`
     display: flex;
@@ -146,13 +140,6 @@ const StyledNoInheritors = styled.div`
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-`
-
-const StyledPercentInput = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
     align-items: center;
 `
 
@@ -174,6 +161,13 @@ const StyledSumBlock = styled("div")((props) => ({
     transition: "background-color 200ms ease-in-out",
     width: "100%"
 }))
+
+export const StyledPercentInput = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+`
 
 
 export default InheritorsList
