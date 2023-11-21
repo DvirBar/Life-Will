@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import NonProfitItem from './NonProfitItem';
 
 function NonProfitListContent({ inheritors, arrayHelpers }) {
-    console.log(inheritors.length);
+
     if (inheritors.length === 0) {
         return (
             <StyledEmptyList>
@@ -13,7 +13,6 @@ function NonProfitListContent({ inheritors, arrayHelpers }) {
                 </Typography>
             </StyledEmptyList>
         )
-
     }
 
     return (

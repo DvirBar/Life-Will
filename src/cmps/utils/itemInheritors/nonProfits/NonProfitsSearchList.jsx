@@ -1,9 +1,9 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { rgba } from '../../../../Theme'
 import useDebounce from '../../useDebounce'
-import axios from 'axios'
-import { CircularProgress, Tooltip, Typography } from '@mui/material'
+import { CircularProgress, Typography } from '@mui/material'
 import { FieldArray } from 'formik'
 import { inheritorsTypes } from '../../../../store/translation'
 import NonProfitItem from './NonProfitItem'
@@ -32,7 +32,6 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch }) {
                 const records = response.data?.result?.records?.filter(record =>
                     record[NON_PROFIT_STATUS] === "רשומה" || record[NON_PROFIT_STATUS] === "פעילה")
 
-                console.log();
                 setSearchResults(records.map(record => ({
                     ...record,
                     [NON_PROFIT_NAME_KEY]: record[NON_PROFIT_NAME_KEY]?.replace(/~/g, "״")
@@ -73,7 +72,7 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch }) {
             </StyledCenterView>
         )
     }
-    console.log(searchResults);
+
     return (
         <StyledSearchList>
             {searchResults.map(result =>
@@ -90,7 +89,6 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch }) {
                             />
                         </StyledSearchListItem>
                     )} />
-
             )}
         </StyledSearchList>
     )
@@ -119,7 +117,6 @@ const StyledSearchListItem = styled.div`
     &:active {
         transform: scale(0.98);
     }
-    
 `
 
 const StyledCenterView = styled.div`

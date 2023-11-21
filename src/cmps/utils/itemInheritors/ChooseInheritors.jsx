@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import { SiteContext, defaultItemInheritor } from '../../../store/context'
+import { SiteContext } from '../../../store/context'
 import styled from '@emotion/styled'
 import { FieldArray, useField } from 'formik'
 import ModalBox from '../../layout/ModalBox'
@@ -14,11 +14,10 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
 
     const [field] = useField(name)
 
-    const findInheritorIndex = id => {
-        const inheritors = field.value
-        for (let i = 0; i < inheritors.length; i++) {
-            const inheritor = inheritors[i]
-            if (inheritor.person_id === id) {
+    const findInheritorIndex = (uuid) => {
+        const itemInheritors = field.value
+        for (let i = 0; i < itemInheritors.length; i++) {
+            if (itemInheritors[i].uuid === uuid) {
                 return i
             }
         }
@@ -26,31 +25,30 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
         return -1
     }
 
-    const isChecked = id => {
-        const index = findInheritorIndex(id)
+    const isChecked = (uuid) => {
+        const index = findInheritorIndex(uuid)
 
         return index > -1
     }
 
     const onChange = (arrayHelpers, inheritor) => {
-        const index = findInheritorIndex(inheritor.person_id)
+        const index = findInheritorIndex(inheritor.uuid)
 
         if (index > -1) {
             arrayHelpers.remove(index)
         } else {
-            const inheritorItem = {
-                ...defaultItemInheritor,
-                ...inheritor
+            const itemInheritor = {
+                uuid: inheritor.uuid,
+                percent: ''
             }
 
-            arrayHelpers.push(inheritorItem)
+            arrayHelpers.push(itemInheritor)
         }
     }
 
     const [isSearchOpen, setIsSearchOpen] = useState(false)
 
     const inheritors = getInheritors()
-
     return (
         <StyledInheritorsModalContent
             open={isOpen}
@@ -76,7 +74,7 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
                                                 render={(arrayHelpers) => (
                                                     <FormControlLabel
                                                         control={<Checkbox
-                                                            checked={isChecked(inheritor.person_id)}
+                                                            checked={isChecked(inheritor.uuid)}
                                                             onChange={() => onChange(arrayHelpers, inheritor)}
                                                         />}
                                                         label={inheritorString(inheritor)}

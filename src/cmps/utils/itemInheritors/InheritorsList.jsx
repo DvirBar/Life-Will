@@ -18,22 +18,22 @@ function InheritorsList({ name, inheritorString, handleOpen }) {
     const inheritorsListMeta = useField(name)[FIELD_META_INDEX]
     const isErrorEmptyInheritorsList = inheritorsListMeta.touched && inheritorsListMeta.error
 
-    if (!inheritors || inheritors.length === 0) {
-        return (
-            <StyledInheritorsList isError={isErrorEmptyInheritorsList}>
-                <StyledNoInheritors>
-                    <Typography variant="subtitle1">עדיין אין יורשים ברשימה</Typography>
-                    <Button
-                        variant="contained"
-                        onClick={handleOpen}
-                    >
-                        לחצו להוספה
-                    </Button>
-                </StyledNoInheritors>
-                <Error isError={isErrorEmptyInheritorsList}>{inheritorsListMeta.error}</Error>
-            </StyledInheritorsList>
-        )
-    }
+    // if (!inheritors || inheritors.length === 0) {
+    return (
+        <StyledInheritorsList isError={isErrorEmptyInheritorsList}>
+            <StyledNoInheritors>
+                <Typography variant="subtitle1">עדיין אין יורשים ברשימה</Typography>
+                <Button
+                    variant="contained"
+                    onClick={handleOpen}
+                >
+                    לחצו להוספה
+                </Button>
+            </StyledNoInheritors>
+            <Error isError={isErrorEmptyInheritorsList}>{inheritorsListMeta.error}</Error>
+        </StyledInheritorsList>
+    )
+    // }    
 
     const CalculateSum = () => {
         let sum = 0;

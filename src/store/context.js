@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { answers, giveToFamilyTypesKeys, inheritorsTypes } from "./translation";
 
 export const SiteContext = createContext(null);
@@ -110,6 +110,7 @@ export const defaultRealEstateData = {
 }
 
 const SiteProvider = ({ children }) => {
+	console.log("run");
 	const [data, setData] = useState({
 		// Step 1
 		first_name: '',
@@ -129,17 +130,18 @@ const SiteProvider = ({ children }) => {
 		// Step 2
 		status: '',
 		// TODO: add UUID
-		partner_uuid: '',
-		partner_gender: '',
-		partner_first_name: '',
-		partner_last_name: '',
-		partner_id: '',
+		partner_uuid: '6EF5A9FF-7B57-4DA1-BF7A-FC6F2E194C86',
+		partner_gender: 'נקבה',
+		partner_first_name: 'ישראלה',
+		partner_last_name: 'לוי',
+		partner_id: '123123123',
 		// TODO: CLARIFY - if status is married we should also show ex partners (not just when divorced) 
 		ex_partner_gain: 'לא',
 		// TODO: add UUID
 		ex_partners: [
 			{
 				...personInfo,
+				uuid: 'BB7E7FAE-E1F5-4A8E-A054-3D8D5982EA42',
 				first_name: 'גרוש',
 				last_name: 'גרוש',
 				person_id: '0000000000',
@@ -153,6 +155,7 @@ const SiteProvider = ({ children }) => {
 		kids_data: [
 			{
 				...personInfo,
+				uuid: '40B77945-D1C4-401C-9AAD-5D37C83E1B2D',
 				first_name: 'ילד',
 				last_name: 'ילד',
 				person_id: '12333333333',
@@ -171,7 +174,7 @@ const SiteProvider = ({ children }) => {
 		give_to_family_type: {
 			[giveToFamilyTypesKeys.parents]: [
 				{
-					uuid: '',
+					uuid: 'C5B4702C-2A61-49D3-8B64-AB7944E5A3BB',
 					gender: 'זכר',
 					first_name: 'הורה',
 					last_name: 'ישראלי',
@@ -180,6 +183,7 @@ const SiteProvider = ({ children }) => {
 			],
 			[giveToFamilyTypesKeys.siblings]: [
 				{
+					uuid: 'CB1AD754-C162-4D07-A60D-2EB3E74F1E09',
 					gender: 'נקבה',
 					first_name: 'אחות',
 					last_name: 'ישראלי',
@@ -188,6 +192,7 @@ const SiteProvider = ({ children }) => {
 			],
 			[giveToFamilyTypesKeys.friends]: [
 				{
+					uuid: 'E9313631-783D-449A-9594-A38422143641',
 					gender: 'זכר',
 					first_name: 'חבר',
 					last_name: 'ישראלי',
@@ -196,6 +201,7 @@ const SiteProvider = ({ children }) => {
 			],
 			[giveToFamilyTypesKeys.grandChildren]: [
 				{
+					uuid: 'C20FBB08-4C90-48BE-B9D7-B35AC6224CEC',
 					gender: 'נקבה',
 					first_name: 'נכדה',
 					last_name: 'ישראלי',
@@ -321,13 +327,13 @@ const SiteProvider = ({ children }) => {
 		setSelectedStep(0)
 	}
 
-	const inheritors = {}
+	const [inheritors, setInheritors] = useState({})
 
-	// TODO: in inheritors - what about ex partners?
-	const getInheritors = (inputValues) => {
-		const values = inputValues || data
+	const syncInheritors = (values) => {
+		const newInheritors = {}
 		if (values.partner_first_name?.length > 0) {
-			inheritors[inheritorsTypes.spouse] = [{
+			newInheritors[inheritorsTypes.spouse] = [{
+				uuid: values.partner_uuid,
 				first_name: values.partner_first_name,
 				last_name: values.partner_last_name,
 				person_id: values.partner_id,
@@ -335,19 +341,16 @@ const SiteProvider = ({ children }) => {
 			}]
 		}
 
-		inheritors[inheritorsTypes.children] = [
+		newInheritors[inheritorsTypes.children] = [
 			...(values.kids_data.map(kid => ({
-				first_name: kid.first_name,
-				last_name: kid.last_name,
-				person_id: kid.person_id,
+				...kid,
 				type: inheritorsTypes.children
 			})))
 		]
-		inheritors[inheritorsTypes.inheritors] = [
+
+		newInheritors[inheritorsTypes.inheritors] = [
 			...(values.ex_partners.map(ex => ({
-				first_name: ex.first_name,
-				last_name: ex.last_name,
-				person_id: ex.person_id,
+				...ex,
 				type: inheritorsTypes.inheritors
 			}))),
 		]
@@ -355,17 +358,39 @@ const SiteProvider = ({ children }) => {
 		for (const key of Object.keys(values.give_to_family_type)) {
 			const currentTypeItem = values.give_to_family_type[key]
 			for (const item of currentTypeItem) {
-				inheritors[inheritorsTypes.inheritors].push({
-					first_name: item.first_name,
-					last_name: item.last_name,
-					person_id: item.person_id,
+				newInheritors[inheritorsTypes.inheritors].push({
+					...item,
 					type: inheritorsTypes.inheritors
 				})
 			}
 		}
 
+		setInheritors(newInheritors)
 		return inheritors
 	}
+
+
+	// TODO: in inheritors - what about ex partners?
+	const getInheritors = (values) => {
+		syncInheritors(values)
+		return inheritors
+	}
+
+	const getInheritorById = (id) => {
+		for (const key of Object.keys(inheritors)) {
+			const inheritorsOfType = inheritors[key]
+
+
+			for (const inheritor of inheritorsOfType) {
+				if (inheritor.uuid === id) {
+					return inheritor
+				}
+			}
+		}
+
+		return {}
+	}
+
 
 	const submitForm = (values, isFinalStep) => {
 		setData(values)
@@ -381,6 +406,8 @@ const SiteProvider = ({ children }) => {
 		moveNextStep,
 		movePrevStep,
 		getInheritors,
+		getInheritorById,
+		syncInheritors,
 		submitForm
 	}
 
