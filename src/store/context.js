@@ -261,7 +261,7 @@ const SiteProvider = ({ children }) => {
 				// TODO: enum
 				non_profit_name: '',
 				non_profit_provision_percentage: '',
-				non_profit_message: 'לא',
+				non_profit_message: answers.no,
 				non_profit_message_content: ''
 			}
 		],
@@ -276,21 +276,21 @@ const SiteProvider = ({ children }) => {
 			}
 		],
 		// Step 6
-		not_applied_before_spouse: '',
+		not_applied_before_spouse: answers.no,
 		burial_location: '',
-		funeral_in_charge: '',
+		funeral_in_charge: answers.no,
 		funeral_in_charge_details: {
 			first_name: '',
 			last_name: '',
 			person_id: ''
 		},
-		edi_card: '',
-		organ_donation: '',
-		relatives_message: '',
-		relatives_message_content: 'הודעה שנכתבה ליקירים'
+		edi_card: answers.no,
+		organ_donation: answers.no,
+		relatives_message: answers.no,
+		relatives_message_content: ''
 	})
 
-	const [selectedStage, setSelectedStage] = useState(2)
+	const [selectedStage, setSelectedStage] = useState(5)
 	const [selectedStep, setSelectedStep] = useState(0)
 
 	const moveNextStep = (isFinalStep = false) => {

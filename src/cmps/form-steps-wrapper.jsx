@@ -11,6 +11,7 @@ import { inheritanceKeysStep4 } from '../store/translation';
 import InheritedTopicForm from './utils/InheritedItem/InheritedTopicForm';
 import FutureInheritedItem from './utils/InheritedItem/FutureInheritedItem';
 import StepFiveMoney from './stepfive/StepFiveMoney/StepFiveMoney';
+import StepSix from './stepsix/StepSix';
 
 
 function FormStepsWrapper() {
@@ -48,6 +49,9 @@ function FormStepsWrapper() {
 		],
 		[
 			<StepFiveMoney />
+		],
+		[
+			<StepSix />
 		]
 	]
 

@@ -400,7 +400,8 @@ const translation = {
     funeral_in_charge_details: personInfo,
     edi_card: 'האם קיים ברשותך כרטיס "אדי" הנותן אפשרות לתרומת איברים מגופך?',
     organ_donation: 'האם תרצה לתרום איברים בעזיבתך?',
-    relatives_message: 'האם תרצה לכתוב משהו ליקירך?'
+    relatives_message: 'האם תרצה לכתוב משהו ליקירך?',
+    relatives_message_content: 'תוכן ההודעה'
 }
 
 export default translation

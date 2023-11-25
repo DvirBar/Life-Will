@@ -30,10 +30,11 @@ function MuiTextField({
         }
 
         else if (numeric) {
-            if (!isNaN(event.target.value) || event.target.value === '') {
+            if (((!isNaN(event.target.value)) && !event.target.value.includes(".")) || event.target.value === '') {
                 field.onChange(event)
             }
         }
+
         else {
             field.onChange(event)
         }
