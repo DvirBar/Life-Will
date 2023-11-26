@@ -6,12 +6,12 @@ import StepTwoContinue from './steptwo/step-two-continue';
 import StepTwoContinue2 from './steptwo/step-two-continue2';
 import StepThree from './stepthree/step-three';
 import { SiteContext } from '../store/context'
-import StepThreeFutureInheritors from './stepthree/StepThreeFutureInheritors';
 import { inheritanceKeysStep4 } from '../store/translation';
 import InheritedTopicForm from './utils/InheritedItem/InheritedTopicForm';
 import FutureInheritedItem from './utils/InheritedItem/FutureInheritedItem';
 import StepFiveMoney from './stepfive/StepFiveMoney/StepFiveMoney';
 import StepSix from './stepsix/StepSix';
+import StepFiveNonProfit from './stepfive/StepFiveNonProfits/StepFiveNonProfits';
 
 
 function FormStepsWrapper() {
@@ -48,7 +48,8 @@ function FormStepsWrapper() {
 			)
 		],
 		[
-			<StepFiveMoney />
+			<StepFiveMoney />,
+			<StepFiveNonProfit />
 		],
 		[
 			<StepSix />

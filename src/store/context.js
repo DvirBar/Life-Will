@@ -85,6 +85,12 @@ export const defaults = {
 	study_funds: {
 		fund_name: '',
 		fund_number: ''
+	},
+	nonProfitProvision: {
+		non_profit_name: '',
+		non_profit_provision_percentage: '',
+		non_profit_message: answers.no,
+		non_profit_message_content: ''
 	}
 }
 
@@ -256,15 +262,7 @@ const SiteProvider = ({ children }) => {
 		study_funds: 'לא',
 		study_funds_data: [],
 		non_profit_provision: 'לא',
-		non_profit_provision_data: [
-			{
-				// TODO: enum
-				non_profit_name: '',
-				non_profit_provision_percentage: '',
-				non_profit_message: answers.no,
-				non_profit_message_content: ''
-			}
-		],
+		non_profit_provision_data: [],
 		// TODO: enum - either equal or by decision
 		money_division: '',
 		money_division_inheritors: [
@@ -290,7 +288,7 @@ const SiteProvider = ({ children }) => {
 		relatives_message_content: ''
 	})
 
-	const [selectedStage, setSelectedStage] = useState(5)
+	const [selectedStage, setSelectedStage] = useState(4)
 	const [selectedStep, setSelectedStep] = useState(0)
 
 	const moveNextStep = (isFinalStep = false) => {

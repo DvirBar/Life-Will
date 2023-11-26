@@ -9,7 +9,7 @@ import Error from '../Error'
 
 const FIELD_META_INDEX = 1
 
-function ItemsList({ name, title, defaultValue, renderItem }) {
+function ItemsList({ name, title, defaultValue, renderItem, hideAddButton }) {
     const { values } = useFormikContext()
 
     const items = values[name] || []
@@ -74,9 +74,13 @@ function ItemsList({ name, title, defaultValue, renderItem }) {
                             </Item>
                         </StyledItemsList>
                     }
-                    <AddItemButton variant="outlined" onClick={() => arrayHelpers.push(defaultValue)}>
-                        + הוספה
-                    </AddItemButton>
+
+                    {!hideAddButton &&
+                        <AddItemButton variant="outlined" onClick={() => arrayHelpers.push(defaultValue)}>
+                            + הוספה
+                        </AddItemButton>
+                    }
+
                     <Error isError={isError}>{meta.error}</Error>
                 </StyledItemListWrapper>
             } />
@@ -87,25 +91,18 @@ const StyledItemListWrapper = styled("div")(({ theme, isError }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: "20px",
+    margin: "1rem 0",
     width: "100%",
     border: `2px solid ${isError ? theme.palette.error.light : "transparent"}`,
     padding: "0.5rem",
     borderRadius: "5px"
 }))
 
-const StyledError = styled(Typography)(({ theme }) => ({
-    color: theme.palette.error.light,
-    fontSize: "0.85rem",
-    fontWeight: 600,
-    alignSelf: "flex-start",
-}))
-
-
 const StyledListHeader = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 `
 
 const StyledItemsList = styled.div`

@@ -7,7 +7,11 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
     const displayTitle = `${title} ${index + 1}/${numElements}`
 
     if (numElements === 0) {
-        return <Typography variant="subtitle1">אין נתונים עדיין. לחצו על ״הוספה״</Typography>
+        return (
+            <StyledNoData>
+                <Typography variant="subtitle1">אין נתונים עדיין.</Typography>
+            </StyledNoData>
+        )
     }
 
     return (
@@ -24,6 +28,16 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
         </StyledItemListNavigation>
     )
 }
+
+const StyledNoData = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #eee;
+    border-radius: 10px;
+    width: 100%;
+`
 
 
 const StyledItemListNavigation = styled.div`

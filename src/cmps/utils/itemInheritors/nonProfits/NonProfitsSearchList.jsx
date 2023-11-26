@@ -5,16 +5,14 @@ import { rgba } from '../../../../Theme'
 import useDebounce from '../../useDebounce'
 import { CircularProgress, Typography } from '@mui/material'
 import { FieldArray } from 'formik'
-import { inheritorsTypes } from '../../../../store/translation'
 import NonProfitItem from './NonProfitItem'
-import { defaultItemInheritor } from '../../../../store/context'
 
 const DELAY = 600
 const NON_PROFIT_NAME_KEY = "שם עמותה בעברית"
 const NON_PROFIT_STATUS = "סטטוס עמותה"
 const NON_PROFIT_ID_KEY = "מספר עמותה"
 
-function NonProfitsSearchList({ name, searchTerm, closeSearch }) {
+function NonProfitsSearchList({ name, searchTerm, closeSearch, onAdd }) {
     const [isSearching, setIsSearching] = useState()
     const [searchResults, setSearchResults] = useState([])
     const [error, setError] = useState("")
@@ -23,6 +21,7 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch }) {
         debounceValue,
         isLoading
     } = useDebounce(searchTerm, DELAY)
+
 
     useEffect(() => {
         setIsSearching(true)
@@ -45,14 +44,7 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch }) {
     }, [debounceValue])
 
     const addNonProfit = (arrayHelpers, nonProfitName, nonProfitId) => {
-        arrayHelpers.push({
-            ...defaultItemInheritor,
-            type: inheritorsTypes.nonprofit,
-            first_name: nonProfitName,
-            person_id: nonProfitId,
-            percent: ""
-        })
-
+        onAdd(arrayHelpers, nonProfitName, nonProfitId)
         closeSearch()
     }
 
@@ -130,20 +122,5 @@ const StyledError = styled(Typography)`
     color: ${({ theme }) => theme.palette.error.light};
 `
 
-const StyledResultItem = styled.div`
-    font-size: 0.85rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-    height: 3rem;
-`
-
-const StyledNonProfitNameText = styled(Typography)`
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-`
 
 export default NonProfitsSearchList

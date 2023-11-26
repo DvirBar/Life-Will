@@ -15,6 +15,7 @@ function MuiTextField({
     percent,
     numeric,
     maxLength,
+    disabled,
     ...props
 }) {
     const fieldName = name || field.name;
@@ -61,6 +62,7 @@ function MuiTextField({
             multiline={multiline}
             rows={rows}
             sx={percent ? percentFieldWidthStyle : {}}
+            disabled={disabled}
         />
     )
 }
@@ -73,7 +75,8 @@ function FormikTextField({
     multiline,
     rows,
     numeric,
-    maxLength
+    maxLength,
+    disabled
 }) {
     return (
         <FastField
@@ -86,6 +89,7 @@ function FormikTextField({
             rows={rows}
             numeric={numeric}
             maxLength={maxLength}
+            disabled={disabled}
         />
     )
 }

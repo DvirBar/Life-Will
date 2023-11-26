@@ -1,11 +1,12 @@
 import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import { SiteContext } from '../../../store/context'
+import { SiteContext, defaultItemInheritor } from '../../../store/context'
 import styled from '@emotion/styled'
 import { FieldArray, useField } from 'formik'
 import ModalBox from '../../layout/ModalBox'
 import NonProfitsList from './nonProfits/NonProfitsList'
 import FindNonProfits from './nonProfits/FindNonProfits'
+import { inheritorsTypes } from '../../../store/translation'
 
 function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
     const {
@@ -49,17 +50,31 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
 
     const inheritors = getInheritors()
+
+    const addNonProfit = (arrayHelpers, nonProfitName, nonProfitId) => {
+        arrayHelpers.push({
+            ...defaultItemInheritor,
+            type: inheritorsTypes.nonprofit,
+            first_name: nonProfitName,
+            person_id: nonProfitId,
+            percent: ""
+        })
+    }
     return (
         <StyledInheritorsModalContent
             open={isOpen}
             handleClose={handleClose}
             title="בחירת יורשים"
         >
-            <FindNonProfits
-                name={name}
-                isOpen={isSearchOpen}
-                handleClose={() => setIsSearchOpen(false)}
-            />
+            <StyledFindNonProfits isOpen={isSearchOpen}>
+                <FindNonProfits
+                    name={name}
+                    isOpen={isSearchOpen}
+                    handleClose={() => setIsSearchOpen(false)}
+                    displayBackButton
+                    addNonProfit={addNonProfit}
+                />
+            </StyledFindNonProfits>
             <StyledInheritorsListContainer>
                 {Object.keys(inheritors).map((inheritorType, index) => {
                     if (inheritors[inheritorType]?.length > 0) {
@@ -125,6 +140,25 @@ const StyledTypeInheritorsListContainer = styled.div`
 
 const StyledEndButton = styled(Button)`
     width: 100%;
+`
+
+const StyledFindNonProfits = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 1rem;
+    width: 100%;
+    top: 0rem;
+    right: 0rem;
+    z-index: 4;
+    background-color: #fff;
+    width: 100%;
+    visibility: ${({ isOpen }) => isOpen ? "visible" : "hidden"};
+    height:  100%;
+    padding: 1rem;
+    border-radius: 10px;
+    opacity: ${({ isOpen }) => isOpen ? 1 : 0};
+    transition: all 200ms ease-in-out;
 `
 
 export default ChooseInheritors
