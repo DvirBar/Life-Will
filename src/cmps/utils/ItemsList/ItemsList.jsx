@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { Button, Typography } from '@mui/material'
-import { FieldArray, useField, useFormikContext } from 'formik'
+import { Button } from '@mui/material'
+import { FieldArray, getIn, useField, useFormikContext } from 'formik'
 import React, { useState } from 'react'
 import Item from "./Item"
 import ItemListNavigation from './ItemListNavigation'
@@ -11,8 +11,7 @@ const FIELD_META_INDEX = 1
 
 function ItemsList({ name, title, defaultValue, renderItem, hideAddButton }) {
     const { values } = useFormikContext()
-
-    const items = values[name] || []
+    const items = getIn(values, name) || []
     const [selectedItemIndex, setSelectedItemIndex] = useState(0)
 
     const moveNextItem = () => {

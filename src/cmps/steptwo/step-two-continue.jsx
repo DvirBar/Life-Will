@@ -1,8 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
+import { Formik, Form } from "formik";
+import { Typography } from '@mui/material';
+import styled from '@emotion/styled'
 
-import { Formik, Form, Field, FieldArray } from "formik";
-import { SiteContext } from '../../store/context';
+import { SiteContext, defaultChildData } from '../../store/context';
 
+import YesNoRadio from '../formikcomponents/YesNoRadio';
+import ItemsList from "../utils/ItemsList/ItemsList";
+import { ChildDetails } from './ChildDetails';
+
+import Button from '@mui/material/Button';
+
+import translation from '../../store/translation'
 
 export default function StepTwoContinue() {
 
@@ -17,53 +26,10 @@ export default function StepTwoContinue() {
 		moveNextStep();
 	}
 
-
-	const renderKidsForm = (values) => {
-		return (
-			<FieldArray
-				name="kids_data"
-				render={arrayHelpers => (
-					<div>
-						{
-							(
-								values.kids_data.map((kid, i) => (
-									<div key={i} className="flex gap direction-rtl">
-										<div
-											className='flex align-center pointer'
-											style={{ visibility: (i === values.kids_data.length - 1 && i > 0) ? "visible" : "hidden" }}
-											onClick={() => arrayHelpers.remove(i)}> -
-										</div>
-										<Field key={`kids_data[${i}].id`} name={`kids_data[${i}].id`} type="number" placeholder={`תז של ילד מספר ${i + 1}`} />
-										<Field key={`kids_data.${i}.first_name`} name={`kids_data.${i}.first_name`} placeholder={`שם פרטי ${i + 1}`} />
-										<Field key={`kids_data.${i}.last_name`} name={`kids_data.${i}.last_name`} placeholder={`שם משפחה ${i + 1}`} />
-										<div
-											className='flex align-center pointer'
-											onClick={() => { arrayHelpers.push({ id: '', first_name: '', last_name: '' }) }}>+</div>
-									</div>
-								))
-							)
-						}
-					</div >
-				)
-				}
-
-			/>
-		);
-		// <div key={`${i}`} className="flex gap direction-rtl">
-		// 	<div className='flex align-center pointer' style={{ visibility: (i === data.kids_data.length - 1 && i > 0) ? "visible" : "hidden" }} onClick={() => onRemoveKid(i)}>-</div>
-		// 	<Field key={`id${i}`} onChange={(ev) => updateKidsData(ev, i)} name={`id${i}`} type="number" placeholder={`תז של ילד מספר ${i + 1}`} />
-		// 	<Field key={`first_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'first-name')} name={`first_name${i}`} placeholder={`שם פרטי ${i + 1}`} />
-		// 	<Field key={`last_name${i}`} onChange={(ev) => updateKidsData(ev, i, 'last-name')} name={`last_name${i}`} placeholder={`שם משפחה ${i + 1}`} />
-		// 	<div className='flex align-center pointer' onClick={onAddKid}>+</div>
-		// </div>
-
-
+	const handleValidate = () => {
+		const errors = {};
+		return errors;
 	}
-
-	// const handleSubmit = (values) => {
-	//     next(values, false)
-	// }
-
 
 	return (
 		<>
@@ -71,45 +37,47 @@ export default function StepTwoContinue() {
 				//validationSchema={validationSchema}
 				initialValues={data}
 				onSubmit={handleSubmit}
+				validate={handleValidate}
 			>
-				{({ values, resetForm }) => {
+				{({ values }) => {
+					console.log(values);
 					return (
-						<Form className="input-container" style={{ width: "500px" }}>
-							<div role="group">
-								<p>ילדים-</p>
-								<div className="status-group input-btn">
-									<label className={`${values.kids === "לא" ? 'active' : ''}`}>
-										<Field type="radio" name="kids" value="לא" />
-										לא
-									</label>
-									<label className={`${values.kids === "כן" ? 'active' : ''}`}>
-										<Field type="radio" name="kids" value="כן" />
-										כן
-									</label>
-								</div>
-							</div>
-							{values.kids === 'כן' &&
-								<>
-									{/* <div className="input-container-formik" >
-										<p>מספר-</p>
-										<Field name="num_of_kids" type="number" placeholder='מספר' />
-									</div> */}
-									<div>
-										<div className="input-container-formik child-container direction-ltr" >
-											{renderKidsForm(values)}
-										</div>
-
-									</div>
-								</>
-
+						<Form>
+							<StyledChildQuestion>
+								<Typography>ילדים-</Typography>
+								<YesNoRadio name="kids" />
+							</StyledChildQuestion>
+							{
+								values.kids === 'כן' &&
+								<ItemsList
+									name="kids_data"
+									values={values}
+									title={translation.kids}
+									defaultValue={defaultChildData}
+									renderItem={(dataItem, itemName) => <ChildDetails dataItem={dataItem} itemName={itemName} />} />
 							}
-							<button type="submit">המשך</button>
+							<StyledColumnCenter>
+								<Button variant="contained" type="submit">המשך</Button>
+							</StyledColumnCenter>
 						</Form>
 					)
 				}
 				}
-			</Formik>
+			</Formik >
 
 		</>
 	)
 }
+
+const StyledChildQuestion = styled.div`
+	display:flex;
+	flex-direction:row;
+	padding-bottom:2rem;
+	
+`
+const StyledColumnCenter = styled.div`
+    padding:1rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items:center
+`

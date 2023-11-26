@@ -1,13 +1,30 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
-import { SiteContext } from "../../store/context";
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Button } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import styled from '@emotion/styled'
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from 'yup';
+
+import { SiteContext } from "../../store/context";
 
 import { HebrewMonthInput } from '../formikcomponents/hebrew-month-input';
 import { HebrewDayInput } from '../formikcomponents/hebrew-day-input';
+
+import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+import FormikTextField from '../formikcomponents/FormikTextField';
+import FormikDatePicker from '../formikcomponents/FormikDatePicker';
+
+import sampleData from '../../store/sampleData';
+import translation from '../../store/translation';
+
 export const validationSchema = Yup.object().shape({
-	first_name: Yup.string().required('Required').label("שם פרטי"),
-	last_name: Yup.string().required('Required').label("שם משפחה"),
+	first_name: Yup.string().required('יש להזין שם פרטי').label("שם פרטי"),
+	last_name: Yup.string().required('יש להזין שם משפחה').label("שם משפחה"),
+	birthDate: Yup.date().required('יש להזין תאריך לידה'),
+	gender: Yup
+		.string()
+		.oneOf(["זכר", "נקבה", "אחר"])
+		.required('נדרש לבחור את המגדר').label("מגדר")
 	//email: Yup.string().email('Invalid email').required('Required'),
 });
 
@@ -27,85 +44,83 @@ export default function StepOne() {
 	// 	const isAgeOver18 = diff.getUTCFullYear() - 1970 < 18 ? false : true
 	// 	next(values, false, false, isAgeOver18)
 	// }
-	const handleSubmit = (values, actions) => {
+	const handleSubmit = (values) => {
 		setData({ ...values })
 		moveNextStep();
 	}
+
 	return (
 		<Formik
 			validationSchema={validationSchema}
-			initialValues={data}
+			initialValues={sampleData}
 			onSubmit={handleSubmit}
 		>
 			{({ values }) => {
+				console.log(values);
 				return (
 					<Form>
-						<div className="input-container">
-							<div className="input-container-formik">
-								<Field name="first_name" placeholder='שם פרטי' />
-								<ErrorMessage name="first_name" />
-								<Field name="last_name" placeholder='שם משפחה' />
-								<ErrorMessage name="last_name" />
-							</div>
-							<div className="input-container-formik">
-								<p>מה התאריך לידה שלך</p>
-								{/* <input placeholder='תאריך לידה' type="date" name="birthDate" required /> */}
-								<Field
-									name="birthDate"
-									type="date"
-									className="birthDate"
-									placeholder="dd/mm/yyyy"
-								/>
-								<p>תאריך עברי(לא חובה*)</p>
-								<div className="display-rows">
-									<label>
-										שנה
-										<Field name="hebrew_year" />
-									</label>
-									<label>
-										חודש
-										<HebrewMonthInput name="hebrew_month" />
-									</label>
-									<label>
-										יום
-										<HebrewDayInput name="hebrew_day" />
-									</label>
+						<StyledPersonalDetails>
+							{/* TODO: Placeholder is missing => translation.first_name*/}
+							<FormikTextField name={"first_name"} placeholder={translation.first_name} />
+							<ErrorMessage name="first_name" />
+							{/* TODO: Placeholder is missing => translation.last_name*/}
+							<FormikTextField name={"last_name"} placeholder={translation.last_name} />
+							<ErrorMessage name="last_name" />
+						</StyledPersonalDetails>
 
-								</div>
+						<StyledPersonalBirthdate>
+							<Typography variant="subtitle1">מה התאריך לידה שלך</Typography>
+							{/* TODO: Placeholder is missing dd/mm/yyyy*/}
+							<FormikDatePicker name={"birthDate"} label={"תאריך לידה"} />
+							<ErrorMessage name="birthDate" />
+							<Accordion>
+								<AccordionSummary
+									expandIcon={<ExpandMoreIcon />}
 
+								>
+									<Typography>הוספת תאריך עברי?</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<StyledHebrewDateItems>
+										<FormikTextField name={"hebrewBirthDate.year"} label={"שנה"} />
+										<HebrewMonthInput name="hebrewBirthDate.month" label={"חודש"} />
+										<HebrewDayInput name={"hebrewBirthDate.day"} label={"יום"} />
+									</StyledHebrewDateItems>
+								</AccordionDetails>
+							</Accordion>
+						</StyledPersonalBirthdate>
+						<StyledColumnCenter>
+							<FormikRadioGroup
+								name={"gender"}
+								options={[
+									{
+										value: "זכר",
+										label: "זכר"
+									},
+									{
+										value: "נקבה",
+										label: "נקבה"
+									},
+									{
+										value: "אחר",
+										label: "אחר"
+									}]} />
+							<ErrorMessage name="gender" />
+						</StyledColumnCenter>
 
-								<div role="group">
-									<p>מגדר</p>
-									<div className="status-group flex space-between input-btn">
-										<label className={`${values.gender === "זכר" ? 'active' : ''}`}>
-											<Field type="radio" name="gender" value="זכר" />
-											זכר
-										</label>
-										<label className={`${values.gender === "נקבה" ? 'active' : ''}`}>
-											<Field type="radio" name="gender" value="נקבה" />
-											נקבה
-										</label>
-									</div>
-								</div>
-								<div role="group">
-									<p>האם ערכת את הצוואה לבד?</p>
-									<div className="status-group flex space-between input-btn">
-										<label className={`${values.edited_by === "לא" ? 'active' : ''}`}>
-											<Field type="radio" name="edited_by" value="לא" />
-											לא
-										</label>
-										<label className={`${values.edited_by === "כן" ? 'active' : ''}`}>
-											<Field type="radio" name="edited_by" value="כן" />
-											כן
-										</label>
-									</div>
-								</div>
+						<StyledColumnCenter>
+							<Typography variant='string' gutterBottom>האם ערכת את הצוואה לבד?</Typography>
+							<FormikRadioGroup
+								name={"edited_by"}
+								options={[{ value: "לא", label: "לא" }, { value: "כן", label: "כן" }]} />
+							<ErrorMessage name="edited_by" />
+						</StyledColumnCenter>
+						<StyledColumnCenter>
+							<Button variant="contained" type="submit">המשך</Button>
+						</StyledColumnCenter>
 
-							</div>
-							{/* <button onClick={() => moveNextStep()}>המשך</button> */}
-							{/* <button onClick={() => nextStepHandler(formikProps, false, submitForm)}>המשך</button> */}
-							<button type="submit">המשך</button>
-						</div>
+						{/* <button onClick={() => moveNextStep()}>המשך</button> */}
+						{/* <button onClick={() => nextStepHandler(formikProps, false, submitForm)}>המשך</button> */}
 					</Form>
 				)
 			}
@@ -114,3 +129,37 @@ export default function StepOne() {
 
 	)
 }
+
+const StyledPersonalDetails = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+	justify-content:center;
+`
+
+const StyledPersonalBirthdate = styled.div`
+	padding:1rem 0;
+	display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem;
+	justify-content:center;
+	&>*{
+		max-width:200px
+	}
+	align-items:center
+`
+
+const StyledColumnCenter = styled.div`
+    padding:1rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items:center
+`
+const StyledHebrewDateItems = styled.div`
+	&>*{
+		max-width: 120px;
+		padding-bottom:1rem;
+	}	
+`

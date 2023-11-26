@@ -1,13 +1,39 @@
 import React, { useContext } from 'react';
-
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import StepTwoContinue from './step-two-continue';
-import StepTwoContinue2 from './step-two-continue2';
+import { Typography, Button } from '@mui/material';
+import styled from '@emotion/styled'
+
 import { SiteContext } from '../../store/context';
 
+import YesNoRadio from '../formikcomponents/YesNoRadio';
+import { PartnerDetails } from './PartnerDetails';
+import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+import FormikButtonSelect from '../formikcomponents/FormikButtonSelect'
+import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
+
+import translation, { statusTypes } from '../../store/translation'
+
+const validatePartnerDetails = ((errors, status, allocateToDivorsed, ...partnerData) => {
+	const [
+		firstName,
+		lastName,
+		id
+	] = partnerData;
+
+	const toAllocateForDivorsed = allocateToDivorsed === "כן" ? true : false;
+	const isPartnerDetailsRequired = ["שותפות", "נשוי"].includes(status) || (toAllocateForDivorsed && status === "גרוש");
+
+	if (isPartnerDetailsRequired && !(firstName && lastName && id)) {
+		errors.partnerError = "יש למלא את פרטים הנדרשים";
+	}
+	else {
+		errors = {};
+	}
+})
+
 const stepTwoValidationSchema = Yup.object({
-	status: Yup.string().required(),
+	status: Yup.string().required("יש לבחור את הסטטוס")
 })
 
 export default function StepTwo() {
@@ -17,9 +43,21 @@ export default function StepTwo() {
 		moveNextStep
 	} = useContext(SiteContext);
 
-	const handleSubmit = (values, actions) => {
+	const handleSubmit = (values, actions, meta) => {
 		setData({ ...values });
 		moveNextStep();
+	}
+
+	const handleValidate = (values) => {
+		const errors = {};
+		validatePartnerDetails(
+			errors,
+			values.status,
+			values.ex_partner_gain,
+			values.partner_first_name,
+			values.partner_last_name,
+			values.partner_id)
+		return errors;
 	}
 
 	return (
@@ -28,118 +66,45 @@ export default function StepTwo() {
 				validationSchema={stepTwoValidationSchema}
 				initialValues={data}
 				onSubmit={handleSubmit}
+				validate={handleValidate}
 			>
-				{({ values }) => {
+				{({ values, errors, touched }) => {
 					return (
-						<Form className="input-container" style={{ width: "500px" }}>
-							<div>סטטוס</div>
-							<div role="group" className="status-group flex space-between input-btn">
-								<label className={`${values.status === "נשוי" ? 'active' : ''}`}>
-									<Field type="radio" name="status" value="נשוי" />
-									נשוי
-								</label>
-								<label className={`${values.status === "פרוד" ? 'active' : ''}`}>
-									<Field type="radio" name="status" value="פרוד" />
-									פרוד
-								</label>
-								<label className={`${values.status === "אלמן" ? 'active' : ''}`}>
-									<Field type="radio" name="status" value="אלמן" />
-									אלמן
-								</label>
-								<label className={`${values.status === "רווק" ? 'active' : ''}`}>
-									<Field type="radio" name="status" value="רווק" />
-									רווק
-								</label>
-								<label className={`${values.status === "ערירי" ? 'active' : ''}`}>
-									<Field type="radio" name="status" value="ערירי" />
-									ערירי
-								</label>
-								<label className={`${values.status === "שותפות" ? 'active' : ''}`}>
-									<Field type="radio" name="status" value="שותפות" />
-									שותפות
-								</label>
-								<label className={`${values.status === "גרוש" ? 'active' : ''}`}>
-									<Field type="radio" name="status" value="גרוש" />
-									גרוש
-								</label>
-							</div>
+						<Form >
+							<Typography variant="subtitle1">{translation.status}</Typography>
+							<FormikButtonSelect
+								name={`status`}
+							>
+								{Object.keys(statusTypes).map(key =>
+									<ButtonSelectItem key={statusTypes[key]} value={statusTypes[key]}>{statusTypes[key]}</ButtonSelectItem>
+								)}
+							</FormikButtonSelect>
+
+							<ErrorMessage name="status" />
+
 							{values.status === 'נשוי' && <div>
-								<div className='partner-details'>
-									<h3>אני נשוי ל-</h3>
-									<div role="group" className="status-group flex space-between input-btn">
-										<label className={`${values.partner_gender === "גבר" ? 'active' : ''}`}>
-											<Field type="radio" name="partner_gender" value="גבר" />
-											גבר
-										</label>
-										<label className={`${values.partner_gender === "אישה" ? 'active' : ''}`}>
-											<Field type="radio" name="partner_gender" value="אישה" />
-											אישה
-										</label>
-									</div>
-								</div>
-								<div className='partner-details'>
-									<Field name="partner_first_name" placeholder='שם פרטי' />
-									<Field name="partner_last_name" placeholder='שם משפחה' />
-									<Field name="partner_id" type="number" placeholder='ת.ז' />
-								</div>
+								<Typography variant="subtitle1">אני נשוי ל-</Typography>
+								<PartnerDetails className="partner-details" />
 							</div>}
 							{values.status === 'שותפות' && <div>
-								<div className='partner-details'>
-									<h3>אני מנהל זוגיות עם- </h3>
-									<div role="group" className="status-group flex space-between input-btn">
-										<label className={`${values.partner_gender === "גבר" ? 'active' : ''}`}>
-											<Field type="radio" name="partner_gender" value="גבר" />
-											גבר
-										</label>
-										<label className={`${values.partner_gender === "אישה" ? 'active' : ''}`}>
-											<Field type="radio" name="partner_gender" value="אישה" />
-											אישה
-										</label>
-									</div>
-								</div>
-								<div className='partner-details'>
-									<Field name="partner_first_name" placeholder='שם פרטי' />
-									<Field name="partner_last_name" placeholder='שם משפחה' />
-									<Field name="partner_id" type="number" placeholder='ת.ז' />
-								</div>
+								<Typography variant="subtitle1">אני מנהל זוגיות עם- </Typography>
+								<PartnerDetails className="partner-details" />
 							</div>}
 							{values.status === 'גרוש' && <div>
-								<div role="group" className="status-group flex space-between input-btn">
-									<h5>האם תרצה להקצות  לגרוש/גרושתך מהצוואה?</h5>
-									<label className={`${values.ex_partner_gain === "לא" ? 'active' : ''}`} style={{ width: '40px' }}>
-										<Field type="radio" name="ex_partner_gain" value="לא" />
-										לא
-									</label>
-									<label className={`${values.ex_partner_gain === "כן" ? 'active' : ''}`} style={{ width: '40px' }}>
-										<Field type="radio" name="ex_partner_gain" value="כן" />
-										כן
-									</label>
-								</div>
+								<StyledExPartnerQuestion>
+									<YesNoRadio name="ex_partner_gain" question="האם תרצה להקצות  לגרוש/גרושתך מהצוואה?" />
+								</StyledExPartnerQuestion>
 								{values.ex_partner_gain === 'כן' && <>
-									<div className='partner-details'>
-										<h3>פרטי זיהוי–</h3>
-										<div role="group" className="status-group flex space-between input-btn">
-											<label className={`${values.partner_gender === "גבר" ? 'active' : ''}`}>
-												<Field type="radio" name="partner_gender" value="גבר" />
-												גבר
-											</label>
-											<label className={`${values.partner_gender === "אישה" ? 'active' : ''}`}>
-												<Field type="radio" name="partner_gender" value="אישה" />
-												אישה
-											</label>
-										</div>
-									</div>
-									<div className='partner-details'>
-										<Field name="partner_first_name" placeholder='שם פרטי' />
-										<Field name="partner_last_name" placeholder='שם משפחה' />
-										<Field name="partner_id" type="number" placeholder='ת.ז' />
-									</div>
+									<Typography variant="subtitle1">פרטי זיהוי–</Typography>
+									<PartnerDetails className="partner-details" />
 								</>}
 							</div>}
 							{/* <StepTwoContinue next={next} prev={prev} data={data} />
             				<StepTwoContinue2 next={next} prev={prev} data={data} /> */}
-
-							<button type="submit">המשך</button>
+							{touched.status && errors.partnerError && <div>{errors.partnerError}</div>}
+							<StyledColumnCenter>
+								<Button variant="contained" type="submit">המשך</Button>
+							</StyledColumnCenter>
 						</Form>
 					)
 				}
@@ -148,3 +113,15 @@ export default function StepTwo() {
 		</>
 	)
 }
+
+
+const StyledColumnCenter = styled.div`
+    padding:1rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items:center
+`
+
+const StyledExPartnerQuestion = styled.div`
+    padding:1rem 0;
+`
