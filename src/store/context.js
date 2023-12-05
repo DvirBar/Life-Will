@@ -1,8 +1,11 @@
 import React, { createContext, useState } from "react";
 import { answers, giveToFamilyTypesKeys, inheritorsTypes } from "./translation";
+import useSteps from "./useSteps";
+
 
 export const SiteContext = createContext(null);
 // TODO: Add types of non profits
+
 
 export const personInfo = {
     first_name: '',
@@ -258,41 +261,14 @@ const SiteProvider = ({ children }) => {
         relatives_message_content: ''
     })
 
-    const [selectedStage, setSelectedStage] = useState(1)
-    const [selectedStep, setSelectedStep] = useState(0)
-
-    const moveNextStep = (isFinalStep = false) => {
-        setSelectedStep(currStep => {
-            if (isFinalStep) {
-                return 0
-            }
-
-            return currStep + 1
-        })
-
-        if (isFinalStep) {
-            setSelectedStage(currStage => currStage + 1)
-        }
-    }
-
-    const movePrevStep = (isFirstStep) => {
-        setSelectedStage(currStage => {
-            if (currStage > 0) {
-                return currStage - 1
-            }
-        })
-
-        setSelectedStep(currStep => {
-            if (currStep > 0) {
-                return currStep + 1
-            }
-        })
-    }
-
-    const selectStage = (stage) => {
-        setSelectedStage(stage)
-        setSelectedStep(0)
-    }
+    const {
+        selectedStage,
+        selectedStep,
+        stages,
+        moveNextStep,
+        movePrevStep,
+        selectStage
+    } = useSteps()
 
     const inheritors = {}
 
@@ -372,6 +348,7 @@ const SiteProvider = ({ children }) => {
         getInheritors,
         getInheritorById,
         submitForm,
+        stages
     }
 
     return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

@@ -23,42 +23,44 @@ function StepFiveMoney() {
                     numeric
                 />
             </Question>
-            <ItemWrapper title={translation.bank_accounts_title}>
-                <ItemsList
-                    name="bank_accounts"
-                    title={translation.bank_accounts_title}
-                    defaultValue={defaults.bank_accounts}
-                    renderItem={(_dataItem, itemNameWithIndex) =>
-                        <BankDetails
-                            nameWithIndex={itemNameWithIndex}
-                        />
-                    }
-                />
-            </ItemWrapper>
-            <ItemWrapper title={translation.provident_funds_title}>
-                <ItemsList
-                    name="provident_funds_data"
-                    title={translation.provident_funds_title}
-                    defaultValue={defaults.provident_funds}
-                    renderItem={(_dataItem, itemNameWithIndex) =>
-                        <ProvidentFundDetails
-                            nameWithIndex={itemNameWithIndex}
-                        />
-                    }
-                />
-            </ItemWrapper>
-            <ItemWrapper title={translation.study_funds_title}>
-                <ItemsList
-                    name="study_funds_data"
-                    title={translation.study_funds_title}
-                    defaultValue={defaults.study_funds}
-                    renderItem={(_dataItem, itemNameWithIndex) =>
-                        <StudyFundDetails
-                            nameWithIndex={itemNameWithIndex}
-                        />
-                    }
-                />
-            </ItemWrapper>
+
+            <ItemsList
+                name="bank_accounts"
+                title={translation.bank_accounts_title}
+                itemTitle={translation.bank_accounts_title}
+                defaultValue={defaults.bank_accounts}
+                renderItem={(_dataItem, itemNameWithIndex) =>
+                    <BankDetails
+                        nameWithIndex={itemNameWithIndex}
+                    />
+                }
+            />
+
+            <ItemsList
+                name="provident_funds_data"
+                title={translation.provident_funds_title}
+                itemTitle={translation.provident_funds_title}
+                defaultValue={defaults.provident_funds}
+                renderItem={(_dataItem, itemNameWithIndex) =>
+                    <ProvidentFundDetails
+                        nameWithIndex={itemNameWithIndex}
+                    />
+                }
+            />
+
+
+            <ItemsList
+                name="study_funds_data"
+                title={translation.study_funds_title}
+                itemTitle={translation.study_funds_title}
+                defaultValue={defaults.study_funds}
+                renderItem={(_dataItem, itemNameWithIndex) =>
+                    <StudyFundDetails
+                        nameWithIndex={itemNameWithIndex}
+                    />
+                }
+            />
+
         </FormWrapper>
     )
 }

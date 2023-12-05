@@ -38,24 +38,28 @@ function GiveToFamily() {
         <StyledGiveToFamily>
             <ItemsList
                 name={`give_to_family_type.${giveToFamilyTypesKeys.parents}`}
+                title={giveToFamilyTypes[giveToFamilyTypesKeys.parents]}
                 itemTitle={giveToFamilyTypes[giveToFamilyTypesKeys.parents]}
                 defaultValue={personInfo}
                 renderItem={(_dataItem, itemName) => <GiveToFamilyItem name={itemName} />} />
 
             <ItemsList
                 name={`give_to_family_type.${giveToFamilyTypesKeys.siblings}`}
+                title={giveToFamilyTypes[giveToFamilyTypesKeys.siblings]}
                 itemTitle={giveToFamilyTypes[giveToFamilyTypesKeys.siblings]}
                 defaultValue={personInfo}
                 renderItem={(_dataItem, itemName) => <GiveToFamilyItem name={itemName} />} />
 
             <ItemsList
                 name={`give_to_family_type.${giveToFamilyTypesKeys.friends}`}
+                title={giveToFamilyTypes[giveToFamilyTypesKeys.friends]}
                 itemTitle={giveToFamilyTypes[giveToFamilyTypesKeys.friends]}
                 defaultValue={personInfo}
                 renderItem={(_dataItem, itemName) => <GiveToFamilyItem name={itemName} />} />
 
             <ItemsList
                 name={`give_to_family_type.${giveToFamilyTypesKeys.grandChildren}`}
+                title={giveToFamilyTypes[giveToFamilyTypesKeys.grandChildren]}
                 itemTitle={giveToFamilyTypes[giveToFamilyTypesKeys.grandChildren]}
                 defaultValue={personInfo}
                 renderItem={(_dataItem, itemName) => <GiveToFamilyItem name={itemName} />} />

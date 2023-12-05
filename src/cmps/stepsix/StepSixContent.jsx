@@ -10,7 +10,6 @@ import { Typography } from '@mui/material'
 function StepSixContent() {
     const { values } = useFormikContext()
     const funeralInChargeDetailsName = 'funeral_in_charge_details'
-    console.log(values);
     return (
         <StyledStepSixContent>
             <YesNoRadio

@@ -14,7 +14,7 @@ function FormWrapper({ validationSchema, children, isFinalStep }) {
         <Formik
             initialValues={data}
             onSubmit={(values) => submitForm(values, isFinalStep)}
-            validationSchema={validationSchema}
+        // validationSchema={validationSchema}
         >
             <StyledForm>
                 <StyledWrapper>

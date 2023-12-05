@@ -8,9 +8,7 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
 
     if (numElements === 0) {
         return (
-            <StyledNoData>
-                <Typography variant='subtitle1'>{title}</Typography>
-            </StyledNoData>
+            <></>
         )
     }
 

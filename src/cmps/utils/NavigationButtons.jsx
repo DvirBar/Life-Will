@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { SiteContext } from '../../store/context'
 
-function NavigationButtons({ isLastStep }) {
+function NavigationButtons() {
     const { movePrevStep } = useContext(SiteContext)
 
     return (
