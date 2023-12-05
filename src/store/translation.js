@@ -2,7 +2,7 @@ const first_name = 'שם פרטי'
 const last_name = 'שם משפחה'
 const birth_date = 'תאריך לידה'
 const hebrew_birth_date = 'תאריך עברי'
-const person_id = 'ת״ז'
+const person_id = "תעודת זהות"
 const gender = 'מגדר'
 const personInfo = {
 	first_name,
@@ -18,6 +18,16 @@ export const statusTypes = {
 	married: 'נשוי',
 	partnership: 'שותפות',
 	divorced: 'גרוש'
+}
+
+export const childrenGenderTypes = {
+	male: "זכר",
+	female: "נקבה",
+}
+
+export const genderTypes = {
+	...childrenGenderTypes,
+	other: "אחר"
 }
 
 const inheritorsData = {
@@ -216,20 +226,31 @@ const translation = {
 	person_id,
 	email: 'כתובת מייל',
 	phone: 'טלפון נייד',
-	address: 'כתובת',
+	address: {
+		text: 'כתובת',
+		street: 'רחוב',
+		houseNum: 'מספר בית',
+		city: 'עיר'
+	},
 	citizenship: 'אזרחות - האם יש בבעלותך אזרחות נוספת?',
 	passport_id: 'מספר דרכון',
 
 	// Step 2
 	step2: `שלב ב׳ - ${stepNames[1]}`,
 	status: 'סטטוס',
+	// TODO: fix in PDF
 	partner_married_gender: 'אני נשוי ל-',
 	partner_spouse_gender: 'אני מנהל זוגיות עם-',
-	partner_first_name: first_name,
-	partner_last_name: last_name,
-	partner_id: person_id,
+	partner: {
+		...personInfo,
+		married_gender: 'אני נשוי ל-',
+		spouse_gender: 'אני מנהל זוגיות עם-',
+	},
+	has_ex_partner: 'האם היו לך נישואים קודמים?',
 	ex_partner_gain: 'האם תרצה להקצות לגרושך/גרושתך מהצוואה?',
+	ex_partner: 'גרוש/ה',
 	ex_partners: {
+		title: "פרטי הגרוש/ה",
 		gender,
 		...personInfo
 	},

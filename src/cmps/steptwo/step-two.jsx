@@ -1,127 +1,52 @@
-import React, { useContext } from 'react';
-import { Formik, Form, ErrorMessage } from "formik";
+import React from 'react';
 import * as Yup from "yup";
-import { Typography, Button } from '@mui/material';
-import styled from '@emotion/styled'
-
-import { SiteContext } from '../../store/context';
-
-import YesNoRadio from '../formikcomponents/YesNoRadio';
-import { PartnerDetails } from './PartnerDetails';
-import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
+import { Typography } from '@mui/material';
 import FormikButtonSelect from '../formikcomponents/FormikButtonSelect'
 import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
 
-import translation, { statusTypes } from '../../store/translation'
-
-const validatePartnerDetails = ((errors, status, allocateToDivorsed, ...partnerData) => {
-	const [
-		firstName,
-		lastName,
-		id
-	] = partnerData;
-
-	const toAllocateForDivorsed = allocateToDivorsed === "כן" ? true : false;
-	const isPartnerDetailsRequired = ["שותפות", "נשוי"].includes(status) || (toAllocateForDivorsed && status === "גרוש");
-
-	if (isPartnerDetailsRequired && !(firstName && lastName && id)) {
-		errors.partnerError = "יש למלא את פרטים הנדרשים";
-	}
-	else {
-		errors = {};
-	}
-})
+import translation, { answers, statusTypes } from '../../store/translation'
+import FormWrapper from '../utils/FormWrapper';
+import FamilyStatusDetails from './FamilyStatusDetails';
+import { personInfoValidation } from '../utils/validation';
 
 const stepTwoValidationSchema = Yup.object({
-	status: Yup.string().required("יש לבחור את הסטטוס")
+    status: Yup.string().required("יש לבחור סטטוס"),
+    partner: Yup.object().when("status", {
+        is: (status) => (status === statusTypes.married || status === statusTypes.partnership),
+        then: (schema) => schema.shape(personInfoValidation)
+    }),
+    has_ex_partner: Yup.string().required("יש לבחור באפשרות המתאימה"),
+    ex_partner_gain: Yup.string().when(["has_ex_partner", "status"], {
+        is: (has_ex_partner, status) => has_ex_partner === answers.yes || status === statusTypes.divorced,
+        then: (schema) => schema.required("יש לבחור האם ברצונך להקצות לגרושך/גרושתך")
+    }),
+    ex_partners: Yup.array().when("ex_partner_gain", {
+        is: answers.yes,
+        then: (schema) => schema.of(Yup.object(personInfoValidation))
+            .min(1, "יש לבחור את פרטי הגרוש/ה")
+    })
 })
 
 export default function StepTwo() {
-	const {
-		data,
-		setData,
-		moveNextStep
-	} = useContext(SiteContext);
 
-	const handleSubmit = (values, actions, meta) => {
-		setData({ ...values });
-		moveNextStep();
-	}
-
-	const handleValidate = (values) => {
-		const errors = {};
-		validatePartnerDetails(
-			errors,
-			values.status,
-			values.ex_partner_gain,
-			values.partner_first_name,
-			values.partner_last_name,
-			values.partner_id)
-		return errors;
-	}
-
-	return (
-		<>
-			<Formik
-				validationSchema={stepTwoValidationSchema}
-				initialValues={data}
-				onSubmit={handleSubmit}
-				validate={handleValidate}
-			>
-				{({ values, errors, touched }) => {
-					return (
-						<Form >
-							<Typography variant="subtitle1">{translation.status}</Typography>
-							<FormikButtonSelect
-								name={`status`}
-							>
-								{Object.keys(statusTypes).map(key =>
-									<ButtonSelectItem key={statusTypes[key]} value={statusTypes[key]}>{statusTypes[key]}</ButtonSelectItem>
-								)}
-							</FormikButtonSelect>
-
-							<ErrorMessage name="status" />
-
-							{values.status === 'נשוי' && <div>
-								<Typography variant="subtitle1">אני נשוי ל-</Typography>
-								<PartnerDetails className="partner-details" />
-							</div>}
-							{values.status === 'שותפות' && <div>
-								<Typography variant="subtitle1">אני מנהל זוגיות עם- </Typography>
-								<PartnerDetails className="partner-details" />
-							</div>}
-							{values.status === 'גרוש' && <div>
-								<StyledExPartnerQuestion>
-									<YesNoRadio name="ex_partner_gain" question="האם תרצה להקצות  לגרוש/גרושתך מהצוואה?" />
-								</StyledExPartnerQuestion>
-								{values.ex_partner_gain === 'כן' && <>
-									<Typography variant="subtitle1">פרטי זיהוי–</Typography>
-									<PartnerDetails className="partner-details" />
-								</>}
-							</div>}
-							{/* <StepTwoContinue next={next} prev={prev} data={data} />
-            				<StepTwoContinue2 next={next} prev={prev} data={data} /> */}
-							{touched.status && errors.partnerError && <div>{errors.partnerError}</div>}
-							<StyledColumnCenter>
-								<Button variant="contained" type="submit">המשך</Button>
-							</StyledColumnCenter>
-						</Form>
-					)
-				}
-				}
-			</Formik>
-		</>
-	)
+    return (
+        <FormWrapper
+        // validationSchema={stepTwoValidationSchema}
+        >
+            <Typography variant="subtitle1">{translation.status}</Typography>
+            <FormikButtonSelect
+                name="status"
+            >
+                {Object.keys(statusTypes).map(key =>
+                    <ButtonSelectItem
+                        key={statusTypes[key]}
+                        value={statusTypes[key]}
+                    >
+                        {statusTypes[key]}
+                    </ButtonSelectItem>
+                )}
+            </FormikButtonSelect>
+            <FamilyStatusDetails />
+        </FormWrapper>
+    )
 }
-
-
-const StyledColumnCenter = styled.div`
-    padding:1rem 0;
-	display: flex;
-	flex-direction: column;
-	align-items:center
-`
-
-const StyledExPartnerQuestion = styled.div`
-    padding:1rem 0;
-`

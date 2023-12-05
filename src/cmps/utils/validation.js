@@ -2,6 +2,16 @@ import * as Yup from "yup"
 import { answers, itemDetails } from "../../store/translation"
 import hasField from "./InheritedItem/hasField"
 
+export const basePersonInfoValidation = {
+    first_name: Yup.string().required("יש להזין שם"),
+    last_name: Yup.string().required("יש להזין שם משפחה"),
+    person_id: Yup.string().required("יש להזין תעודת זהות")
+}
+
+export const personInfoValidation = {
+    ...basePersonInfoValidation,
+    gender: Yup.string().required("יש לבחור מגדר"),
+}
 
 export const inheritedItemValidation = (name, isFuture) => {
     const DataValidation = Yup.object().shape({

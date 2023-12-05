@@ -1,29 +1,47 @@
-import { Field } from 'formik'
 import translation from '../../store/translation';
-import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
 import FormikTextField from '../formikcomponents/FormikTextField';
 import styled from '@emotion/styled';
+import FormikButtonSelect from '../formikcomponents/FormikButtonSelect';
+import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem';
 
-export const PartnerDetails = (props) => {
+const partnerGenders = {
+	man: "גבר",
+	woman: "אישה"
+}
+
+export const PartnerDetails = () => {
+	const partnerKeyName = "partner"
 	return (
 		<>
-			<Field
-				render={() => {
-					return (
-						<>
-							<FormikRadioGroup
-								name={"partner_gender"}
-								options={[{ value: "גבר", label: "גבר" }, { value: "אישה", label: "אישה" }]} />
-							<StyledPartnerContainer>
-								<FormikTextField name="partner_first_name" placeholder={`${translation.partner_first_name}`} />
-								<FormikTextField name="partner_last_name" placeholder={`${translation.partner_last_name}`} />
-								<FormikTextField name="partner_id" placeholder={`${translation.partner_id}`} />
-							</StyledPartnerContainer>
+			<FormikButtonSelect
+				name={`${partnerKeyName}.gender`}
+			>
+				{Object.keys(partnerGenders).map(key =>
+					<ButtonSelectItem
+						key={key}
+						value={partnerGenders[key]}
+					>
+						{partnerGenders[key]}
+					</ButtonSelectItem>
+				)}
+			</FormikButtonSelect>
+			<StyledPartnerContainer>
+				<FormikTextField
+					name={`${partnerKeyName}.first_name`}
+					label={translation.partner.first_name}
+				/>
+				<FormikTextField
+					name={`${partnerKeyName}.last_name`}
+					label={translation.partner.last_name}
+				/>
+				<FormikTextField
+					numeric
+					maxLength={9}
+					name={`${partnerKeyName}.person_id`}
+					label={translation.partner.person_id}
+				/>
+			</StyledPartnerContainer>
 
-						</>
-					);
-				}}
-			/>
 		</>
 	);
 }

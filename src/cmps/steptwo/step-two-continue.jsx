@@ -1,83 +1,48 @@
-import React, { useContext } from 'react';
-import { Formik, Form } from "formik";
-import { Typography } from '@mui/material';
-import styled from '@emotion/styled'
-
-import { SiteContext, defaultChildData } from '../../store/context';
-
+import React from 'react';
 import YesNoRadio from '../formikcomponents/YesNoRadio';
-import ItemsList from "../utils/ItemsList/ItemsList";
-import { ChildDetails } from './ChildDetails';
+import translation, { answers } from '../../store/translation'
+import FormWrapper from "../utils/FormWrapper"
+import ChildrenDetails from './ChildrenDetails';
+import * as Yup from "yup"
+import { basePersonInfoValidation, personInfoValidation } from '../utils/validation';
+import { getAge } from '../utils/getAge';
+import { MAX_AGE_FOR_GUARDIAN } from './GuardianDetails';
 
-import Button from '@mui/material/Button';
 
-import translation from '../../store/translation'
-
-export default function StepTwoContinue() {
-
-	const {
-		data,
-		setData,
-		moveNextStep
-	} = useContext(SiteContext);
-
-	const handleSubmit = (values, actions) => {
-		setData({ ...values })
-		moveNextStep();
-	}
-
-	const handleValidate = () => {
-		const errors = {};
-		return errors;
-	}
-
-	return (
-		<>
-			<Formik
-				//validationSchema={validationSchema}
-				initialValues={data}
-				onSubmit={handleSubmit}
-				validate={handleValidate}
-			>
-				{({ values }) => {
-					console.log(values);
-					return (
-						<Form>
-							<StyledChildQuestion>
-								<Typography>ילדים-</Typography>
-								<YesNoRadio name="kids" />
-							</StyledChildQuestion>
-							{
-								values.kids === 'כן' &&
-								<ItemsList
-									name="kids_data"
-									values={values}
-									title={translation.kids}
-									defaultValue={defaultChildData}
-									renderItem={(dataItem, itemName) => <ChildDetails dataItem={dataItem} itemName={itemName} />} />
-							}
-							<StyledColumnCenter>
-								<Button variant="contained" type="submit">המשך</Button>
-							</StyledColumnCenter>
-						</Form>
-					)
-				}
-				}
-			</Formik >
-
-		</>
-	)
+const guardianValidation = {
+    ...basePersonInfoValidation,
+    type: Yup.string().required("שדה דרוש")
 }
 
-const StyledChildQuestion = styled.div`
-	display:flex;
-	flex-direction:row;
-	padding-bottom:2rem;
-	
-`
-const StyledColumnCenter = styled.div`
-    padding:1rem 0;
-	display: flex;
-	flex-direction: column;
-	align-items:center
-`
+const childData = {
+    ...personInfoValidation,
+    birthDate: Yup.string().required("יש להזין תאריך לידה"),
+    has_disability: Yup.string().required("יש לציין האם הילד בעל מוגבלות"),
+    guardian: Yup.object().when(["birthDate", "hasDisability"], {
+        is: (birthDate, hasDisability) => {
+            return (getAge(birthDate) < MAX_AGE_FOR_GUARDIAN || hasDisability)
+        },
+        then: (schema) => schema.shape(guardianValidation)
+    })
+}
+
+const validationSchema = Yup.object({
+    kids: Yup.string().required("יש לבחור האם יש ילדים"),
+    kids_data: Yup.array().when("kids", {
+        is: answers.yes,
+        then: (schema) => schema.of(Yup.object(childData))
+            .min(1, "יש להזין את פרטי הילדים")
+    })
+})
+
+export default function StepTwoContinue() {
+    return (
+        <FormWrapper
+        // validationSchema={validationSchema}s
+        >
+            <YesNoRadio name="kids" question={translation.kids} />
+            <ChildrenDetails />
+        </FormWrapper>
+    )
+}
+

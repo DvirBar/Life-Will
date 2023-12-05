@@ -1,15 +1,17 @@
 import styled from '@emotion/styled'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { FieldArray, getIn, useField, useFormikContext } from 'formik'
 import React, { useState } from 'react'
 import Item from "./Item"
 import ItemListNavigation from './ItemListNavigation'
 import ItemListPageNumbers from './ItemListPageNumbers'
 import Error from '../Error'
+import { v4 as uuidv4 } from "uuid"
+import { Add } from '@mui/icons-material'
 
 const FIELD_META_INDEX = 1
 
-function ItemsList({ name, title, defaultValue, renderItem, hideAddButton }) {
+function ItemsList({ name, title, itemTitle, defaultValue, renderItem, hideAddButton }) {
     const { values } = useFormikContext()
     const items = getIn(values, name) || []
     const [selectedItemIndex, setSelectedItemIndex] = useState(0)
@@ -38,51 +40,70 @@ function ItemsList({ name, title, defaultValue, renderItem, hideAddButton }) {
 
     const meta = useField(name)[FIELD_META_INDEX]
 
-
-    const selectedItem = values[name][selectedItemIndex]
     const nameWithIndex = `${name}[${selectedItemIndex}]`
+    const selectedItem = getIn(values, nameWithIndex)
+
 
     const isError = !selectedItem && meta.touched && meta.error
 
     // TODO: if someone chooses a type, fills its repective fields and then changes it to another types - these fields will still be filled
 
     return (
-        <FieldArray
-            name={name}
-            render={arrayHelpers =>
-                <StyledItemListWrapper isError={isError}>
-                    <StyledListHeader>
-                        <ItemListNavigation
-                            title={title}
-                            index={selectedItemIndex}
-                            numElements={items.length}
-                            moveNextIndex={moveNextItem}
-                            movePrevIndex={movePrevItem}
-                        />
-                        <ItemListPageNumbers
-                            moveToIndex={moveToIndex}
-                            selectedIndex={selectedItemIndex}
-                            numElements={items.length}
-                        />
-                    </StyledListHeader>
+        <>
+            <Typography variant="h2">{title}</Typography>
+            <FieldArray
+                name={name}
+                render={arrayHelpers =>
+                    <StyledItemListWrapper isError={isError}>
+                        <StyledListHeader>
+                            <AddItemWrapper>
+                                {!hideAddButton &&
+                                    <Button variant="outlined" onClick={() => arrayHelpers.push({
+                                        uuid: uuidv4(),
+                                        ...defaultValue
+                                    })}>
+                                        <Add />
+                                        <Typography variant="subtitle1">הוספה</Typography>
+                                    </Button>
+                                }
+                            </AddItemWrapper>
 
-                    {selectedItem &&
-                        <StyledItemsList>
-                            <Item key={selectedItemIndex} onDelete={() => arrayHelpers.remove(selectedItemIndex)}>
-                                {renderItem(selectedItem, nameWithIndex)}
-                            </Item>
-                        </StyledItemsList>
-                    }
+                            <StyledHeaderNavigationWrapper>
+                                <ItemListNavigation
+                                    title={itemTitle}
+                                    index={selectedItemIndex}
+                                    numElements={items.length}
+                                    moveNextIndex={moveNextItem}
+                                    movePrevIndex={movePrevItem}
+                                />
+                                <ItemListPageNumbers
+                                    moveToIndex={moveToIndex}
+                                    selectedIndex={selectedItemIndex}
+                                    numElements={items.length}
+                                />
+                            </StyledHeaderNavigationWrapper>
+                            <DummyDiv />
+                        </StyledListHeader>
 
-                    {!hideAddButton &&
-                        <AddItemButton variant="outlined" onClick={() => arrayHelpers.push(defaultValue)}>
-                            + הוספה
-                        </AddItemButton>
-                    }
 
-                    <Error isError={isError}>{meta.error}</Error>
-                </StyledItemListWrapper>
-            } />
+                        {items.length === 0 &&
+                            <StyledNoData>
+                                <Typography variant="subtitle1">אין נתונים עדיין.</Typography>
+                            </StyledNoData>
+                        }
+
+                        {selectedItem &&
+                            <StyledItemsList>
+                                <Item key={selectedItemIndex} onDelete={() => arrayHelpers.remove(selectedItemIndex)}>
+                                    {renderItem(selectedItem, nameWithIndex)}
+                                </Item>
+                            </StyledItemsList>
+                        }
+                        <Error isError={isError}>{meta.error}</Error>
+                    </StyledItemListWrapper>
+                } />
+        </>
+
     )
 }
 
@@ -94,14 +115,23 @@ const StyledItemListWrapper = styled("div")(({ theme, isError }) => ({
     width: "100%",
     border: `2px solid ${isError ? theme.palette.error.light : "transparent"}`,
     padding: "0.5rem",
-    borderRadius: "5px"
+    borderRadius: "5px",
+    gap: "1rem"
 }))
 
 const StyledListHeader = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     width: 100%;
+`
+
+const StyledHeaderNavigationWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    flex: 1;
 `
 
 const StyledItemsList = styled.div`
@@ -110,11 +140,22 @@ const StyledItemsList = styled.div`
     width: 100%;
 `
 
-const AddItemButton = styled(Button)`
+const AddItemWrapper = styled.div`
+    flex: 1;
+`
+
+const DummyDiv = styled.div`
+    flex: 1;
+`
+
+const StyledNoData = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #eee;
+    border-radius: 10px;
     width: 100%;
-    font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 1rem;
 `
 
 

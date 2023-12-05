@@ -1,73 +1,34 @@
-import React, { useContext } from 'react';
-import { Formik, Form } from "formik";
-import { Typography, Button } from '@mui/material';
-import styled from '@emotion/styled'
-
-import { SiteContext } from '../../store/context';
-
+import React from 'react';
+import FormWrapper from '../utils/FormWrapper';
 import YesNoRadio from '../formikcomponents/YesNoRadio';
-import { InheritorsTypeSelect } from './InheritorsTypeSelect';
+import translation, { answers, giveToFamilyTypesKeys } from '../../store/translation';
+import GiveToFamily from './GiveToFamily';
+import * as Yup from "yup"
+import { basePersonInfoValidation } from '../utils/validation';
 
-import { giveToFamilyTypes } from '../../store/translation';
+const giveToFamilyTypeSchema = {
+    [giveToFamilyTypesKeys.parents]: Yup.array().of(Yup.object().shape(basePersonInfoValidation)),
+    [giveToFamilyTypesKeys.siblings]: Yup.array().of(Yup.object().shape(basePersonInfoValidation)),
+    [giveToFamilyTypesKeys.friends]: Yup.array().of(Yup.object().shape(basePersonInfoValidation)),
+    [giveToFamilyTypesKeys.grandChildren]: Yup.array().of(Yup.object().shape(basePersonInfoValidation)),
+}
 
-
+const validationSchema = Yup.object({
+    give_to_family: Yup.string().required("יש לבחור באפשרות המתאימה"),
+    give_to_family_type: Yup.object().when("give_to_family", {
+        is: answers.yes,
+        then: (schema) => schema.shape(giveToFamilyTypeSchema)
+    })
+})
 
 
 export default function StepTwoContinue2() {
-
-	const {
-		data,
-		setData,
-		moveNextStep
-	} = useContext(SiteContext);
-
-	const handleSubmit = (values, actions) => {
-		setData(({ ...values }))
-		moveNextStep(true);
-	}
-
-	return (
-		<>
-			<Formik
-				//validationSchema={validationSchema}
-				initialValues={data}
-				onSubmit={handleSubmit}
-			>
-				{({ values, setFieldValue }) => {
-					const isGiveToFamily = values?.give_to_family === "כן";
-
-					return (
-						<Form>
-							<StyledAdditionalInheritorsQuestion>
-								<Typography variant="subtitle1">האם יש הורים / אחים / חברים או אחרים שתרצה להפריש להם מצוואתך?</Typography>
-								<YesNoRadio
-									name="give_to_family" />
-							</StyledAdditionalInheritorsQuestion>
-
-							{isGiveToFamily && <InheritorsTypeSelect name="give_to_family_type" keyValues={giveToFamilyTypes} setFieldItem={setFieldValue} formikValues={values} />}
-							<StyledColumnCenter>
-								<Button variant="contained" type="submit">המשך</Button>
-							</StyledColumnCenter>
-						</Form>
-					)
-				}
-				}
-			</Formik>
-
-		</>
-	)
+    return (
+        <FormWrapper
+            validationSchema={validationSchema}
+        >
+            <YesNoRadio name="give_to_family" question={translation.give_to_family} />
+            <GiveToFamily />
+        </FormWrapper>
+    )
 }
-
-const StyledAdditionalInheritorsQuestion = styled.div`
-	display:flex;
-	flex-direction:column;
-	padding-bottom:2rem;
-	gap:1rem;
-`
-
-const StyledColumnCenter = styled.div`
-    padding:1rem 0;
-	display: flex;
-	flex-direction: column;
-	align-items:center
-`

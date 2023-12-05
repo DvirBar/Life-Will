@@ -58,7 +58,7 @@ function MuiTextField({
             name={fieldName}
             label={label}
             variant="outlined"
-            size='small'
+            size="medium"
             multiline={multiline}
             rows={rows}
             sx={percent ? percentFieldWidthStyle : {}}

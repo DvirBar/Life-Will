@@ -9,7 +9,7 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
     if (numElements === 0) {
         return (
             <StyledNoData>
-                <Typography variant="subtitle1">אין נתונים עדיין.</Typography>
+                <Typography variant='subtitle1'>{title}</Typography>
             </StyledNoData>
         )
     }
@@ -29,20 +29,13 @@ function ItemListNavigation({ title, index, numElements, moveNextIndex, movePrev
     )
 }
 
-const StyledNoData = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    background-color: #eee;
-    border-radius: 10px;
-    width: 100%;
-`
-
-
 const StyledItemListNavigation = styled.div`
     display: flex;
     margin-bottom: 5px;
+`
+
+const StyledNoData = styled.div`
+    color: #662A68;
 `
 
 const StyledStepsHeader = styled.div`

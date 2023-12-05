@@ -4,7 +4,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { heIL } from '@mui/x-date-pickers/locales';
 
 import dayjs from 'dayjs';
-import { Field } from 'formik';
+import { Field, getIn } from 'formik';
+import FormError from './FormError';
 
 const MuiDatePicker = ({
 	field,
@@ -17,6 +18,9 @@ const MuiDatePicker = ({
 	const fieldName = name || field.name;
 	const fieldValue = dayjs(field.value);
 
+	// TODO: Translate datepicker to Hebrew 
+	const isTouched = getIn(touched, fieldName);
+	const error = isTouched ? getIn(errors, fieldName) : ""
 	return (
 		<LocalizationProvider
 			dateAdapter={AdapterDayjs} adapterLocale='he'
@@ -29,10 +33,13 @@ const MuiDatePicker = ({
 				labelId={label}
 				format='DD/MM/YYYY'
 				onChange={(date) => setFieldValue(fieldName, date.format("DD/MM/YYYY"))}
-				sx={{ "& .MuiInputBase-root": { direction: "ltr" } }}
 			/>
+			{isTouched && error &&
+				<FormError>
+					{error}
+				</FormError>
+			}
 		</LocalizationProvider>
-
 	)
 }
 const FormikDatePicker = ({ name, label, placeholder }) => {

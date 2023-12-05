@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import React from 'react'
 
 function ButtonSelectItem({ children, value, selected, onClick }) {
@@ -6,10 +6,14 @@ function ButtonSelectItem({ children, value, selected, onClick }) {
         <Button
             onClick={onClick}
             variant={value === selected ? "contained" : "outlined"}
+            size="large"
             disableElevation>
-            {children}
+            <Typography>
+                {children}
+            </Typography>
         </Button>
     )
 }
+
 
 export default ButtonSelectItem

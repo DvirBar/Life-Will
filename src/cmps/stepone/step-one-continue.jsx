@@ -1,107 +1,68 @@
-import { useContext } from "react";
-import { Typography, Button } from '@mui/material';
 import styled from '@emotion/styled'
-import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { SiteContext } from "../../store/context";
-
 import FormikTextField from '../formikcomponents/FormikTextField';
-import FormikRadioGroup from '../formikcomponents/FormikRadioGroup';
-import { AddressItems } from './AddressItem';
 
-import translation from '../../store/translation';
+import translation, { answers } from '../../store/translation';
+import FormWrapper from "../utils/FormWrapper";
+
+import YesNoRadio from "../formikcomponents/YesNoRadio"
+import CitizenshipField from "./CitizenshipField";
+import AddressDetails from "./AddressDetails"
 
 const stepOneContinueValidationSchema = Yup.object({
-	email: Yup.string().required("יש להזין את הדואר האלקטרוני").email().label("Email"),
-	citizenship: Yup.string().oneOf(["כן", "לא"]).required("יש לבחור האם קיימת אזרחות"),
 	person_id: Yup.number().required("יש להזין תעודת זהות"),
-	phone: Yup.string().required("יש להזין את הטלפון"),
-	address: Yup.string().min(5).required("יש להזין את הכתובת")
+	citizenship: Yup.string().required("יש לבחור האם קיימת אזרחות"),
+	// TODO: make sure passport_id works!
+	passport_id: Yup.string().when("citizenhship", {
+		is: answers.yes,
+		then: (schema) => schema.required("יש להזין מספר דרכון זר")
+	}),
+	address: Yup.object().shape({
+		city: Yup.string().required("יש להזין עיר"),
+		street: Yup.string().required("יש להזין רחוב"),
+		houseNum: Yup.string().required("יש להזין מספר בית"),
+	}),
+	email: Yup.string().required("יש להזין דואר אלקטרוני").email(),
+	phone: Yup.string().required("יש להזין מספר טלפון"),
 })
 
 export default function StepOneContinue() {
-
-	const {
-		data,
-		setData,
-		moveNextStep
-	} = useContext(SiteContext);
-
-	const handleSubmit = (values, actions) => {
-		setData({ ...values });
-		moveNextStep(true);
-	}
 	return (
-		<>
-			<Formik
-				validationSchema={stepOneContinueValidationSchema}
-				initialValues={data}
-				onSubmit={handleSubmit}
-			>
-				{({ values, setFieldValue }) => {
-					console.log(values);
-					return (
-						<Form>
-							<StyledColumnCenter>
-								<FormikTextField name="person_id" type="number" placeholder={translation.person_id} />
-								<ErrorMessage name="person_id" />
-							</StyledColumnCenter>
-							<StyledColumnCenter>
-								<Typography variant='subtitle1' gutterBottom>{translation.citizenship}</Typography>
-								<FormikRadioGroup
-									name={"citizenship"}
-									options={[{ value: "לא", label: "לא" }, { value: "כן", label: "כן" }]}
-								/>
-								{/* <div className="status-group flex space-between input-btn">
-										<label className={`${values.citizenship === "לא" ? 'active' : ''}`}>
-											<Field type="radio" name="citizenship" value="לא" />
-											לא
-										</label>
-										<label className={`${values.citizenship === "כן" ? 'active' : ''}`}>
-											<Field type="radio" name="citizenship" value="כן" />
-											כן
-										</label>
-									</div> */}
-								{values.citizenship === "כן" && <FormikTextField name="passport_id" type="number" placeholder={translation.passport_id} />}
-								<FormikTextField name="email" placeholder={translation.email} />
-								<ErrorMessage name="email" />
-								<FormikTextField name="phone" type="text" placeholder={translation.phone} />
-								<ErrorMessage name="phone" />
-							</StyledColumnCenter>
-							<StyledRowCenter>
-								<AddressItems name="address" setFieldValue={setFieldValue} />
-								<ErrorMessage name="address" />
-							</StyledRowCenter>
-
-							{/* <Field name="company" placeholder='שם חברה / עסק' /> */}
-							{/* <Field name="city" placeholder='עיר / יישוב' /> */}
-							{/* <Field name="companyID" placeholder='ח.פ' /> */}
-							{/* <Field name="" placeholder='' /> */}
-							{/* <button type="button" onClick={() => prev(values)}>Back</button> */}
-							<StyledColumnCenter>
-								<Button variant="contained" type="submit">המשך</Button>
-							</StyledColumnCenter>
-						</Form>
-					)
-				}
-				}
-			</Formik>
-		</>
+		<FormWrapper
+			validationSchema={stepOneContinueValidationSchema}
+		>
+			<StyledContent>
+				<FormikTextField
+					name="person_id"
+					numeric
+					maxLength={9}
+					label={translation.person_id}
+				/>
+				<YesNoRadio
+					name="citizenship"
+					question={translation.citizenship}
+				/>
+				<CitizenshipField />
+				<AddressDetails />
+				<FormikTextField
+					name="email"
+					label={translation.email}
+				/>
+				<FormikTextField
+					name="phone"
+					numeric
+					label={translation.phone}
+				/>
+			</StyledContent>
+		</FormWrapper>
 	)
 }
 
-const StyledColumnCenter = styled.div`
-    padding:1rem 0;
+const StyledContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items:center;
-	gap:1rem;
+	gap: 1rem;
+	align-items: flex-start;
 `
-const StyledRowCenter = styled.div`
-    padding:1rem 0;
-	display: flex;
-	flex-direction: row;
-	align-items:center;
-	gap:1rem;
-`
+

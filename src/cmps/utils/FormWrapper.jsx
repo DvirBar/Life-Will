@@ -16,7 +16,7 @@ function FormWrapper({ validationSchema, children, isFinalStep }) {
             onSubmit={(values) => submitForm(values, isFinalStep)}
             validationSchema={validationSchema}
         >
-            <StyledForm style={{ minWidth: "500px" }}>
+            <StyledForm>
                 <StyledWrapper>
                     {children}
                 </StyledWrapper>
@@ -30,7 +30,6 @@ const StyledForm = styled(Form)`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    min-width: 500px;
 `
 
 const StyledWrapper = styled.div`
