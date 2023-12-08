@@ -18,9 +18,9 @@ function FutureInheritedItem({ name }) {
             </Typography>
             <ItemInheritors
                 showTitle={false}
-                name={`${name}_data.inheritors`} />
+                name={`${name}_data.[0].inheritors`} />
             <FormikTextField
-                name={`${name}_data.remarks`}
+                name={`${name}_data.[0].remarks`}
                 label={translation[`${name}_data`].remarks}
                 fullWidth
                 multiline

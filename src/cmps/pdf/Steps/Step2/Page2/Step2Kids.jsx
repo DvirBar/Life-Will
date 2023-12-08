@@ -1,20 +1,22 @@
 import React from 'react'
 import QuestionBlock from '../../../QuestionBlock'
 import translation, { answers } from '../../../../../store/translation'
-import data from '../../../../../store/sampleData'
 import Table from '../../../Table'
 import RowHeader from '../../../RowHeader'
 import TableHeader from '../../../TableHeader'
 import TableRow from '../../../TableRow'
 import TableCell from '../../../TableCell'
+import { globalData as data } from '../../../../../store/context'
+import { hebrewBirthDateString } from '../../../pdf'
 
 function Step2Kids() {
+    const num_of_kids = data.kids_data.length
     return (
         <>
             <QuestionBlock question={translation.kids} answer={data.kids} />
             {data.kids === answers.yes &&
                 <>
-                    <QuestionBlock question={translation.num_of_kids} answer={data.num_of_kids} />
+                    <QuestionBlock question={translation.num_of_kids} answer={num_of_kids} />
                     <Table>
                         <RowHeader>
                             <TableHeader size={30}></TableHeader>
@@ -33,9 +35,9 @@ function Step2Kids() {
                             <TableHeader>
                                 {translation.kids_data.birthDate}
                             </TableHeader>
-                            {/* <TableHeader>
+                            <TableHeader>
                                 {translation.kids_data.hebrewBirthDate}
-                            </TableHeader> */}
+                            </TableHeader>
                             <TableHeader>
                                 {translation.kids_data.has_disability}
                             </TableHeader>
@@ -48,7 +50,7 @@ function Step2Kids() {
                                 <TableCell>{kid.last_name}</TableCell>
                                 <TableCell>{kid.person_id}</TableCell>
                                 <TableCell>{kid.birthDate}</TableCell>
-                                {/* <TableCell>{kid.hebrewBirthDate}</TableCell> */}
+                                <TableCell>{hebrewBirthDateString(kid.hebrewBirthDate.day, kid.hebrewBirthDate.month, kid.hebrewBirthDate.year)}</TableCell>
                                 <TableCell>{kid.has_disability}</TableCell>
                             </TableRow>
                         )}

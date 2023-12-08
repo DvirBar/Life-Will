@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, PDFViewer, Font } from '@react-pdf/renderer';
+import { Document, StyleSheet, Font } from '@react-pdf/renderer';
 import HebrewRegular from "../../assets/fonts/NotoSansHebrew-Regular.ttf"
 import HebrewBold from "../../assets/fonts/NotoSansHebrew-Bold.ttf"
 import Step1 from './Steps/Step1';
@@ -56,18 +56,24 @@ const styles = StyleSheet.create({
     },
 });
 
+export const hebrewBirthDateString = (day, month, year) => {
+    if (day && month && year) {
+        return `${day} ב${month}, ${year}`
+    }
+
+    return ''
+}
+
 // Create Document Component
-export default function MyDocument() {
+export default function LifeWillDocument() {
     return (
-        <PDFViewer style={styles.pdfViewer}>
-            <Document style={styles.document}>
-                <Step1 />
-                <Step2 />
-                <Step3 />
-                <Step4 />
-                <Step5 />
-                <Step6 />
-            </Document>
-        </PDFViewer>
+        <Document style={styles.document}>
+            <Step1 />
+            <Step2 />
+            <Step3 />
+            <Step4 />
+            <Step5 />
+            <Step6 />
+        </Document>
     )
 }

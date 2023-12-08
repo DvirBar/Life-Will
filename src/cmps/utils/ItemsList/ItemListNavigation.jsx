@@ -32,16 +32,13 @@ const StyledItemListNavigation = styled.div`
     margin-bottom: 5px;
 `
 
-const StyledNoData = styled.div`
-    color: #662A68;
-`
-
 const StyledStepsHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #662A68;
     gap: 10px;
+    text-align: center;
 `
 
 export default ItemListNavigation

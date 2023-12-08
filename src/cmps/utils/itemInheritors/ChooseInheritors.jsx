@@ -107,7 +107,13 @@ function ChooseInheritors({ name, inheritorString, isOpen, handleClose }) {
                 )}
                 <NonProfitsList name={name} openSearch={() => setIsSearchOpen(true)} />
             </StyledInheritorsListContainer>
-            <StyledEndButton onClick={handleClose} variant="contained">סיום</StyledEndButton>
+            <StyledEndButton
+                onClick={handleClose}
+                variant="contained"
+                color="secondary"
+            >
+                <StyledFinishButtonText vairant="subtitle1">סיום</StyledFinishButtonText>
+            </StyledEndButton>
         </StyledInheritorsModalContent>
     )
 }
@@ -159,6 +165,10 @@ const StyledFindNonProfits = styled.div`
     border-radius: 10px;
     opacity: ${({ isOpen }) => isOpen ? 1 : 0};
     transition: all 200ms ease-in-out;
+`
+
+const StyledFinishButtonText = styled(Typography)`
+    font-weight: bold;
 `
 
 export default ChooseInheritors

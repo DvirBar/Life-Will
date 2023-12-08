@@ -3,7 +3,6 @@ import FormWrapper from '../../utils/FormWrapper'
 import FormikTextField from "../../formikcomponents/FormikTextField"
 import translation from '../../../store/translation'
 import Question from '../../utils/Question'
-import ItemWrapper from '../../utils/ItemWrapper'
 import ItemsList from '../../utils/ItemsList/ItemsList'
 import { defaults } from '../../../store/context'
 import BankDetails from './BankDetails'

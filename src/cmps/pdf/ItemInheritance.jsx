@@ -12,8 +12,9 @@ import Divider from './Divider'
 import Subtitle from './Subtitle'
 
 function ItemInheritance({ item, itemKey, index, numItems }) {
-    const itemDetails = item.details ? Object.keys(item.details) : null
+    const itemDetailsKeys = item.details ? Object.keys(item.details) : null
     const itemTitle = translation[`${itemKey}_title`]
+
 
     return (
         <Block>
@@ -22,16 +23,16 @@ function ItemInheritance({ item, itemKey, index, numItems }) {
             }
 
             <QuestionBlock question={translation[`${itemKey}_data`].type} answer={item.type} />
-            <QuestionBlock question={translation[`${itemKey}_data`].own_percentage} answer={item.own_percentage} />
-            {itemDetails &&
+            <QuestionBlock question={translation[`${itemKey}_data`].own_percentage?.answer} answer={item.own_percentage} />
+            {itemDetailsKeys &&
                 <Table>
                     <RowHeader>
-                        {Object.keys(translation[`${itemKey}_data`].details).forEach(key =>
+                        {itemDetailsKeys.map(key =>
                             <TableHeader>{translation[`${itemKey}_data`].details[key]}</TableHeader>
                         )}
                     </RowHeader>
                     <TableRow>
-                        {itemDetails.forEach(key =>
+                        {itemDetailsKeys.map(key =>
                             <TableCell>{item.details[key]}</TableCell>
                         )}
                     </TableRow>
@@ -50,7 +51,7 @@ function ItemInheritance({ item, itemKey, index, numItems }) {
                     <TableHeader>{translation[`${itemKey}_data`].inheritors.first_name}</TableHeader>
                     <TableHeader>{translation[`${itemKey}_data`].inheritors.last_name}</TableHeader>
                     <TableHeader>{translation[`${itemKey}_data`].inheritors.person_id}</TableHeader>
-                    <TableHeader>{translation[`${itemKey}_data`].inheritors.percentage}</TableHeader>
+                    <TableHeader>{translation[`${itemKey}_data`].inheritors.percent}</TableHeader>
                 </RowHeader>
                 {item.inheritors.map((inheritor, index) =>
                     <TableRow>
@@ -63,8 +64,8 @@ function ItemInheritance({ item, itemKey, index, numItems }) {
                     </TableRow>
                 )}
             </Table>
-            {item.remarks.length > 0 &&
-                <QuestionBlock question={translation[`${itemKey}_data`].remarks} answer={item.remarks} newLine={true} />
+            {item.remarks?.length > 0 &&
+                <QuestionBlock question="הערות בכתב על אופן החלוקה" answer={item.remarks} newLine={true} />
             }
         </Block>
 

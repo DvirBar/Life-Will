@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { rgba } from '../../../../Theme'
 import useDebounce from '../../useDebounce'
 import { CircularProgress, Typography } from '@mui/material'
-import { FieldArray } from 'formik'
+import { FieldArray, getIn, useFormikContext } from 'formik'
 import NonProfitItem from './NonProfitItem'
 
 const DELAY = 600
@@ -21,12 +21,17 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch, onAdd }) {
         debounceValue,
         isLoading
     } = useDebounce(searchTerm, DELAY)
+    const searchLimit = 100
 
+
+    const { values } = useFormikContext()
+
+    const nonProfitsArray = getIn(values, name)
 
     useEffect(() => {
         setIsSearching(true)
         // TODO: only registered and active non profits
-        axios.get(`https://data.gov.il/api/3/action/datastore_search?resource_id=be5b7935-3922-45d4-9638-08871b17ec95&q=${debounceValue}`)
+        axios.get(`https://data.gov.il/api/3/action/datastore_search?resource_id=be5b7935-3922-45d4-9638-08871b17ec95&limit=${searchLimit}&q=${debounceValue}`)
             .then(response => {
                 const records = response.data?.result?.records?.filter(record =>
                     record[NON_PROFIT_STATUS] === "רשומה" || record[NON_PROFIT_STATUS] === "פעילה")
@@ -43,11 +48,16 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch, onAdd }) {
             })
     }, [debounceValue])
 
-    const addNonProfit = (arrayHelpers, nonProfitName, nonProfitId) => {
-        onAdd(arrayHelpers, nonProfitName, nonProfitId)
-        closeSearch()
+    const isAlreadyAdded = (id) => {
+        return !!nonProfitsArray.find(item => item.person_id === id)
     }
 
+    const addNonProfit = (arrayHelpers, nonProfitName, nonProfitId, isAdded) => {
+        if (!isAdded) {
+            onAdd(arrayHelpers, nonProfitName, nonProfitId)
+            closeSearch()
+        }
+    }
 
     if (isLoading && isSearching) {
         return (
@@ -70,17 +80,21 @@ function NonProfitsSearchList({ name, searchTerm, closeSearch, onAdd }) {
             {searchResults.map(result =>
                 <FieldArray
                     name={name}
-                    render={(arrayHelpers) => (
-                        <StyledSearchListItem
-                            key={result[NON_PROFIT_ID_KEY]}
-                            onClick={() => addNonProfit(arrayHelpers, result[NON_PROFIT_NAME_KEY], result[NON_PROFIT_ID_KEY])}
-                        >
-                            <NonProfitItem
-                                name={result[NON_PROFIT_NAME_KEY]}
-                                id={result[NON_PROFIT_ID_KEY]}
-                            />
-                        </StyledSearchListItem>
-                    )} />
+                    render={(arrayHelpers) => {
+                        const isAdded = isAlreadyAdded(result[NON_PROFIT_ID_KEY])
+                        return (
+                            <StyledSearchListItem
+                                key={result[NON_PROFIT_ID_KEY]}
+                                onClick={() => addNonProfit(arrayHelpers, result[NON_PROFIT_NAME_KEY], result[NON_PROFIT_ID_KEY], isAdded)}
+                                isAdded={isAdded}
+                            >
+                                <NonProfitItem
+                                    name={result[NON_PROFIT_NAME_KEY]}
+                                    id={result[NON_PROFIT_ID_KEY]}
+                                />
+                            </StyledSearchListItem>
+                        )
+                    }} />
             )}
         </StyledSearchList>
     )
@@ -96,18 +110,20 @@ const StyledSearchList = styled.div`
 
 const StyledSearchListItem = styled.div`
     &:hover {
-        background-color: ${({ theme }) => rgba(theme.palette.primary.main, 0.15)};
+        background-color: ${({ theme, isAdded }) => isAdded ? "transparent" : rgba(theme.palette.primary.main, 0.15)};
     }
 
     padding: 0.5rem 1rem;
     border-radius: 10px;
     transition: background-color 100ms ease-in-out;
-    cursor: pointer;
+    cursor: ${({ isAdded }) => isAdded ? "default" : "pointer"};
+
+    color: ${({ isAdded }) => isAdded ? "#aaa" : "auto"};
 
     transition: transform 50ms linear;
 
     &:active {
-        transform: scale(0.98);
+        transform: ${({ isAdded }) => isAdded ? "scale(1)" : "scale(0.98)"};
     }
 `
 

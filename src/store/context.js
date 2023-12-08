@@ -1,10 +1,56 @@
-import React, { createContext, useState } from "react";
-import { answers, giveToFamilyTypesKeys, inheritorsTypes } from "./translation";
+import React, { createContext, useContext, useState } from "react";
+import { answers, giveToFamilyTypesKeys, guardianTypes, inheritanceKeys, inheritanceKeysStep4, inheritorsTypes, realEstateTypes } from "./translation";
 import useSteps from "./useSteps";
 
 
 export const SiteContext = createContext(null);
-// TODO: Add types of non profits
+export let globalData = {}
+
+const kids_data = [
+    {
+        person_id: '444444444',
+        gender: 'זכר',
+        first_name: 'ילד1',
+        last_name: 'ישראלי',
+        birthDate: '01/01/2000',
+        hebrewBirthDate: 'כ״ג טבת תש״ס',
+        has_disability: 'לא',
+        uuid: "1",
+        guardian: {}
+    },
+    {
+        person_id: '555555555',
+        gender: 'נקבה',
+        first_name: 'ילד2',
+        last_name: 'ישראלי',
+        birthDate: '01/01/2017',
+        hebrewBirthDate: 'ג׳ טבת תשע״ז',
+        has_disability: 'לא',
+        uuid: "2",
+        guardian: {
+            type: guardianTypes.other,
+            first_name: 'אפוטרופוס',
+            last_name: 'אפוטרופוס',
+            person_id: '666666666'
+        }
+    },
+    {
+        person_id: '777777777',
+        gender: 'זכר',
+        first_name: 'ילד3',
+        last_name: 'ישראלי',
+        birthDate: '01/01/2002',
+        hebrewBirthDate: 'י״ז טבת תשס״ב',
+        has_disability: 'כן',
+        uuid: "3",
+        guardian: {
+            type: guardianTypes.other,
+            first_name: 'אפוטרופוס',
+            last_name: 'אפוטרופוס',
+            person_id: '666666666'
+        }
+    }
+]
 
 
 export const personInfo = {
@@ -177,9 +223,9 @@ const SiteProvider = ({ children }) => {
         has_ex_partner: '',
         ex_partner_gain: '',
         ex_partners: [],
-        kids: '',
+        kids: answers.yes,
         num_of_kids: '',
-        kids_data: [],
+        kids_data,
         give_to_family: 'לא',
         give_to_family_type: {
             [giveToFamilyTypesKeys.parents]: [],
@@ -191,8 +237,30 @@ const SiteProvider = ({ children }) => {
         // Step 3
         // TODO: enum
         real_estate: answers.no,
-        real_estate_data: [],
-        future_real_estate_data: defaults.future_real_estate_data,
+        real_estate_data: [
+            {
+                type: realEstateTypes.appartment,
+                own_percentage: '70%',
+                details: {
+                    country: 'ישראל',
+                    city: 'תל אביב',
+                    street: 'רחוב1',
+                    house_number: '20',
+                    block: '7',
+                    lot: '2',
+                    sub_lot: '1',
+                    size: '',
+                },
+                inheritors: [
+                    {
+                        uuid: "1",
+                        percent: "100"
+                    }
+                ]
+
+            }
+        ],
+        future_real_estate_data: [defaults.future_real_estate_data],
 
         // Step 4
         vehicle: answers.no,
@@ -225,7 +293,7 @@ const SiteProvider = ({ children }) => {
         items_data: [],
         other_inheritance: answers.no,
         other_inheritance_data: [],
-        future_items_data: itemNoDescription,
+        future_items_data: [itemNoDescription],
 
         // Step 5
         money: '',
@@ -238,14 +306,7 @@ const SiteProvider = ({ children }) => {
         non_profit_provision_data: [],
         // TODO: enum - either equal or by decision
         money_division: '',
-        money_division_inheritors: [
-            {
-                first_name: '',
-                last_name: '',
-                person_id: '',
-                percentage: ''
-            }
-        ],
+        money_division_inheritors: [],
         // Step 6
         not_applied_before_spouse: answers.no,
         burial_location: '',
@@ -261,20 +322,44 @@ const SiteProvider = ({ children }) => {
         relatives_message_content: ''
     })
 
+
     const {
         selectedStage,
         selectedStep,
         stages,
         moveNextStep,
         movePrevStep,
-        selectStage
+        selectStage,
+        returnToEdit
     } = useSteps()
 
-    const inheritors = {}
+    const inheritors = {
+        [inheritorsTypes.children]: [
+            {
+                type: inheritorsTypes.children,
+                first_name: 'ילד',
+                last_name: 'ישראלי',
+                person_id: '222222222',
+                percent: "30",
+                uuid: "7C8EACC6-BD77-4C0A-9042-31C3F26483BB"
+            }
+        ],
+        [inheritorsTypes.spouse]: [
+            {
+                type: inheritorsTypes.spouse,
+                first_name: 'ישראלה',
+                last_name: 'ישראלי',
+                person_id: '111111111',
+                percent: "60",
+                uuid: "36CAD714-E0B8-481B-AF44-C52040DBAB25"
+            }
+        ],
+    }
 
     const syncInheritors = (formikValues) => {
         const values = formikValues || data
-        if (values.partner_first_name?.length > 0) {
+
+        if (values.partner?.first_name?.length > 0) {
             inheritors[inheritorsTypes.spouse] = [{
                 ...values.partner,
                 type: inheritorsTypes.spouse,
@@ -288,8 +373,9 @@ const SiteProvider = ({ children }) => {
             })))
         ]
 
+
         inheritors[inheritorsTypes.inheritors] = [
-            ...(values.ex_partners.map(ex => ({
+            ...(values.ex_partners?.map(ex => ({
                 ...ex,
                 type: inheritorsTypes.inheritors
             }))),
@@ -307,8 +393,6 @@ const SiteProvider = ({ children }) => {
 
         return inheritors
     }
-
-    syncInheritors()
 
     // TODO: in inheritors - what about ex partners?
     const getInheritors = () => {
@@ -331,10 +415,55 @@ const SiteProvider = ({ children }) => {
     }
 
 
+    syncInheritors()
+
     const submitForm = (values, isFinalStep) => {
         syncInheritors(values)
         setData(values)
         moveNextStep(isFinalStep);
+    }
+
+    const goBack = (values) => {
+        syncInheritors(values)
+        setData(values)
+        movePrevStep()
+    }
+
+    const finishForm = () => {
+        syncInheritors()
+        globalData = { ...data }
+        // console.log(globalData);
+        const updateInheritors = (key) => {
+            const itemKey = `${key}_data`
+
+            for (let i = 0; i < globalData[itemKey]?.length; i++) {
+                const currItem = globalData[itemKey][i]
+
+                for (let j = 0; j < currItem.inheritors?.length; j++) {
+                    const inheritorItem = currItem.inheritors[j]
+
+                    if (inheritorItem.first_name && key !== "money_division_inheritors") {
+                        continue
+                    }
+
+                    globalData[itemKey][i].inheritors[j] = getInheritorById(inheritorItem.uuid)
+                }
+
+            }
+
+        }
+
+        for (const key in inheritanceKeys) {
+            updateInheritors(key)
+        }
+
+        for (const key in inheritanceKeysStep4) {
+            updateInheritors(key)
+        }
+
+        updateInheritors("money_division_inheritors")
+
+        console.log(globalData);
     }
 
     const value = {
@@ -344,11 +473,13 @@ const SiteProvider = ({ children }) => {
         selectedStep,
         selectStage,
         moveNextStep,
-        movePrevStep,
+        goBack,
         getInheritors,
         getInheritorById,
         submitForm,
-        stages
+        stages,
+        finishForm,
+        returnToEdit
     }
 
     return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

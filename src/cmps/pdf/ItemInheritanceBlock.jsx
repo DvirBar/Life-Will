@@ -1,9 +1,9 @@
 import React from 'react'
-import translation, { answers } from '../../store/translation'
-import data from '../../store/sampleData'
+import translation from '../../store/translation'
 import Subtitle from './Subtitle'
 import ItemInheritance from './ItemInheritance'
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
+import { globalData as data } from '../../store/context'
 
 const styles = StyleSheet.create({
     wrappedView: {
@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
 function ItemInheritanceBlock({ itemKey }) {
     const title = translation[`${itemKey}_title`]
     const itemData = data[`${itemKey}_data`]
+
+    if (itemData.length === 0) {
+        return <></>
+    }
+
     return (
         <View>
             <>

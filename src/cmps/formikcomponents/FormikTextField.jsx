@@ -1,6 +1,7 @@
 import React from 'react'
 import { TextField } from '@mui/material'
 import { FastField, getIn } from 'formik'
+import useWindowDim from '../../utils/useWindowDim';
 
 function MuiTextField({
     field,
@@ -44,11 +45,14 @@ function MuiTextField({
     const percentFieldWidthStyle = {
         width: "60px"
     }
+
+    const { width: windowWidth } = useWindowDim()
+
     const isTouched = getIn(touched, fieldName);
     const error = isTouched ? getIn(errors, fieldName) : ""
     return (
         <TextField
-            fullWidth={fullWidth}
+            fullWidth={windowWidth <= 400 ? true : fullWidth}
             {...props}
             {...field}
             error={error ? true : false}

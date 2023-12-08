@@ -1,19 +1,15 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Button, Typography, useTheme } from '@mui/material'
 import { useField } from 'formik'
-import FormikTextField from "../../formikcomponents/FormikTextField"
 import styled from '@emotion/styled'
 import Error from '../Error'
 import { rgba } from '../../../Theme'
-import { SiteContext } from '../../../store/context'
 import InheritorsListItem from './InheritorsListItem'
 
 const FIELD_META_INDEX = 1
 
 function InheritorsList({ name, inheritorString, handleOpen }) {
     const [field] = useField(name)
-
-    const { getInheritorById } = useContext(SiteContext)
 
     const inheritors = field.value
 
@@ -27,12 +23,14 @@ function InheritorsList({ name, inheritorString, handleOpen }) {
             <StyledInheritorsList isError={isErrorEmptyInheritorsList}>
                 <StyledNoInheritors>
                     <Typography variant="subtitle1">עדיין אין יורשים ברשימה</Typography>
-                    <Button
-                        variant="contained"
-                        onClick={handleOpen}
-                    >
-                        לחצו להוספה
-                    </Button>
+                    {handleOpen &&
+                        <Button
+                            variant="contained"
+                            onClick={handleOpen}
+                        >
+                            לחצו להוספה
+                        </Button>
+                    }
                 </StyledNoInheritors>
                 <Error isError={isErrorEmptyInheritorsList}>{inheritorsListMeta.error}</Error>
             </StyledInheritorsList>
@@ -43,7 +41,7 @@ function InheritorsList({ name, inheritorString, handleOpen }) {
         let sum = 0;
 
         for (const inheritor of inheritors) {
-            sum += Number(inheritor.percent)
+            sum += Number(inheritor.percent) || 0
         }
 
         return sum
@@ -92,12 +90,16 @@ function InheritorsList({ name, inheritorString, handleOpen }) {
                         <Typography variant="subtitle1">{sum}</Typography>
                     </StyledPercentInput>
                 </StyledSumBlock>
-                <Button
-                    variant="contained"
-                    onClick={handleOpen}
-                >
-                    יורשים נוספים
-                </Button>
+                {handleOpen &&
+                    <Button
+                        variant="contained"
+                        onClick={handleOpen}
+                        color="secondary"
+                        fullWidth
+                    >
+                        <StyledOtherInheritorsButtonText vairant="subtitle1">יורשים נוספים</StyledOtherInheritorsButtonText>
+                    </Button>
+                }
             </StyledWrapper>
             <Error>{inheritorsListMeta.error}</Error>
         </StyledInheritorsList>
@@ -151,16 +153,25 @@ const StyledListWrapper = styled.div`
     gap: 1rem;
 `
 
-const StyledSumBlock = styled("div")((props) => ({
-    padding: "0.5rem 1rem",
-    borderRadius: "5px",
-    backgroundColor: props.blockBackground(),
-    color: "#fff",
-    display: "flex",
-    justifyContent: "space-between",
-    transition: "background-color 200ms ease-in-out",
-    width: "100%"
-}))
+const StyledSumBlock = styled.div`
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    background-color: ${({ blockBackground }) => blockBackground()};
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    transition: background-color 200ms ease-in-out;
+    width: 100%;
+
+    @media(max-width: 400px) {
+        flex-direction: column;
+        align-items: center;
+    }
+`
+
+const StyledOtherInheritorsButtonText = styled(Typography)`
+    font-weight: bold;
+`
 
 export const StyledPercentInput = styled.div`
     display: flex;
@@ -168,6 +179,7 @@ export const StyledPercentInput = styled.div`
     gap: 5px;
     align-items: center;
 `
+
 
 
 export default InheritorsList

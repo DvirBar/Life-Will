@@ -38,7 +38,7 @@ const validationSchema = Yup.object({
 export default function StepTwoContinue() {
     return (
         <FormWrapper
-        // validationSchema={validationSchema}s
+            validationSchema={validationSchema}
         >
             <YesNoRadio name="kids" question={translation.kids} />
             <ChildrenDetails />

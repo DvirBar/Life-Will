@@ -11,22 +11,18 @@ import StepFiveMoney from "../cmps/stepfive/StepFiveMoney/StepFiveMoney";
 import StepFiveNonProfit from "../cmps/stepfive/StepFiveNonProfits/StepFiveNonProfits";
 import StepSix from "../cmps/stepsix/StepSix";
 import { inheritanceKeysStep4 } from './translation';
+import StepFiveFamily from '../cmps/stepfive/StepFiveFamily/StepFiveFamily';
 
 const MIN_STAGE = 0
 const MIN_STEP = 0
-function useSteps() {
+function useSteps(setIsDone) {
     const [selectedLocation, setSelectedLocation] = useState({
-        selectedStage: MIN_STAGE,
+        selectedStage: 5,
         selectedStep: MIN_STEP
     })
 
     const stages = [
         [
-            // <StepOneWrapper
-            // 	formikProps={values}
-            // 	nextStepHandler={nextStepHandler}
-            // 	validationSchema={stepOneSchema}
-            // 	formRef={formRef} />,
             <StepOne />,
             <StepOneContinue />,
         ],
@@ -48,7 +44,8 @@ function useSteps() {
         ],
         [
             <StepFiveMoney />,
-            <StepFiveNonProfit />
+            <StepFiveNonProfit />,
+            <StepFiveFamily />
         ],
         [
             <StepSix />
@@ -67,14 +64,10 @@ function useSteps() {
             } = currLocation
 
             if (isFinalStep(currLocation)) {
-                if (selectedStage + 1 < stages.length) {
-                    return {
-                        selectedStage: selectedStage + 1,
-                        selectedStep: MIN_STEP
-                    }
+                return {
+                    selectedStage: selectedStage + 1,
+                    selectedStep: MIN_STEP
                 }
-
-                return currLocation
             }
 
             return {
@@ -93,7 +86,6 @@ function useSteps() {
 
             if (selectedStep === MIN_STEP) {
                 if (selectedStage > MIN_STAGE) {
-                    console.log(stages[selectedStage - 1].length - 1);
                     return {
                         selectedStage: selectedStage - 1,
                         selectedStep: stages[selectedStage - 1].length - 1
@@ -111,7 +103,6 @@ function useSteps() {
     }
 
 
-
     const selectStage = (stage) => {
         if (stage > MIN_STAGE && stage < stages.length) {
             setSelectedLocation({
@@ -119,7 +110,10 @@ function useSteps() {
                 selectedStep: MIN_STEP
             })
         }
+    }
 
+    const returnToEdit = () => {
+        movePrevStep()
     }
 
     const {
@@ -133,6 +127,7 @@ function useSteps() {
         stages,
         moveNextStep,
         movePrevStep,
+        returnToEdit,
         selectStage
     }
 

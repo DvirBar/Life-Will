@@ -70,7 +70,7 @@ function ItemsList({ name, title, itemTitle, defaultValue, renderItem, hideAddBu
 
                             <StyledHeaderNavigationWrapper>
                                 <ItemListNavigation
-                                    title={itemTitle}
+                                    title={itemTitle || title}
                                     index={selectedItemIndex}
                                     numElements={items.length}
                                     moveNextIndex={moveNextItem}
@@ -107,23 +107,29 @@ function ItemsList({ name, title, itemTitle, defaultValue, renderItem, hideAddBu
     )
 }
 
-const StyledItemListWrapper = styled("div")(({ theme, isError }) => ({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "1rem 0",
-    width: "100%",
-    border: `2px solid ${isError ? theme.palette.error.light : "transparent"}`,
-    padding: "0.5rem",
-    borderRadius: "5px",
-    gap: "1rem"
-}))
+const StyledItemListWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+    width: 100%;
+    border: ${({ theme, isError }) => `2px solid ${isError ? theme.palette.error.light : "transparent"}`};
+    padding: 0.5rem;
+    border-radius: "5px";
+    gap: 1rem;
+`
+
 
 const StyledListHeader = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
+
+    @media (max-width: 400px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `
 
 const StyledHeaderNavigationWrapper = styled.div`
@@ -132,6 +138,7 @@ const StyledHeaderNavigationWrapper = styled.div`
     align-items: center;
     justify-self: center;
     flex: 1;
+    align-self: center;
 `
 
 const StyledItemsList = styled.div`

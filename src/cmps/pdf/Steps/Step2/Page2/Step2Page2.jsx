@@ -2,13 +2,13 @@ import React from 'react'
 import DocPage from '../../../DocPage'
 import QuestionBlock from '../../../QuestionBlock'
 import translation, { answers, giveToFamilyTypes, giveToFamilyTypesKeys } from '../../../../../store/translation'
-import data from '../../../../../store/sampleData'
 import Subtitle from '../../../Subtitle'
 import Table from '../../../Table'
 import RowHeader from '../../../RowHeader'
 import TableHeader from '../../../TableHeader'
 import TableRow from '../../../TableRow'
 import TableCell from '../../../TableCell'
+import { globalData as data } from '../../../../../store/context'
 
 function GiveToFamilyTable({ type }) {
     if (data.give_to_family_type[type].length === 0) {

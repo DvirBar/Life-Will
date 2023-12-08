@@ -15,8 +15,8 @@ const StepFiveNonProfitSchema = Yup.object().shape({
     non_profit_provision: Yup.string().required("יש לסמן שדה זה"),
     non_profit_provision_data: Yup.array().when("non_profit_provision", {
         is: answers.yes,
-        then: (schema) => schema.of(NonProfitProvisionSchema)
-    }).min(1, "יש להוסיף לפחות ערך אחד.")
+        then: (schema) => schema.of(NonProfitProvisionSchema).min(1, "יש להוסיף לפחות ערך אחד.")
+    })
 })
 
 export default StepFiveNonProfitSchema

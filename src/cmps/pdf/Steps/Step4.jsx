@@ -1,9 +1,8 @@
 import React from 'react'
 import DocPage from '../DocPage'
 import Title from "../Title"
-import translation, { inheritanceKeys, inheritanceKeysStep4 } from "../../../store/translation"
+import translation, { inheritanceKeysStep4 } from "../../../store/translation"
 import ItemInheritanceBlock from '../ItemInheritanceBlock'
-import data from '../../../store/sampleData'
 
 function Step4() {
     return (

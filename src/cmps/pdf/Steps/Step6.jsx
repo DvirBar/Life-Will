@@ -3,9 +3,9 @@ import DocPage from '../DocPage'
 import Title from '../Title'
 import translation, { answers } from '../../../store/translation'
 import QuestionBlock from '../QuestionBlock'
-import data from '../../../store/sampleData'
 import Block from '../Block'
 import { Text } from '@react-pdf/renderer'
+import { globalData as data } from '../../../store/context'
 
 function Step6() {
     return (

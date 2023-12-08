@@ -1,17 +1,21 @@
 import React from 'react'
 import Table from '../../../Table'
 import Subtitle from '../../../Subtitle'
-import translation from '../../../../../store/translation'
+import translation, { answers } from '../../../../../store/translation'
 import TableHeader from '../../../TableHeader'
 import RowHeader from '../../../RowHeader'
 import TableRow from '../../../TableRow'
 import TableCell from '../../../TableCell'
-import data from '../../../../../store/sampleData'
+import { globalData as data } from '../../../../../store/context'
+import { getAge } from '../../../../utils/getAge'
 
 function Step2Guardians() {
+    const needGuardian = (kid) => {
+        return (getAge(kid.birthDate) < 18 || kid.has_disability === answers.yes)
+    }
     const needGuardians = () => {
         for (let kid of data.kids_data) {
-            if (kid.guardian_data) {
+            if (needGuardian(kid)) {
                 return true
             }
         }
@@ -22,6 +26,8 @@ function Step2Guardians() {
     if (!needGuardians()) {
         return <></>
     }
+
+
 
     return (
         <>
@@ -35,13 +41,13 @@ function Step2Guardians() {
                     <TableHeader>{translation.kids_data.guardian_data.person_id}</TableHeader>
                 </RowHeader>
                 {data.kids_data.map(kid =>
-                    kid.guardian_data &&
+                    needGuardian(kid) &&
                     <TableRow>
-                        <TableCell>{kid.guardian_data.type}</TableCell>
+                        <TableCell>{kid.guardian.type}</TableCell>
                         <TableCell>{kid.first_name + " " + kid.last_name}</TableCell>
-                        <TableCell>{kid.guardian_data.first_name}</TableCell>
-                        <TableCell>{kid.guardian_data.last_name}</TableCell>
-                        <TableCell>{kid.guardian_data.person_id}</TableCell>
+                        <TableCell>{kid.guardian.first_name}</TableCell>
+                        <TableCell>{kid.guardian.last_name}</TableCell>
+                        <TableCell>{kid.guardian.person_id}</TableCell>
                     </TableRow>
                 )}
             </Table>

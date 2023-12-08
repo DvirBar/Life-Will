@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 
 
 export default function MultiStepForm() {
-	return (
-		<StyledForm>
-			<FormStepsWrapper />
-		</StyledForm>
-	)
+    return (
+        <StyledForm>
+            <FormStepsWrapper />
+        </StyledForm>
+    )
 }
 
 const StyledForm = styled.div`
-	padding: 0 2rem;
+	/* padding: 0 2rem; */
 `

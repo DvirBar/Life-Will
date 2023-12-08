@@ -59,10 +59,16 @@ const StyledBox = styled(Box)`
     position: relative;
     width: 600;
     background-color: 'background.paper';
-    border-radius: "10px";
-    box-shadow: 24;
+    border-radius: 10px;
+    /* box-shadow: 24; */
     padding: 1rem;
     margin: 2rem auto;
+
+    height: 80%;
+
+    @media (max-width: 600px) {
+        width: 100%;
+    }
 `
 
 const StyledCloseIconWrapper = styled.div`

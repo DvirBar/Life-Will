@@ -61,7 +61,7 @@ export const inheritedItemValidation = (name, isFuture) => {
     const validationObject = Yup.object().shape({
         [name]: isFuture ? Yup.string() : Yup.string().required("יש לסמן שדה זה."),
         [`${name}_data`]: isFuture
-            ? DataValidation
+            ? Yup.array().of(DataValidation)
             : Yup.array().when([name], {
                 is: answers.yes,
                 then: (schema) => schema.of(DataValidation)

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ModalBox from '../../layout/ModalBox'
 import styled from '@emotion/styled'
 import SearchNonProfitsButton from '../../utils/itemInheritors/nonProfits/SearchNonProfitsButton'
-import { useField } from 'formik'
+import { useField, useFormikContext } from 'formik'
 import { defaults } from '../../../store/context'
 import FindNonProfits from '../../utils/itemInheritors/nonProfits/FindNonProfits'
 import translation, { answers } from '../../../store/translation'
@@ -14,7 +14,9 @@ function NonProfitsContent() {
     const nonProfitProvisionValue = field?.value
 
     const [openModal, setOpenModal] = useState(false)
+    const { errors } = useFormikContext()
 
+    console.log(errors);
     if (nonProfitProvisionValue !== answers.yes) {
         return <></>
     }

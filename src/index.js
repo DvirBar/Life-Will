@@ -9,12 +9,12 @@ import { HomePage } from "./pages/home-page";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <RTL>
-    <SiteProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <HomePage />
-      </ThemeProvider>
-    </SiteProvider>
-  </RTL>
+    <RTL>
+        <SiteProvider>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <HomePage />
+            </ThemeProvider>
+        </SiteProvider>
+    </RTL>
 );

@@ -3,14 +3,16 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { SiteContext } from '../../store/context'
+import { useFormikContext } from 'formik'
 
 function NavigationButtons() {
-    const { movePrevStep } = useContext(SiteContext)
+    const { goBack } = useContext(SiteContext)
+    const { values } = useFormikContext()
 
     return (
         <StyledWrapper>
             <StyledButton
-                onClick={movePrevStep}
+                onClick={() => goBack(values)}
                 color="secondary"
                 fullWidth
                 variant="outlined">

@@ -5,11 +5,13 @@ import FormikTextField from '../formikcomponents/FormikTextField'
 import styled from '@emotion/styled'
 import ItemInheritors from '../utils/itemInheritors/ItemInheritors'
 import ItemType from '../utils/InheritedItem/ItemType'
+import { useFormikContext } from 'formik'
 
 function RealEstateItem({ dataItem, itemName }) {
     const type = dataItem.type
     const typeDetails = realEstateTypesDetailsMap(type)
-
+    const { values } = useFormikContext()
+    console.log(values.real_estate_data);
     return (
         <StyledRealEstateItem>
             <ItemType

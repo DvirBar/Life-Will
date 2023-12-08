@@ -31,7 +31,7 @@ export default function StepTwo() {
 
     return (
         <FormWrapper
-        // validationSchema={stepTwoValidationSchema}
+            validationSchema={stepTwoValidationSchema}
         >
             <Typography variant="subtitle1">{translation.status}</Typography>
             <FormikButtonSelect

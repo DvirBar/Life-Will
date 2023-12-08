@@ -1,10 +1,9 @@
 import React from 'react'
 import DocPage from '../DocPage'
 import Title from '../Title'
-import translation from '../../../store/translation'
+import translation, { moneyDivision } from '../../../store/translation'
 import Subtitle from "../Subtitle"
 import QuestionBlock from "../QuestionBlock"
-import data from "../../../store/sampleData"
 import Table from "../Table"
 import RowHeader from "../RowHeader"
 import TableRow from '../TableRow'
@@ -14,6 +13,7 @@ import Block from "../Block"
 import BlockInfo from "../BlockInfo"
 import Divider from "../Divider"
 import { StyleSheet, Text, View } from '@react-pdf/renderer'
+import { globalData as data } from '../../../store/context'
 
 const style = StyleSheet.create({
     money: {
@@ -23,12 +23,14 @@ const style = StyleSheet.create({
 })
 
 function Step5() {
+
     return (
         <DocPage>
             <Title>{translation.step5}</Title>
             <Text style={style.money}>
                 <Text>{translation.money_ils}</Text>&nbsp;
-                <QuestionBlock question={translation.money} answer={data.money} />
+                {/* TODO: hardcoded */}
+                <QuestionBlock question="כסף בחשבון הבנק" answer={data.money} />
             </Text>
 
             <Subtitle>{translation.bank_accounts_title}</Subtitle>
@@ -48,21 +50,21 @@ function Step5() {
             )}
 
             <Divider />
-            <QuestionBlock question={translation.provident_fund} answer={data.provident_fund} />
-            {data.provident_fund_data.map((fund, index) =>
+            <QuestionBlock question={translation.provident_funds} answer={data.provident_funds} />
+            {data.provident_funds_data.map((fund, index) =>
                 <Block>
-                    <BlockInfo>{`${translation.provident_fund_title} ${data.provident_fund_data.length}/${index + 1}`}</BlockInfo>
-                    <QuestionBlock question={translation.provident_fund_data.fund_name} answer={fund.fund_name} />
-                    <QuestionBlock question={translation.provident_fund_data.fund_number} answer={fund.fund_number} />
+                    <BlockInfo>{`${translation.provident_funds_title} ${data.provident_funds_data.length}/${index + 1}`}</BlockInfo>
+                    <QuestionBlock question={translation.provident_funds_data.fund_name} answer={fund.fund_name} />
+                    <QuestionBlock question={translation.provident_funds_data.fund_number} answer={fund.fund_number} />
                 </Block>
             )}
 
-            <QuestionBlock question={translation.study_fund} answer={data.study_fund} />
-            {data.study_fund_data.map((fund, index) =>
+            <QuestionBlock question={translation.study_funds} answer={data.study_fund} />
+            {data.study_funds_data.map((fund, index) =>
                 <Block>
-                    <BlockInfo>{`${translation.study_fund_title} ${data.study_fund_data.length}/${index + 1}`}</BlockInfo>
-                    <QuestionBlock question={translation.study_fund_data.fund_name} answer={fund.fund_name} />
-                    <QuestionBlock question={translation.study_fund_data.fund_number} answer={fund.fund_number} />
+                    <BlockInfo>{`${translation.study_funds_title} ${data.study_funds_data.length}/${index + 1}`}</BlockInfo>
+                    <QuestionBlock question={translation.study_funds_data.fund_name} answer={fund.fund_name} />
+                    <QuestionBlock question={translation.study_funds_data.fund_number} answer={fund.fund_number} />
                 </Block>
             )}
 
@@ -81,7 +83,7 @@ function Step5() {
             <Divider />
             <View wrap={false}>
                 <QuestionBlock question={translation.money_division} answer={data.money_division} />
-                {data.money_division_inheritors.map((inheritor) =>
+                {data.money_division === moneyDivision.byDecision && data.money_division_inheritors.map((inheritor) =>
                     <Table>
                         <RowHeader>
                             <TableHeader>{translation.money_division_inheritors.first_name}</TableHeader>
@@ -93,7 +95,7 @@ function Step5() {
                             <TableCell>{inheritor.first_name}</TableCell>
                             <TableCell>{inheritor.last_name}</TableCell>
                             <TableCell>{inheritor.person_id}</TableCell>
-                            <TableCell>{inheritor.percentage}</TableCell>
+                            <TableCell>{inheritor.percent}%</TableCell>
                         </TableRow>
                     </Table>
                 )}

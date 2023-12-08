@@ -1,9 +1,7 @@
 import React from 'react'
 import Title from '../Title'
-import Subtitle from '../Subtitle'
-import translation, { answers, inheritanceKeys } from '../../../store/translation'
+import translation, { inheritanceKeys } from '../../../store/translation'
 import DocPage from '../DocPage'
-import data from '../../../store/sampleData'
 import ItemInheritanceBlock from '../ItemInheritanceBlock'
 
 function Step3() {

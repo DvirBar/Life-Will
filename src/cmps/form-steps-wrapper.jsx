@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { SiteContext } from '../store/context'
+import FinishForm from './FinishForm';
 
 
 function FormStepsWrapper() {
@@ -8,10 +9,9 @@ function FormStepsWrapper() {
         selectedStage,
         stages
     } = useContext(SiteContext);
-
     return (
         <>
-            {stages[selectedStage][selectedStep]}
+            {selectedStage < stages.length ? stages[selectedStage][selectedStep] : <FinishForm />}
         </>
     )
 }

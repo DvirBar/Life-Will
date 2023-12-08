@@ -31,6 +31,7 @@ const StyledYesNoButton = styled.div`
     flex-direction: row;
     gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
 `
 
 export default YesNoRadio
