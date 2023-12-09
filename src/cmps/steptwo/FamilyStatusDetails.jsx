@@ -5,7 +5,7 @@ import { Typography } from '@mui/material'
 import YesNoRadio from '../formikcomponents/YesNoRadio'
 import { PartnerDetails } from './PartnerDetails'
 import ItemsList from '../utils/ItemsList/ItemsList'
-import { defaults } from '../../store/context'
+import { defaults } from '../../store/data'
 import ExPartnerItem from './ExPartnerItem'
 
 function FamilyStatusDetails() {

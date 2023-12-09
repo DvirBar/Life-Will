@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StepOne from "../cmps/stepone/step-one";
 import StepOneContinue from "../cmps/stepone/step-one-continue";
 import StepTwo from "../cmps/steptwo/step-two";
@@ -15,11 +15,17 @@ import StepFiveFamily from '../cmps/stepfive/StepFiveFamily/StepFiveFamily';
 
 const MIN_STAGE = 0
 const MIN_STEP = 0
-function useSteps(setIsDone) {
-    const [selectedLocation, setSelectedLocation] = useState({
-        selectedStage: 5,
+function useSteps() {
+    const initialLocation = {
+        selectedStage: MIN_STAGE,
         selectedStep: MIN_STEP
-    })
+    }
+
+    const [selectedLocation, setSelectedLocation] = useState(JSON.parse(localStorage.getItem("location")) || initialLocation)
+
+    useEffect(() => {
+        localStorage.setItem("location", JSON.stringify(selectedLocation))
+    }, [selectedLocation])
 
     const stages = [
         [

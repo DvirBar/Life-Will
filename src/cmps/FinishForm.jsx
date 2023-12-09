@@ -9,7 +9,8 @@ import { ArrowForward, Send } from '@mui/icons-material'
 function FinishForm() {
     const {
         finishForm,
-        returnToEdit
+        returnToEdit,
+        sendForm
     } = useContext(SiteContext)
 
     finishForm()
@@ -61,6 +62,7 @@ function FinishForm() {
                     color="secondary"
                     fullWidth
                     type="submit"
+                    onClick={sendForm}
                     variant="contained">
                     <Typography variant="subtitle1">שליחה</Typography>
                     <StyledSendIcon />

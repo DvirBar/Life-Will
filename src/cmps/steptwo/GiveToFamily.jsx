@@ -3,7 +3,7 @@ import React from 'react'
 import translation, { answers, giveToFamilyTypes, giveToFamilyTypesKeys } from '../../store/translation'
 import styled from '@emotion/styled'
 import ItemsList from '../utils/ItemsList/ItemsList'
-import { personInfo } from '../../store/context'
+import { personInfo } from '../../store/data'
 import FormikTextField from '../formikcomponents/FormikTextField'
 
 function GiveToFamilyItem({ name }) {

@@ -3,7 +3,7 @@ import React from 'react'
 import translation, { answers, inheritanceKeys } from '../../store/translation'
 import YesNoRadio from '../formikcomponents/YesNoRadio'
 import ItemsList from '../utils/ItemsList/ItemsList'
-import { defaults } from '../../store/context'
+import { defaults } from '../../store/data'
 import RealEstateItem from './RealEstateItem'
 
 function StepThreeInheritedTopic() {

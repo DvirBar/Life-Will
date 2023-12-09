@@ -28,3 +28,7 @@ html {
 * {
     font-family: 'NotoSansHebrew';
 }
+
+p {
+    margin: 0;
+}

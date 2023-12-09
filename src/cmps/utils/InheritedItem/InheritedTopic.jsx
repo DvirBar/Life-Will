@@ -2,7 +2,7 @@ import React from 'react'
 import translation, { answers } from '../../../store/translation'
 import { useFormikContext } from 'formik'
 import ItemsList from '../ItemsList/ItemsList'
-import { defaults } from '../../../store/context'
+import { defaults } from '../../../store/data'
 import InheritedItem from './InheritedItem'
 import YesNoRadio from '../../formikcomponents/YesNoRadio'
 

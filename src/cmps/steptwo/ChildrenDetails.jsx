@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik'
 import React from 'react'
 import translation, { answers } from '../../store/translation'
 import ItemsList from '../utils/ItemsList/ItemsList'
-import { defaultChildData } from '../../store/context'
+import { defaultChildData } from '../../store/data'
 import ChildItem from './ChildItem'
 
 function ChildrenDetails() {

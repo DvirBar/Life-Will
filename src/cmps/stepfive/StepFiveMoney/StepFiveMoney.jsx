@@ -4,7 +4,7 @@ import FormikTextField from "../../formikcomponents/FormikTextField"
 import translation from '../../../store/translation'
 import Question from '../../utils/Question'
 import ItemsList from '../../utils/ItemsList/ItemsList'
-import { defaults } from '../../../store/context'
+import { defaults } from '../../../store/data'
 import BankDetails from './BankDetails'
 import ProvidentFundDetails from "./ProvidentFundDetails"
 import StudyFundDetails from "./StudyFundDetails"

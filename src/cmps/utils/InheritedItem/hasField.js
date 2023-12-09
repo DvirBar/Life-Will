@@ -1,4 +1,4 @@
-import { defaults } from "../../../store/context";
+import { defaults } from "../../../store/data";
 
 function hasField(fieldName, name) {
     if (defaults[name]) {

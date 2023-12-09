@@ -1,6 +1,7 @@
 import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import { SiteContext, defaultItemInheritor } from '../../../store/context'
+import { SiteContext } from '../../../store/context'
+import { defaultItemInheritor } from '../../../store/data'
 import styled from '@emotion/styled'
 import { FieldArray, useField } from 'formik'
 import ModalBox from '../../layout/ModalBox'
