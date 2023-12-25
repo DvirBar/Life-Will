@@ -4,6 +4,7 @@ import { data as initialData } from "./data";
 import useSteps from "./useSteps";
 import { collection, addDoc } from "firebase/firestore"
 import { db } from "../firebase"
+import axios from "axios";
 
 export const SiteContext = createContext(null);
 export let globalData = {}
@@ -13,6 +14,7 @@ const SiteProvider = ({ children }) => {
     const [isAlone, setIsAlone] = useState(localStorage.getItem("isAlone") || false)
     const [saveLocal, setSaveLocal] = useState(localStorage.getItem("saveLocal") || false)
     const [startedFill, setStartedFill] = useState(localStorage.getItem("startedFill") || false)
+    const [chosenItemTypes, setChosenItemTypes] = useState(JSON.parse(localStorage.getItem("chosenItems")) || {})
 
     const startFill = () => {
         if (isAlone) {
@@ -24,10 +26,10 @@ const SiteProvider = ({ children }) => {
         localStorage.setItem("isAlone", isAlone)
         localStorage.setItem("saveLocal", saveLocal)
         localStorage.setItem("startedFill", startedFill)
-    }, [isAlone, saveLocal, startedFill])
+        localStorage.setItem("chosenItems", JSON.stringify(chosenItemTypes))
+    }, [isAlone, saveLocal, startedFill, chosenItemTypes])
 
     const [data, setData] = useState(JSON.parse(localStorage.getItem("data")) || initialData)
-
 
     const {
         selectedStage,
@@ -37,30 +39,9 @@ const SiteProvider = ({ children }) => {
         movePrevStep,
         selectStage,
         returnToEdit
-    } = useSteps()
+    } = useSteps(chosenItemTypes)
 
-    const inheritors = {
-        [inheritorsTypes.children]: [
-            {
-                type: inheritorsTypes.children,
-                first_name: 'ילד',
-                last_name: 'ישראלי',
-                person_id: '222222222',
-                percent: "30",
-                uuid: "7C8EACC6-BD77-4C0A-9042-31C3F26483BB"
-            }
-        ],
-        [inheritorsTypes.spouse]: [
-            {
-                type: inheritorsTypes.spouse,
-                first_name: 'ישראלה',
-                last_name: 'ישראלי',
-                person_id: '111111111',
-                percent: "60",
-                uuid: "36CAD714-E0B8-481B-AF44-C52040DBAB25"
-            }
-        ],
-    }
+    const inheritors = {}
 
     const syncInheritors = (formikValues) => {
         const values = formikValues || data
@@ -128,17 +109,18 @@ const SiteProvider = ({ children }) => {
         localStorage.setItem("data", JSON.stringify(values))
     }
 
-    const submitForm = (values, isFinalStep) => {
+    const submitForm = (values) => {
         syncInheritors(values)
         saveToLocalStorage(values)
         setData(values)
-        moveNextStep(isFinalStep);
+        moveNextStep();
     }
 
     const goBack = (values) => {
         syncInheritors(values)
         saveToLocalStorage(values)
         setData(values)
+
         movePrevStep()
     }
 
@@ -177,27 +159,38 @@ const SiteProvider = ({ children }) => {
         updateInheritors("money_division_inheritors")
     }
 
-    const sendForm = async () => {
-        const {
+    const sendForm = async (fileBlob) => {
+        const savedData = (({
             first_name,
             last_name,
             phone,
             email
-        } = globalData
+        }) => ({
+            first_name,
+            last_name,
+            phone,
+            email
+        }))(globalData)
 
         try {
             const docRef = await addDoc(collection(db, "users"), {
-                first_name,
-                last_name,
-                phone,
-                email,
+                ...savedData,
                 timeSent: new Date()
             })
-
-
         } catch (error) {
             console.log(error);
         }
+
+        const formData = new FormData()
+        formData.append("meta", JSON.stringify(savedData))
+        formData.append("file", new File([fileBlob], "lifewill"))
+
+        await axios.post("http://localhost:5001/life-will/us-central1/sendPdf",
+            formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
     }
 
     const value = {
@@ -220,7 +213,9 @@ const SiteProvider = ({ children }) => {
         stages,
         finishForm,
         returnToEdit,
-        sendForm
+        sendForm,
+        chosenItemTypes,
+        setChosenItemTypes
     }
 
     return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

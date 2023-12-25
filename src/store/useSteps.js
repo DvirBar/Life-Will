@@ -12,10 +12,11 @@ import StepFiveNonProfit from "../cmps/stepfive/StepFiveNonProfits/StepFiveNonPr
 import StepSix from "../cmps/stepsix/StepSix";
 import { inheritanceKeysStep4 } from './translation';
 import StepFiveFamily from '../cmps/stepfive/StepFiveFamily/StepFiveFamily';
+import ChooseItemTypes from '../cmps/stepfour/ChooseItemTypes';
 
 const MIN_STAGE = 0
 const MIN_STEP = 0
-function useSteps() {
+function useSteps(chosenItems) {
     const initialLocation = {
         selectedStage: MIN_STAGE,
         selectedStep: MIN_STEP
@@ -26,6 +27,16 @@ function useSteps() {
     useEffect(() => {
         localStorage.setItem("location", JSON.stringify(selectedLocation))
     }, [selectedLocation])
+
+    const Step4InheritancePages = []
+    for (const key in inheritanceKeysStep4) {
+        if (chosenItems[key]) {
+            Step4InheritancePages.push(<InheritedTopicForm name={key} />)
+        }
+    }
+
+    Step4InheritancePages.push(<InheritedTopicForm name={inheritanceKeysStep4.other_inheritance} />)
+    Step4InheritancePages.push(<FutureInheritedItem name={inheritanceKeysStep4.future_items} />)
 
     const stages = [
         [
@@ -42,11 +53,8 @@ function useSteps() {
             <FutureInheritedItem name="future_real_estate" />
         ],
         [
-            ...Object.keys(inheritanceKeysStep4).map((key) =>
-                key === inheritanceKeysStep4.future_items
-                    ? <FutureInheritedItem name={inheritanceKeysStep4.future_items} />
-                    : <InheritedTopicForm name={key} />
-            )
+            <ChooseItemTypes />,
+            ...Step4InheritancePages
         ],
         [
             <StepFiveMoney />,

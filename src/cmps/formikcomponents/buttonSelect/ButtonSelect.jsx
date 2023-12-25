@@ -2,10 +2,19 @@ import styled from '@emotion/styled'
 import { Typography } from '@mui/material'
 import React from 'react'
 
-function ButtonSelect({ value, onChange, children, error }) {
+function ButtonSelect({ value, onChange, children, error, multiSelect }) {
     const handleChange = (e, newValue) => {
-        if (newValue !== value) {
+        console.log(newValue);
+        if (multiSelect || newValue !== value) {
             onChange(e, newValue)
+        }
+    }
+
+    const isItemSeleted = (itemValue) => {
+        if (multiSelect) {
+            return value[itemValue]
+        } else {
+            return itemValue === value
         }
     }
 
@@ -19,7 +28,7 @@ function ButtonSelect({ value, onChange, children, error }) {
                     }
 
                     return React.cloneElement(child, {
-                        selected: value,
+                        isSelected: isItemSeleted(child.props.value),
                         onClick: e => handleChange(e, child.props.value)
                     })
                 })}

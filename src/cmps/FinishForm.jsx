@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Button, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { SiteContext } from '../store/context'
-import { PDFDownloadLink } from '@react-pdf/renderer'
+import { PDFDownloadLink, usePDF } from '@react-pdf/renderer'
 import LifeWillDocument from './pdf/pdf'
 import { ArrowForward, Send } from '@mui/icons-material'
 
@@ -15,29 +15,25 @@ function FinishForm() {
 
     finishForm()
 
+    const [instance] = usePDF({ document: < LifeWillDocument /> })
+
     return (
         <StyledFinishForm>
             <Typography variant="subtitle1">
                 סיימתם את מילוי הצוואה בהצלחה, כעת תוכלו לצפות בטופס לפני שישלח.
             </Typography>
-            <PDFDownloadLink document={<LifeWillDocument />} fileName="lifewill.pdf">
-                {({ blob, url, loading, error }) =>
-                    <a
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        <Button
-                            variant="contained"
-                        >
-                            <Typography variant="subtitle1">
-                                צפייה בטופס
-                            </Typography>
-                        </Button>
-                    </a>
-
-                }
-            </PDFDownloadLink>
-
+            <a
+                href={instance.url}
+                target="_blank"
+                rel="noopener noreferrer">
+                <Button
+                    variant="contained"
+                >
+                    <Typography variant="subtitle1">
+                        צפייה בטופס
+                    </Typography>
+                </Button>
+            </a>
             <Typography variant="subtitle1">
                 <p>
                     לאחר הצפייה באפשרותכם לחזור לערוך או לשלוח את הטופס.
@@ -62,7 +58,7 @@ function FinishForm() {
                     color="secondary"
                     fullWidth
                     type="submit"
-                    onClick={sendForm}
+                    onClick={() => sendForm(instance.blob)}
                     variant="contained">
                     <Typography variant="subtitle1">שליחה</Typography>
                     <StyledSendIcon />
