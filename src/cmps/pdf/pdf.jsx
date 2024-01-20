@@ -8,6 +8,7 @@ import Step3 from './Steps/Step3';
 import Step4 from './Steps/Step4';
 import Step5 from './Steps/Step5';
 import Step6 from './Steps/Step6';
+import CoverPage from './CoverPage';
 // import Page1 from './Page1';
 
 Font.register({
@@ -68,12 +69,13 @@ export const hebrewBirthDateString = (day, month, year) => {
 export default function LifeWillDocument() {
     return (
         <Document style={styles.document}>
+            <CoverPage />
             <Step1 />
-            <Step2 />
+            {/* <Step2 />
             <Step3 />
             <Step4 />
             <Step5 />
-            <Step6 />
+            <Step6 /> */}
         </Document>
     )
 }

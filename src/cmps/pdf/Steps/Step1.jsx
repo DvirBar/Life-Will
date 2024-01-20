@@ -6,15 +6,16 @@ import DocPage from '../DocPage'
 import Title from '../Title'
 import Block from '../Block'
 import Subtitle from '../Subtitle'
-import { globalData as data } from '../../../store/context'
+// import { globalData as data } from '../../../store/context'
+import data from '../../../store'
 
 function Page1() {
     return (
         <DocPage>
             <Title>{translation.step1}</Title>
-            <QuestionBlock question={translation.gender} answer={data.gender} />
+            {/* <QuestionBlock question={translation.gender} answer={data.gender} />
             <QuestionBlock question={translation.birthDate} answer={data.birthDate} />
-            {/* <QuestionBlock question={translation.hebrewBirthDate} answer={data.hebrewBirthDate} /> */}
+            <QuestionBlock question={translation.hebrewBirthDate} answer={data.hebrewBirthDate} />
             <QuestionBlock question={translation.first_name} answer={data.first_name} />
             <QuestionBlock question={translation.last_name} answer={data.last_name} />
             <QuestionBlock question={translation.person_id} answer={data.person_id} />
@@ -29,7 +30,7 @@ function Page1() {
                 <QuestionBlock question={translation.address.street} answer={data.address.street} />
                 <QuestionBlock question={translation.address.houseNum} answer={data.address.houseNum} />
                 <QuestionBlock question={translation.address.city} answer={data.address.city} />
-            </Block>
+            </Block> */}
         </DocPage>
     )
 }

@@ -7,7 +7,7 @@ import { db } from "../firebase"
 import axios from "axios";
 
 export const SiteContext = createContext(null);
-export let globalData = {}
+export let globalData = initialData
 
 
 const SiteProvider = ({ children }) => {
