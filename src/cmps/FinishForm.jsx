@@ -22,7 +22,7 @@ function FinishForm() {
             <Typography variant="subtitle1">
                 סיימתם את מילוי הצוואה בהצלחה, כעת תוכלו לצפות בטופס לפני שישלח.
             </Typography>
-            <a
+            {/* <a
                 href={instance.url}
                 target="_blank"
                 rel="noopener noreferrer">
@@ -33,7 +33,7 @@ function FinishForm() {
                         צפייה בטופס
                     </Typography>
                 </Button>
-            </a>
+            </a> */}
             <Typography variant="subtitle1">
                 <p>
                     לאחר הצפייה באפשרותכם לחזור לערוך או לשלוח את הטופס.
@@ -58,7 +58,7 @@ function FinishForm() {
                     color="secondary"
                     fullWidth
                     type="submit"
-                    onClick={() => sendForm(instance.blob)}
+                    onClick={() => console.log("sent")}
                     variant="contained">
                     <Typography variant="subtitle1">שליחה</Typography>
                     <StyledSendIcon />

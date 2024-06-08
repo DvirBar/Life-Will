@@ -107,9 +107,9 @@ const data = {
     // TODO: change address object in pdf
     address: {
         text: "כתובת",
-        street: 'הרב קלישר',
-        houseNum: '18',
-        city: 'חיפה'
+        street: "אחד העם",
+        houseNum: '101',
+        city: 'תל אביב'
     },
     // Step 2
     status: '',

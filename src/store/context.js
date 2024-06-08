@@ -1,13 +1,14 @@
 import React, { createContext, useEffect, useState } from "react";
 import { inheritanceKeys, inheritanceKeysStep4, inheritorsTypes } from "./translation";
-import { data as initialData } from "./data";
+// import { data as initialData } from "./data";
+import sampleData from "./sampleData"
 import useSteps from "./useSteps";
 import { collection, addDoc } from "firebase/firestore"
 import { db } from "../firebase"
 import axios from "axios";
 
 export const SiteContext = createContext(null);
-export let globalData = initialData
+export let globalData = sampleData
 
 
 const SiteProvider = ({ children }) => {
@@ -29,7 +30,7 @@ const SiteProvider = ({ children }) => {
         localStorage.setItem("chosenItems", JSON.stringify(chosenItemTypes))
     }, [isAlone, saveLocal, startedFill, chosenItemTypes])
 
-    const [data, setData] = useState(JSON.parse(localStorage.getItem("data")) || initialData)
+    const [data, setData] = useState(sampleData)
 
     const {
         selectedStage,

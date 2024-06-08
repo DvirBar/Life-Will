@@ -1,20 +1,21 @@
 import React from 'react'
 
 import translation, { answers } from '../../../store/translation'
+import data from '../../../store/translations/index'
 import QuestionBlock from '../QuestionBlock'
 import DocPage from '../DocPage'
 import Title from '../Title'
 import Block from '../Block'
 import Subtitle from '../Subtitle'
 // import { globalData as data } from '../../../store/context'
-import data from '../../../store'
+// import data from '../../../store'
 
 function Page1() {
     return (
         <DocPage>
             <Title>{translation.step1}</Title>
-            {/* <QuestionBlock question={translation.gender} answer={data.gender} />
-            <QuestionBlock question={translation.birthDate} answer={data.birthDate} />
+            {/* <QuestionBlock question={translation.gender} answer={data.gender} /> */}
+            {/* <QuestionBlock question={translation.birthDate} answer={data.birthDate} />
             <QuestionBlock question={translation.hebrewBirthDate} answer={data.hebrewBirthDate} />
             <QuestionBlock question={translation.first_name} answer={data.first_name} />
             <QuestionBlock question={translation.last_name} answer={data.last_name} />

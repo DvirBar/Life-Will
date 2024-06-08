@@ -48,7 +48,6 @@ function StepSixContent() {
                             maxLength={9}
                         />
                     </StyledInChargeDetailsFields>
-
                 </StyledInCharge>
             }
 

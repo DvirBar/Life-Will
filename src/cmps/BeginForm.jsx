@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { SiteContext } from '../store/context'
+import ts from "../store/translations/index"
 
 function BeginForm() {
     const {
@@ -30,7 +31,7 @@ function BeginForm() {
                     }
                 />
             </StyledTopicBlock>
-
+            <div>{ts.data}</div>
             <StyledTopicBlock>
                 <p>
                     באפשרותכם לבחור למלא את טופס הצוואה בחלקו כך שישמר במכשיר זה ולהמשיך מאוחר יותר, ובלבד שהינכם משתמשים באותו מכשיר ודפדפן במשך כל מילוי הצוואה.

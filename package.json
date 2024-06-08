@@ -24,6 +24,7 @@
 		"react-scripts": "5.0.1",
 		"redux-thunk": "^2.3.0",
 		"sass": "^1.54.9",
+		"serve": "^14.2.3",
 		"stylis": "^4.3.0",
 		"stylis-plugin-rtl": "^2.1.1",
 		"uuid": "^9.0.1",
@@ -53,5 +54,8 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"typescript": "^5.4.5"
 	}
 }
