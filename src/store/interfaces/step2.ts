@@ -1,4 +1,4 @@
-import { ExtendedPersonalInfo, PersonalInfo } from "./globals"
+import { ExtendedPersonalInfo, PersonalInfo, TransData } from "./globals"
 
 interface Partner extends PersonalInfo {
     married_gender: string
@@ -8,13 +8,6 @@ interface Partner extends PersonalInfo {
 interface ExPartner extends PersonalInfo {
     title: string 
     gender: string
-}
-
-interface Step2Gender {
-    partner: Partner
-    has_ex_partner: string
-    ex_partner_gain: string
-    give_to_family: string,
 }
 
 interface GuardianData extends PersonalInfo {
@@ -27,28 +20,34 @@ interface KidsData extends ExtendedPersonalInfo {
     guardian_data: GuardianData
 }
 
-enum GiveToFamilyTypesKeys {
+export enum GiveToFamilyTypesKeys {
     parents,
     siblings,
     friends,
     grandChildren
 }
 
-interface Step2 extends Step2Gender {
+export interface Step2 {
     title: string
-    status: string,
-    ex_partner: string,
-    ex_partners: ExPartner,
+    status: string
+    has_ex_partner: string
+    ex_partner: string
+    ex_partners: ExPartner
     kids: string,
     kidNameText: string,
     num_of_kids: string,
-    kids_data: KidsData
+    kids_data: TransData<KidsData>
     guardianDetailsText: string,
-    give_to_family: string,
     give_to_family_type: {
         [GiveToFamilyTypesKeys.parents]: PersonalInfo,
         [GiveToFamilyTypesKeys.siblings]: PersonalInfo,
         [GiveToFamilyTypesKeys.friends]: PersonalInfo,
         [GiveToFamilyTypesKeys.grandChildren]: PersonalInfo
     },
+}
+
+export interface Step2Gender extends Step2{
+    partner: Partner
+    ex_partner_gain: string
+    give_to_family: string
 }

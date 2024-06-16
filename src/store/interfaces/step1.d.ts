@@ -1,8 +1,4 @@
-interface Step1Gender {
-    edited_by: string
-}
-
-interface Step1 extends Step1Gender {
+export interface Step1 {
     title: string
     first_name: string
     last_name: string
@@ -21,4 +17,10 @@ interface Step1 extends Step1Gender {
     citizenship: string,
     passport_id: string,
 }
+
+
+export interface Step1Gender extends Step1 {
+    edited_by: string
+}
+
 
