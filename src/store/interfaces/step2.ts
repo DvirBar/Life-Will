@@ -46,7 +46,7 @@ export interface Step2 {
     },
 }
 
-export interface Step2Gender extends Step2{
+export interface Step2Gender extends Step2 {
     partner: Partner
     ex_partner_gain: string
     give_to_family: string

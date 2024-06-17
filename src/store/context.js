@@ -1,14 +1,15 @@
 import React, { createContext, useEffect, useState } from "react";
-import { inheritanceKeys, inheritanceKeysStep4, inheritorsTypes } from "./translation";
-// import { data as initialData } from "./data";
+import { genderTypes, inheritanceKeys, inheritanceKeysStep4, inheritorsTypes } from "./translation";
+import { data as initialData } from "./data";
 import sampleData from "./sampleData"
 import useSteps from "./useSteps";
 import { collection, addDoc } from "firebase/firestore"
 import { db } from "../firebase"
 import axios from "axios";
+import generateTranslation, { Gender, Mode } from "./translations";
 
 export const SiteContext = createContext(null);
-export let globalData = sampleData
+export let globalData = initialData
 
 
 const SiteProvider = ({ children }) => {
@@ -16,7 +17,7 @@ const SiteProvider = ({ children }) => {
     const [saveLocal, setSaveLocal] = useState(localStorage.getItem("saveLocal") || false)
     const [startedFill, setStartedFill] = useState(localStorage.getItem("startedFill") || false)
     const [chosenItemTypes, setChosenItemTypes] = useState(JSON.parse(localStorage.getItem("chosenItems")) || {})
-
+    
     const startFill = () => {
         if (isAlone) {
             setStartedFill(true)
@@ -30,8 +31,10 @@ const SiteProvider = ({ children }) => {
         localStorage.setItem("chosenItems", JSON.stringify(chosenItemTypes))
     }, [isAlone, saveLocal, startedFill, chosenItemTypes])
 
-    const [data, setData] = useState(sampleData)
+    const [data, setData] = useState(globalData)
 
+    const selectedGender = data.gender === genderTypes.female ? Gender.Female : Gender.Male
+    
     const {
         selectedStage,
         selectedStep,
@@ -194,6 +197,8 @@ const SiteProvider = ({ children }) => {
         })
     }
 
+    const translation = generateTranslation(Mode.Editor, selectedGender)
+
     const value = {
         isAlone,
         setIsAlone,
@@ -216,7 +221,8 @@ const SiteProvider = ({ children }) => {
         returnToEdit,
         sendForm,
         chosenItemTypes,
-        setChosenItemTypes
+        setChosenItemTypes,
+        translation
     }
 
     return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

@@ -1,12 +1,16 @@
 import { useFormikContext } from 'formik'
-import React from 'react'
-import translation, { answers, giveToFamilyTypes, giveToFamilyTypesKeys } from '../../store/translation'
+import React, { useContext } from 'react'
+import { answers, giveToFamilyTypes, giveToFamilyTypesKeys } from '../../store/translation'
 import styled from '@emotion/styled'
 import ItemsList from '../utils/ItemsList/ItemsList'
 import { personInfo } from '../../store/data'
 import FormikTextField from '../formikcomponents/FormikTextField'
+import { SiteContext } from '../../store/context'
 
 function GiveToFamilyItem({ name }) {
+    const {
+        translation
+    } = useContext(SiteContext)
     return (
         <StyledGiveToFamilyItem>
             <FormikTextField

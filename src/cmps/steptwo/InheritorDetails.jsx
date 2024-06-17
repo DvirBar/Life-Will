@@ -1,9 +1,14 @@
-import translation from '../../store/translation'
+import { useContext } from 'react'
+import { SiteContext } from '../../store/context'
 import FormikRadioGroup from '../formikcomponents/FormikRadioGroup'
 import FormikTextField from '../formikcomponents/FormikTextField'
 import styled from '@emotion/styled'
 
 export const InheritorDetails = ({ itemName }) => {
+    const {
+        translation
+    } = useContext(SiteContext)
+
 	return (
 		<StyledChildColumn>
 			<FormikRadioGroup

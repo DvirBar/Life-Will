@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from "yup";
 import { Typography } from '@mui/material';
 import FormikButtonSelect from '../formikcomponents/FormikButtonSelect'
 import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
 
-import translation, { answers, statusTypes } from '../../store/translation'
+import { answers, statusTypes } from '../../store/translation'
 import FormWrapper from '../utils/FormWrapper';
 import FamilyStatusDetails from './FamilyStatusDetails';
 import { personInfoValidation } from '../utils/validation';
+import { SiteContext } from '../../store/context';
 
 const stepTwoValidationSchema = Yup.object({
     status: Yup.string().required("יש לבחור סטטוס"),
@@ -28,7 +29,9 @@ const stepTwoValidationSchema = Yup.object({
 })
 
 export default function StepTwo() {
-
+    const {
+        translation
+    } = useContext(SiteContext)
     return (
         <FormWrapper
             validationSchema={stepTwoValidationSchema}

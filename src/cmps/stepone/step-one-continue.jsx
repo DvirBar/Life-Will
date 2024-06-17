@@ -3,12 +3,14 @@ import * as Yup from "yup";
 
 import FormikTextField from '../formikcomponents/FormikTextField';
 
-import translation, { answers } from '../../store/translation';
+import { answers } from '../../store/translation';
 import FormWrapper from "../utils/FormWrapper";
 
 import YesNoRadio from "../formikcomponents/YesNoRadio"
 import CitizenshipField from "./CitizenshipField";
 import AddressDetails from "./AddressDetails"
+import { SiteContext } from '../../store/context';
+import { useContext } from 'react';
 
 const stepOneContinueValidationSchema = Yup.object({
 	person_id: Yup.number().required("יש להזין תעודת זהות"),
@@ -28,6 +30,10 @@ const stepOneContinueValidationSchema = Yup.object({
 })
 
 export default function StepOneContinue() {
+    const {
+        translation
+    } = useContext(SiteContext)
+    
 	return (
 		<FormWrapper
 			validationSchema={stepOneContinueValidationSchema}

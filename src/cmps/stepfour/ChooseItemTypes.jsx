@@ -3,14 +3,15 @@ import { SiteContext } from '../../store/context'
 import styled from '@emotion/styled'
 import { Typography } from '@mui/material'
 import ButtonSelect from '../formikcomponents/buttonSelect/ButtonSelect'
-import translation, { inheritanceKeysStep4 } from '../../store/translation'
+import { inheritanceKeysStep4 } from '../../store/translation'
 import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem'
 import FormWrapper from '../utils/FormWrapper'
 
 function ChooseItemTypes() {
     const {
         chosenItemTypes,
-        setChosenItemTypes
+        setChosenItemTypes,
+        translation
     } = useContext(SiteContext)
 
     const handleChange = (event, selectedValue) => {

@@ -1,8 +1,9 @@
-import translation from '../../store/translation';
 import FormikTextField from '../formikcomponents/FormikTextField';
 import styled from '@emotion/styled';
 import FormikButtonSelect from '../formikcomponents/FormikButtonSelect';
 import ButtonSelectItem from '../formikcomponents/buttonSelect/ButtonSelectItem';
+import { useContext } from 'react';
+import { SiteContext } from '../../store/context';
 
 const partnerGenders = {
     man: "גבר",
@@ -11,6 +12,10 @@ const partnerGenders = {
 
 export const PartnerDetails = () => {
     const partnerKeyName = "partner"
+
+    const {
+        translation
+    } = useContext(SiteContext)
     return (
         <>
             <FormikButtonSelect

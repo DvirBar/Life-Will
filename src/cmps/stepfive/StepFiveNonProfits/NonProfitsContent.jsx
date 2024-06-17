@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ModalBox from '../../layout/ModalBox'
 import styled from '@emotion/styled'
 import SearchNonProfitsButton from '../../utils/itemInheritors/nonProfits/SearchNonProfitsButton'
-import { useField, useFormikContext } from 'formik'
+import { useField } from 'formik'
 import { defaults } from '../../../store/data'
 import FindNonProfits from '../../utils/itemInheritors/nonProfits/FindNonProfits'
-import translation, { answers } from '../../../store/translation'
+import { answers } from '../../../store/translation'
 import ItemsList from '../../utils/ItemsList/ItemsList'
 import NonProfitsListItem from './NonProfitsListItem'
+import { SiteContext } from '../../../store/context'
 
 function NonProfitsContent() {
     const [field] = useField("non_profit_provision")
     const nonProfitProvisionValue = field?.value
 
     const [openModal, setOpenModal] = useState(false)
-    const { errors } = useFormikContext()
 
-    console.log(errors);
+    const {
+        translation
+    } = useContext(SiteContext)
+
     if (nonProfitProvisionValue !== answers.yes) {
         return <></>
     }

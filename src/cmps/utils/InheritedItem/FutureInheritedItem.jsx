@@ -1,13 +1,17 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useContext } from 'react'
 import FormWrapper from '../FormWrapper'
 import { inheritedItemValidation } from '../validation'
 import { Typography } from '@mui/material'
-import translation from '../../../store/translation'
 import ItemInheritors from '../itemInheritors/ItemInheritors'
 import FormikTextField from '../../formikcomponents/FormikTextField'
+import { SiteContext } from '../../../store/context'
 
 function FutureInheritedItem({ name }) {
+    const {
+        translation
+    } = useContext(SiteContext)
+    
     return (
         <FormWrapper
             isFinalStep={true}

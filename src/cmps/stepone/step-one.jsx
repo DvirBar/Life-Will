@@ -7,11 +7,13 @@ import FormikDatePicker from '../formikcomponents/FormikDatePicker';
 
 import FormWrapper from "../utils/FormWrapper"
 
-import translation from '../../store/translation';
+// import translation from '../../store/translation';
 import ChooseGender from '../utils/ChooseGender';
 
 import HebrewDatePicker from '../formikcomponents/HebrewDatePicker';
 import { getAge } from '../utils/getAge';
+import { SiteContext } from '../../store/context';
+import { useContext } from 'react';
 
 export const validationSchema = Yup.object().shape({
     first_name: Yup.string().required('יש להזין שם פרטי').label("שם פרטי"),
@@ -25,7 +27,12 @@ export const validationSchema = Yup.object().shape({
         .required('יש לבחור מגדר')
 });
 
+
 export default function StepOne() {
+    const {
+        translation
+    } = useContext(SiteContext)
+    
     return (
         <FormWrapper
             validationSchema={validationSchema}

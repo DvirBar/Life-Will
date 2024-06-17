@@ -1,13 +1,19 @@
 import { useFormikContext } from 'formik'
-import React from 'react'
-import translation, { answers, inheritanceKeys } from '../../store/translation'
+import React, { useContext } from 'react'
+import { answers, inheritanceKeys } from '../../store/translation'
 import YesNoRadio from '../formikcomponents/YesNoRadio'
 import ItemsList from '../utils/ItemsList/ItemsList'
 import { defaults } from '../../store/data'
 import RealEstateItem from './RealEstateItem'
+import { SiteContext } from '../../store/context'
 
 function StepThreeInheritedTopic() {
     const { values } = useFormikContext()
+         
+    const {
+        translation
+    } = useContext(SiteContext)
+
     return (
         <>
             <YesNoRadio name="real_estate" question={translation.real_estate} />

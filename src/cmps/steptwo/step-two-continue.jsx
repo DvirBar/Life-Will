@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import YesNoRadio from '../formikcomponents/YesNoRadio';
-import translation, { answers } from '../../store/translation'
+import { answers } from '../../store/translation'
 import FormWrapper from "../utils/FormWrapper"
 import ChildrenDetails from './ChildrenDetails';
 import * as Yup from "yup"
 import { basePersonInfoValidation, personInfoValidation } from '../utils/validation';
 import { getAge } from '../utils/getAge';
 import { MAX_AGE_FOR_GUARDIAN } from './GuardianDetails';
+import { SiteContext } from '../../store/context';
 
 
 const guardianValidation = {
@@ -36,6 +37,10 @@ const validationSchema = Yup.object({
 })
 
 export default function StepTwoContinue() {
+    const {
+        translation
+    } = useContext(SiteContext)
+
     return (
         <FormWrapper
             validationSchema={validationSchema}

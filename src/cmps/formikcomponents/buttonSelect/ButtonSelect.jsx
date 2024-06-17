@@ -4,7 +4,6 @@ import React from 'react'
 
 function ButtonSelect({ value, onChange, children, error, multiSelect }) {
     const handleChange = (e, newValue) => {
-        console.log(newValue);
         if (multiSelect || newValue !== value) {
             onChange(e, newValue)
         }

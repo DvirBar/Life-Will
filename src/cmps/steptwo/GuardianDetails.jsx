@@ -1,13 +1,18 @@
 import styled from '@emotion/styled'
-import React from 'react'
-import translation, { answers, guardianTypes } from '../../store/translation'
+import React, { useContext } from 'react'
+import { answers, guardianTypes } from '../../store/translation'
 import { getAge } from '../utils/getAge'
 import { MenuItem, Typography } from '@mui/material'
 import FormikSelect from '../formikcomponents/FormikSelect'
 import FormikTextField from '../formikcomponents/FormikTextField'
+import { SiteContext } from '../../store/context'
 
 export const MAX_AGE_FOR_GUARDIAN = 18
 function GuardianDetails({ name, kidItem }) {
+    const {
+        translation
+    } = useContext(SiteContext)
+
     if ((kidItem.has_disability !== answers.yes && getAge(kidItem.birthDate) >= MAX_AGE_FOR_GUARDIAN) || !kidItem.birthDate) {
         return <></>
     }

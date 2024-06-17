@@ -26,7 +26,7 @@ export default function StepThreekids({ data, propertyData }) {
 
     return (
         <div className='input-container-formik'>
-            <div className='on-open-modal' onClick={onToggleModal}>בחר ילדים</div>
+            <div className='on-open-modal' onClick={onToggleModal}>בחירת ילדים</div>
             {modal && <>
                 <div onClick={onToggleModal} className='fade'></div>
                 <div className='association-container'>

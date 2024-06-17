@@ -24,4 +24,14 @@ export interface AssetsData extends ItemNoDecription {
     description: string
 }
 
+export interface StatusTypes {
+    separate: string,
+    widow: string,
+    single: string,
+    solitary: string,
+    married: string,
+    partnership: string,
+    divorced: string
+}
+
 export type TransData<T> = T | T[]

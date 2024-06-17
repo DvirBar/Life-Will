@@ -1,10 +1,14 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useContext } from 'react'
 import ChooseGender from '../utils/ChooseGender'
 import FormikTextField from '../formikcomponents/FormikTextField'
-import translation from '../../store/translation'
+import { SiteContext } from '../../store/context'
 
 function ExPartnerItem({ nameWithIndex }) {
+    const {
+        translation
+    } = useContext(SiteContext)
+
     return (
         <StyledExPartnerItem>
             <ChooseGender name={`${nameWithIndex}.gender`} />

@@ -1,24 +1,34 @@
 import { useField, useFormikContext } from 'formik'
-import React from 'react'
-import translation, { answers, statusTypes } from '../../store/translation'
+import React, { useContext } from 'react'
+import { answers, statusTypes } from '../../store/translation'
 import { Typography } from '@mui/material'
 import YesNoRadio from '../formikcomponents/YesNoRadio'
 import { PartnerDetails } from './PartnerDetails'
 import ItemsList from '../utils/ItemsList/ItemsList'
 import { defaults } from '../../store/data'
 import ExPartnerItem from './ExPartnerItem'
+import { SiteContext } from '../../store/context'
 
 function FamilyStatusDetails() {
     const { values } = useFormikContext()
+    const {
+        translation
+    } = useContext(SiteContext)
+
     const hasPartner = values.status === statusTypes.married || values.status === statusTypes.partnership
+   
     return (
         <div>
             {values.status === statusTypes.married &&
-                <Typography variant="subtitle1">אני נשוי ל-</Typography>
+                <Typography variant="subtitle1">
+                    {translation.partner.married_gender}
+                </Typography>
             }
 
             {values.status === statusTypes.partnership &&
-                <Typography variant="subtitle1">אני מנהל זוגיות עם-</Typography>
+                <Typography variant="subtitle1">
+                    {translation.partner.spouse_gender}
+                </Typography>
             }
 
             {hasPartner &&

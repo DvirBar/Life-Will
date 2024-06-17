@@ -1,10 +1,14 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useContext } from 'react'
 import FormikTextField from '../../formikcomponents/FormikTextField'
-import translation, { answers } from '../../../store/translation'
+import { answers } from '../../../store/translation'
 import YesNoRadio from '../../formikcomponents/YesNoRadio'
+import { SiteContext } from '../../../store/context'
 
 function NonProfitsListItem({ nameWithIndex, nonProfitItem }) {
+    const {
+        translation
+    } = useContext(SiteContext)
 
     return (
         <StyledNonProfitsListItem>

@@ -143,7 +143,7 @@ export const data = {
     birthDate: '',
     hebrewBirthDate,
     gender: '',
-    edited_by: 'כן',
+    edited_by: '',
     person_id: '',
     email: '',
     phone: '',
@@ -182,21 +182,21 @@ export const data = {
     real_estate_data: [
         {
             type: realEstateTypes.appartment,
-            own_percentage: '70%',
+            own_percentage: '',
             details: {
-                country: 'ישראל',
-                city: 'תל אביב',
-                street: 'רחוב1',
-                house_number: '20',
-                block: '7',
-                lot: '2',
-                sub_lot: '1',
+                country: '',
+                city: '',
+                street: '',
+                house_number: '',
+                block: '',
+                lot: '',
+                sub_lot: '',
                 size: '',
             },
             inheritors: [
                 {
-                    uuid: "1",
-                    percent: "100"
+                    uuid: "",
+                    percent: ""
                 }
             ]
 
@@ -240,11 +240,11 @@ export const data = {
     // Step 5
     money: '',
     bank_accounts: [],
-    provident_funds: 'לא',
+    provident_funds: '',
     provident_funds_data: [],
-    study_funds: 'לא',
+    study_funds: '',
     study_funds_data: [],
-    non_profit_provision: 'לא',
+    non_profit_provision: '',
     non_profit_provision_data: [],
     // TODO: enum - either equal or by decision
     money_division: '',

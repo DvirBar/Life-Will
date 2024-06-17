@@ -4,13 +4,17 @@ import ButtonSelect from './buttonSelect/ButtonSelect';
 
 const FIELD_META_INDEX = 1
 
-const FormikButtonSelect = ({ name, children }) => {
+const FormikButtonSelect = ({ name, children, setValue }) => {
     const {
         setFieldValue,
     } = useFormikContext()
 
     const handleChange = (_event, value) => {
         setFieldValue(name, value)
+
+        if(setValue) {
+            setValue(value)
+        }
     }
 
     const meta = useField(name)[FIELD_META_INDEX]

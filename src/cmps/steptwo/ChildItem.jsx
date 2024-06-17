@@ -8,8 +8,14 @@ import FormikDatePicker from '../formikcomponents/FormikDatePicker'
 import HebrewDatePicker from '../formikcomponents/HebrewDatePicker'
 import YesNoRadio from '../formikcomponents/YesNoRadio'
 import GuardianDetails from './GuardianDetails'
+import { useContext } from 'react'
+import { SiteContext } from '../../store/context'
 
 const ChildItem = ({ dataItem, itemName }) => {
+    const {
+        translation
+    } = useContext(SiteContext)
+
     return (
         <StyledChildItem>
             <Typography variant='subtitle1'>{translation.kids_data.gender}</Typography>

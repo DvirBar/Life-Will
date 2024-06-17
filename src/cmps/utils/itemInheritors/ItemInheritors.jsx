@@ -1,12 +1,18 @@
 import styled from '@emotion/styled'
 import { Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import translation from '../../../store/translation'
 import InheritorsList from './InheritorsList'
 import ChooseInheritors from './ChooseInheritors'
+import { SiteContext } from '../../../store/context'
 
 function ItemInheritors({ name, showTitle = true }) {
     const [isOpen, setIsOpen] = useState(false)
+
+    const {
+        translation
+    } = useContext(SiteContext)
+    
     const inheritorString = (inheritor) => {
         return `${inheritor.first_name} ${inheritor.last_name}`
     }

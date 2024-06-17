@@ -1,11 +1,12 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useContext } from 'react'
 import ItemType from './ItemType'
-import translation, { itemDetails } from '../../../store/translation'
+import { itemDetails } from '../../../store/translation'
 import { Typography } from '@mui/material'
 import FormikTextField from '../../formikcomponents/FormikTextField'
 import ItemInheritors from '../itemInheritors/ItemInheritors'
 import hasField from './hasField'
+import { SiteContext } from '../../../store/context'
 
 function InheritedItem({ name, itemDataName, itemName }) {
     /* 
@@ -14,6 +15,10 @@ function InheritedItem({ name, itemDataName, itemName }) {
             itemDataName - vehicle_data
             itemName - vehicle_data[0]
     */
+
+    const {
+        translation
+    } = useContext(SiteContext)
 
     return (
         <StyledInheritedItem>

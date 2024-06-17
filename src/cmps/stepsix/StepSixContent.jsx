@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import YesNoRadio from '../formikcomponents/YesNoRadio'
-import translation, { answers } from '../../store/translation'
+import { answers } from '../../store/translation'
 import FormikTextField from '../formikcomponents/FormikTextField'
 import { useFormikContext } from 'formik'
 import styled from '@emotion/styled'
 import { rgba } from '../../Theme'
 import { Typography } from '@mui/material'
+import { SiteContext } from '../../store/context'
 
 function StepSixContent() {
     const { values } = useFormikContext()
     const funeralInChargeDetailsName = 'funeral_in_charge_details'
+
+    const {
+        translation
+    } = useContext(SiteContext)
+    
     return (
         <StyledStepSixContent>
             <YesNoRadio

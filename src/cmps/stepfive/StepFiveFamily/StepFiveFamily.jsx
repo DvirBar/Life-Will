@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import FormWrapper from '../../utils/FormWrapper'
-import translation, { moneyDivision } from '../../../store/translation'
+import { moneyDivision } from '../../../store/translation'
 import { Typography } from '@mui/material'
 import FormikButtonSelect from '../../formikcomponents/FormikButtonSelect'
 import ButtonSelectItem from '../../formikcomponents/buttonSelect/ButtonSelectItem'
 import MoneyDivisionTable from './MoneyDivisionTable'
 import * as Yup from "yup"
+import { SiteContext } from '../../../store/context'
 
 const validation = Yup.object({
     money_division: Yup.string().required("יש לבחור באפשרות המתאימה"),
@@ -18,6 +19,10 @@ const validation = Yup.object({
 })
 
 function StepFiveFamily() {
+    const {
+        translation
+    } = useContext(SiteContext)
+    
     return (
         <FormWrapper
             validationSchema={validation}

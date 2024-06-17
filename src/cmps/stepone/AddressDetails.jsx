@@ -1,10 +1,16 @@
 import styled from '@emotion/styled'
 import FormikTextField from '../formikcomponents/FormikTextField';
-import translation from '../../store/translation';
 import { Typography } from '@mui/material';
+import { SiteContext } from '../../store/context';
+import { useContext } from 'react';
 
 const AddressDetails = () => {
 	const addressName = "address"
+
+    const {
+        translation
+    } = useContext(SiteContext)
+
 	return (
 		<StyledAddressWrapper>
 			<Typography variant="subtitle1">{translation.address.text}</Typography>

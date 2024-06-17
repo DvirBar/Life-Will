@@ -47,3 +47,5 @@ export const assetsDataWithType: AssestsDataWithType = {
     type: "סוג"
 }
 
+
+

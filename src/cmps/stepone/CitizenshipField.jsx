@@ -1,10 +1,16 @@
 import { useFormikContext } from 'formik'
-import React from 'react'
+import React, { useContext } from 'react'
 import FormikTextField from '../formikcomponents/FormikTextField'
-import translation, { answers } from '../../store/translation'
+import { answers } from '../../store/translation'
+import { SiteContext } from '../../store/context'
 
 function CitizenshipField() {
     const { values } = useFormikContext()
+
+
+    const {
+        translation
+    } = useContext(SiteContext)
 
     if (values.citizenship !== answers.yes) {
         return <></>

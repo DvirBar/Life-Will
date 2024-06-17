@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FormWrapper from '../utils/FormWrapper';
 import YesNoRadio from '../formikcomponents/YesNoRadio';
-import translation, { answers, giveToFamilyTypesKeys } from '../../store/translation';
+import { answers, giveToFamilyTypesKeys } from '../../store/translation';
 import GiveToFamily from './GiveToFamily';
 import * as Yup from "yup"
 import { basePersonInfoValidation } from '../utils/validation';
+import { SiteContext } from '../../store/context';
 
 const giveToFamilyTypeSchema = {
     [giveToFamilyTypesKeys.parents]: Yup.array().of(Yup.object().shape(basePersonInfoValidation)),
@@ -23,6 +24,9 @@ const validationSchema = Yup.object({
 
 
 export default function StepTwoContinue2() {
+    const {
+        translation
+    } = useContext(SiteContext)
     return (
         <FormWrapper
             validationSchema={validationSchema}

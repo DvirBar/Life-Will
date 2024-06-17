@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import FormWrapper from '../../utils/FormWrapper'
 import YesNoRadio from "../../formikcomponents/YesNoRadio"
-import translation from '../../../store/translation'
 import NonProfitsContent from './NonProfitsContent'
 import StepFiveNonProfitSchema from './validation'
+import { SiteContext } from '../../../store/context'
 
 function StepFiveNonProfit() {
+    const {
+        translation
+    } = useContext(SiteContext)
 
     return (
         <FormWrapper

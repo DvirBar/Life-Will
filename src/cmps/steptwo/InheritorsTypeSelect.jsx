@@ -16,7 +16,6 @@ export function InheritorsTypeSelect({ name, keyValues, setFieldItem, formikValu
     const defaultInheritorDataWithId = { uuid: crypto.randomUUID(), ...defaultInheritorData };
 
     const onSelectInheritor = (e) => {
-        debugger;
         const key = e.target.value;
         const val = getIn(formikValues, `give_to_family_type.${key}`);
         if (val === null || val === undefined) {
@@ -24,6 +23,7 @@ export function InheritorsTypeSelect({ name, keyValues, setFieldItem, formikValu
         }
         setSelectedOption(e.target.value);
     }
+
     return (
         <StyledColumn>
             <StyledRow>

@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import FormWrapper from '../../utils/FormWrapper'
 import FormikTextField from "../../formikcomponents/FormikTextField"
-import translation from '../../../store/translation'
 import Question from '../../utils/Question'
 import ItemsList from '../../utils/ItemsList/ItemsList'
 import { defaults } from '../../../store/data'
@@ -9,8 +8,13 @@ import BankDetails from './BankDetails'
 import ProvidentFundDetails from "./ProvidentFundDetails"
 import StudyFundDetails from "./StudyFundDetails"
 import StepFiveMoneySchema from './validation'
+import { SiteContext } from '../../../store/context'
 
 function StepFiveMoney() {
+    const {
+        translation
+    } = useContext(SiteContext)
+
     return (
         <FormWrapper
             validationSchema={StepFiveMoneySchema}
