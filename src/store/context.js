@@ -11,29 +11,47 @@ import generateTranslation, { Gender, Mode } from "./translations";
 export const SiteContext = createContext(null);
 export let globalData = initialData
 
+const binaryToBool = (strVal) => {
+    if(strVal === "1") {
+        return true;
+    }
+
+    return false;
+}
+const boolToBinary = (boolVal) => {
+    if(boolVal) {
+        return 1;
+    }
+
+    return 0;
+}
 
 const SiteProvider = ({ children }) => {
-    const [isAlone, setIsAlone] = useState(localStorage.getItem("isAlone") || false)
-    const [saveLocal, setSaveLocal] = useState(localStorage.getItem("saveLocal") || false)
-    const [startedFill, setStartedFill] = useState(localStorage.getItem("startedFill") || false)
+    const [isAlone, setIsAlone] = useState(binaryToBool(localStorage.getItem("isAlone")) || false)
+    const [saveLocal, setSaveLocal] = useState(binaryToBool(localStorage.getItem("saveLocal")) || false)
+    const [startedFill, setStartedFill] = useState(binaryToBool(localStorage.getItem("startedFill")) || false)
     const [chosenItemTypes, setChosenItemTypes] = useState(JSON.parse(localStorage.getItem("chosenItems")) || {})
-    
+    const [selectedGender, setSelectedGender] = useState(Number(localStorage.getItem("gender")) || Gender.Male)
+
+    const selectGender = (e, value) => {
+        setSelectedGender(Number(value));
+    }
+
     const startFill = () => {
-        if (isAlone) {
+        if (isAlone && selectedGender !== undefined) {
             setStartedFill(true)
         }
     }
 
     useEffect(() => {
-        localStorage.setItem("isAlone", isAlone)
-        localStorage.setItem("saveLocal", saveLocal)
-        localStorage.setItem("startedFill", startedFill)
+        localStorage.setItem("isAlone", boolToBinary(isAlone))
+        localStorage.setItem("saveLocal", boolToBinary(saveLocal))
+        localStorage.setItem("startedFill", boolToBinary(startedFill))
         localStorage.setItem("chosenItems", JSON.stringify(chosenItemTypes))
-    }, [isAlone, saveLocal, startedFill, chosenItemTypes])
+        localStorage.setItem("gender", Number(selectedGender))
+    }, [isAlone, saveLocal, startedFill, chosenItemTypes, selectedGender])
 
     const [data, setData] = useState(globalData)
-
-    const selectedGender = data.gender === genderTypes.female ? Gender.Female : Gender.Male
     
     const {
         selectedStage,
@@ -222,6 +240,8 @@ const SiteProvider = ({ children }) => {
         sendForm,
         chosenItemTypes,
         setChosenItemTypes,
+        selectGender,
+        selectedGender,
         translation
     }
 

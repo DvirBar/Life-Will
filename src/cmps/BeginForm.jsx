@@ -2,7 +2,15 @@ import styled from '@emotion/styled'
 import { Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { SiteContext } from '../store/context'
-import ts from "../store/translations/index"
+import ts, { Gender } from "../store/translations/index"
+import ButtonSelect from './formikcomponents/buttonSelect/ButtonSelect'
+import ButtonSelectItem from './formikcomponents/buttonSelect/ButtonSelectItem'
+
+
+const genderOptions = {
+    [Gender.Male]: "צוואת יחיד בלשון זכר",
+    [Gender.Female]: "צוואת יחיד בלשון נקבה"
+}
 
 function BeginForm() {
     const {
@@ -10,8 +18,12 @@ function BeginForm() {
         setIsAlone,
         saveLocal,
         setSaveLocal,
-        startFill
+        startFill,
+        selectedGender,
+        selectGender
     } = useContext(SiteContext)
+
+    
     return (
         <StyledBeginForm>
             <Typography variant="subtitle1">
@@ -58,6 +70,23 @@ function BeginForm() {
             </StyledTopicBlock>
 
 
+            <Typography variant="subtitle2">
+                לשון הצוואה
+            </Typography>
+            <ButtonSelect
+                onChange={selectGender}
+                value={String(selectedGender)}
+            >
+                {Object.keys(genderOptions).map((key) =>
+                    <ButtonSelectItem
+                        key={key}
+                        value={key}
+                    >
+                        {genderOptions[key]}
+                    </ButtonSelectItem>
+                )}
+        
+            </ButtonSelect>
 
             <Button
                 onClick={startFill}
